@@ -1,0 +1,305 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0D31F61917D8B5C8005EBF21 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D31F61817D8B5C8005EBF21 /* UIKit.framework */; };
+		0D31F61B17D8B5C8005EBF21 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D31F61A17D8B5C8005EBF21 /* Foundation.framework */; };
+		0D31F61D17D8B5C8005EBF21 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D31F61C17D8B5C8005EBF21 /* CoreGraphics.framework */; };
+		0D31F62317D8B5C8005EBF21 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0D31F62117D8B5C8005EBF21 /* InfoPlist.strings */; };
+		0D31F62517D8B5C8005EBF21 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D31F62417D8B5C8005EBF21 /* main.m */; };
+		0D31F62917D8B5C8005EBF21 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D31F62817D8B5C8005EBF21 /* AppDelegate.m */; };
+		0D31F62B17D8B5C8005EBF21 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D31F62A17D8B5C8005EBF21 /* Default.png */; };
+		0D31F62D17D8B5C8005EBF21 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D31F62C17D8B5C8005EBF21 /* Default@2x.png */; };
+		0D31F62F17D8B5C8005EBF21 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D31F62E17D8B5C8005EBF21 /* Default-568h@2x.png */; };
+		0D31F63217D8B5C8005EBF21 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D31F63017D8B5C8005EBF21 /* MainStoryboard.storyboard */; };
+		0D31F63517D8B5C8005EBF21 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D31F63417D8B5C8005EBF21 /* ViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0D31F61517D8B5C8005EBF21 /* SenkoHanabiARC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SenkoHanabiARC.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D31F61817D8B5C8005EBF21 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		0D31F61A17D8B5C8005EBF21 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		0D31F61C17D8B5C8005EBF21 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		0D31F62017D8B5C8005EBF21 /* SenkoHanabiARC-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SenkoHanabiARC-Info.plist"; sourceTree = "<group>"; };
+		0D31F62217D8B5C8005EBF21 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		0D31F62417D8B5C8005EBF21 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		0D31F62617D8B5C8005EBF21 /* SenkoHanabiARC-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SenkoHanabiARC-Prefix.pch"; sourceTree = "<group>"; };
+		0D31F62717D8B5C8005EBF21 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		0D31F62817D8B5C8005EBF21 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		0D31F62A17D8B5C8005EBF21 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		0D31F62C17D8B5C8005EBF21 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		0D31F62E17D8B5C8005EBF21 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		0D31F63117D8B5C8005EBF21 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		0D31F63317D8B5C8005EBF21 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		0D31F63417D8B5C8005EBF21 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0D31F61217D8B5C8005EBF21 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D31F61917D8B5C8005EBF21 /* UIKit.framework in Frameworks */,
+				0D31F61B17D8B5C8005EBF21 /* Foundation.framework in Frameworks */,
+				0D31F61D17D8B5C8005EBF21 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0D31F60C17D8B5C8005EBF21 = {
+			isa = PBXGroup;
+			children = (
+				0D31F61E17D8B5C8005EBF21 /* SenkoHanabiARC */,
+				0D31F61717D8B5C8005EBF21 /* Frameworks */,
+				0D31F61617D8B5C8005EBF21 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		0D31F61617D8B5C8005EBF21 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0D31F61517D8B5C8005EBF21 /* SenkoHanabiARC.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0D31F61717D8B5C8005EBF21 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0D31F61817D8B5C8005EBF21 /* UIKit.framework */,
+				0D31F61A17D8B5C8005EBF21 /* Foundation.framework */,
+				0D31F61C17D8B5C8005EBF21 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		0D31F61E17D8B5C8005EBF21 /* SenkoHanabiARC */ = {
+			isa = PBXGroup;
+			children = (
+				0D31F62717D8B5C8005EBF21 /* AppDelegate.h */,
+				0D31F62817D8B5C8005EBF21 /* AppDelegate.m */,
+				0D31F63017D8B5C8005EBF21 /* MainStoryboard.storyboard */,
+				0D31F63317D8B5C8005EBF21 /* ViewController.h */,
+				0D31F63417D8B5C8005EBF21 /* ViewController.m */,
+				0D31F61F17D8B5C8005EBF21 /* Supporting Files */,
+			);
+			path = SenkoHanabiARC;
+			sourceTree = "<group>";
+		};
+		0D31F61F17D8B5C8005EBF21 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				0D31F62017D8B5C8005EBF21 /* SenkoHanabiARC-Info.plist */,
+				0D31F62117D8B5C8005EBF21 /* InfoPlist.strings */,
+				0D31F62417D8B5C8005EBF21 /* main.m */,
+				0D31F62617D8B5C8005EBF21 /* SenkoHanabiARC-Prefix.pch */,
+				0D31F62A17D8B5C8005EBF21 /* Default.png */,
+				0D31F62C17D8B5C8005EBF21 /* Default@2x.png */,
+				0D31F62E17D8B5C8005EBF21 /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0D31F61417D8B5C8005EBF21 /* SenkoHanabiARC */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0D31F63817D8B5C8005EBF21 /* Build configuration list for PBXNativeTarget "SenkoHanabiARC" */;
+			buildPhases = (
+				0D31F61117D8B5C8005EBF21 /* Sources */,
+				0D31F61217D8B5C8005EBF21 /* Frameworks */,
+				0D31F61317D8B5C8005EBF21 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SenkoHanabiARC;
+			productName = SenkoHanabiARC;
+			productReference = 0D31F61517D8B5C8005EBF21 /* SenkoHanabiARC.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0D31F60D17D8B5C8005EBF21 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = PTA;
+			};
+			buildConfigurationList = 0D31F61017D8B5C8005EBF21 /* Build configuration list for PBXProject "SenkoHanabiARC" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 0D31F60C17D8B5C8005EBF21;
+			productRefGroup = 0D31F61617D8B5C8005EBF21 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0D31F61417D8B5C8005EBF21 /* SenkoHanabiARC */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0D31F61317D8B5C8005EBF21 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D31F62317D8B5C8005EBF21 /* InfoPlist.strings in Resources */,
+				0D31F62B17D8B5C8005EBF21 /* Default.png in Resources */,
+				0D31F62D17D8B5C8005EBF21 /* Default@2x.png in Resources */,
+				0D31F62F17D8B5C8005EBF21 /* Default-568h@2x.png in Resources */,
+				0D31F63217D8B5C8005EBF21 /* MainStoryboard.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0D31F61117D8B5C8005EBF21 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D31F62517D8B5C8005EBF21 /* main.m in Sources */,
+				0D31F62917D8B5C8005EBF21 /* AppDelegate.m in Sources */,
+				0D31F63517D8B5C8005EBF21 /* ViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		0D31F62117D8B5C8005EBF21 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0D31F62217D8B5C8005EBF21 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		0D31F63017D8B5C8005EBF21 /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0D31F63117D8B5C8005EBF21 /* en */,
+			);
+			name = MainStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		0D31F63617D8B5C8005EBF21 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		0D31F63717D8B5C8005EBF21 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		0D31F63917D8B5C8005EBF21 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SenkoHanabiARC/SenkoHanabiARC-Prefix.pch";
+				INFOPLIST_FILE = "SenkoHanabiARC/SenkoHanabiARC-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		0D31F63A17D8B5C8005EBF21 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SenkoHanabiARC/SenkoHanabiARC-Prefix.pch";
+				INFOPLIST_FILE = "SenkoHanabiARC/SenkoHanabiARC-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0D31F61017D8B5C8005EBF21 /* Build configuration list for PBXProject "SenkoHanabiARC" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0D31F63617D8B5C8005EBF21 /* Debug */,
+				0D31F63717D8B5C8005EBF21 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0D31F63817D8B5C8005EBF21 /* Build configuration list for PBXNativeTarget "SenkoHanabiARC" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0D31F63917D8B5C8005EBF21 /* Debug */,
+				0D31F63A17D8B5C8005EBF21 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0D31F60D17D8B5C8005EBF21 /* Project object */;
+}
