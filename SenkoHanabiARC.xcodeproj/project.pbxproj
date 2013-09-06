@@ -20,11 +20,18 @@
 		0D31F63517D8B5C8005EBF21 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D31F63417D8B5C8005EBF21 /* ViewController.m */; };
 		0D31F63D17D8B60E005EBF21 /* fadeObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D31F63C17D8B60E005EBF21 /* fadeObject.m */; };
 		0D31F64317D8CC7B005EBF21 /* fade1.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D31F63F17D8CC7B005EBF21 /* fade1.png */; };
-		0D31F64417D8CC7B005EBF21 /* fade2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D31F64017D8CC7B005EBF21 /* fade2.png */; };
 		0D31F64517D8CC7B005EBF21 /* gradation2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D31F64117D8CC7B005EBF21 /* gradation2.png */; };
 		0D31F64617D8CC7B005EBF21 /* senkohanabi.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D31F64217D8CC7B005EBF21 /* senkohanabi.png */; };
 		0D31F64817D8CC95005EBF21 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D31F64717D8CC95005EBF21 /* CoreMotion.framework */; };
 		0D31F64A17D8CFBA005EBF21 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D31F64917D8CFBA005EBF21 /* AssetsLibrary.framework */; };
+		0D31F65717D9710C005EBF21 /* addPicture2.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0D31F65517D9710C005EBF21 /* addPicture2.gif */; };
+		0D31F65B17D971D2005EBF21 /* again2.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0D31F65917D971D2005EBF21 /* again2.gif */; };
+		0D31F65F17D97231005EBF21 /* fire.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D31F65E17D97231005EBF21 /* fire.m */; };
+		0D31F66517D97914005EBF21 /* hinotama.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D31F66017D97914005EBF21 /* hinotama.png */; };
+		0D31F66617D97914005EBF21 /* hibana5.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D31F66117D97914005EBF21 /* hibana5.png */; };
+		0D31F66717D97914005EBF21 /* hibana4.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D31F66217D97914005EBF21 /* hibana4.png */; };
+		0D31F66817D97914005EBF21 /* hibana3.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D31F66317D97914005EBF21 /* hibana3.png */; };
+		0D31F66917D97914005EBF21 /* hibana2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D31F66417D97914005EBF21 /* hibana2.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,11 +54,19 @@
 		0D31F63B17D8B60E005EBF21 /* fadeObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fadeObject.h; sourceTree = "<group>"; };
 		0D31F63C17D8B60E005EBF21 /* fadeObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = fadeObject.m; sourceTree = "<group>"; };
 		0D31F63F17D8CC7B005EBF21 /* fade1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fade1.png; sourceTree = "<group>"; };
-		0D31F64017D8CC7B005EBF21 /* fade2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fade2.png; sourceTree = "<group>"; };
 		0D31F64117D8CC7B005EBF21 /* gradation2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gradation2.png; sourceTree = "<group>"; };
 		0D31F64217D8CC7B005EBF21 /* senkohanabi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = senkohanabi.png; sourceTree = "<group>"; };
 		0D31F64717D8CC95005EBF21 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		0D31F64917D8CFBA005EBF21 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		0D31F65517D9710C005EBF21 /* addPicture2.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = addPicture2.gif; sourceTree = "<group>"; };
+		0D31F65917D971D2005EBF21 /* again2.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = again2.gif; sourceTree = "<group>"; };
+		0D31F65D17D97231005EBF21 /* fire.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fire.h; sourceTree = "<group>"; };
+		0D31F65E17D97231005EBF21 /* fire.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = fire.m; sourceTree = "<group>"; };
+		0D31F66017D97914005EBF21 /* hinotama.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hinotama.png; sourceTree = "<group>"; };
+		0D31F66117D97914005EBF21 /* hibana5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hibana5.png; sourceTree = "<group>"; };
+		0D31F66217D97914005EBF21 /* hibana4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hibana4.png; sourceTree = "<group>"; };
+		0D31F66317D97914005EBF21 /* hibana3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hibana3.png; sourceTree = "<group>"; };
+		0D31F66417D97914005EBF21 /* hibana2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hibana2.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +125,8 @@
 				0D31F63417D8B5C8005EBF21 /* ViewController.m */,
 				0D31F63B17D8B60E005EBF21 /* fadeObject.h */,
 				0D31F63C17D8B60E005EBF21 /* fadeObject.m */,
+				0D31F65D17D97231005EBF21 /* fire.h */,
+				0D31F65E17D97231005EBF21 /* fire.m */,
 				0D31F61F17D8B5C8005EBF21 /* Supporting Files */,
 			);
 			path = SenkoHanabiARC;
@@ -132,8 +149,14 @@
 		0D31F63E17D8CC58005EBF21 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				0D31F66017D97914005EBF21 /* hinotama.png */,
+				0D31F66117D97914005EBF21 /* hibana5.png */,
+				0D31F66217D97914005EBF21 /* hibana4.png */,
+				0D31F66317D97914005EBF21 /* hibana3.png */,
+				0D31F66417D97914005EBF21 /* hibana2.png */,
+				0D31F65917D971D2005EBF21 /* again2.gif */,
+				0D31F65517D9710C005EBF21 /* addPicture2.gif */,
 				0D31F63F17D8CC7B005EBF21 /* fade1.png */,
-				0D31F64017D8CC7B005EBF21 /* fade2.png */,
 				0D31F64117D8CC7B005EBF21 /* gradation2.png */,
 				0D31F64217D8CC7B005EBF21 /* senkohanabi.png */,
 			);
@@ -197,9 +220,15 @@
 				0D31F62F17D8B5C8005EBF21 /* Default-568h@2x.png in Resources */,
 				0D31F63217D8B5C8005EBF21 /* MainStoryboard.storyboard in Resources */,
 				0D31F64317D8CC7B005EBF21 /* fade1.png in Resources */,
-				0D31F64417D8CC7B005EBF21 /* fade2.png in Resources */,
 				0D31F64517D8CC7B005EBF21 /* gradation2.png in Resources */,
 				0D31F64617D8CC7B005EBF21 /* senkohanabi.png in Resources */,
+				0D31F65717D9710C005EBF21 /* addPicture2.gif in Resources */,
+				0D31F65B17D971D2005EBF21 /* again2.gif in Resources */,
+				0D31F66517D97914005EBF21 /* hinotama.png in Resources */,
+				0D31F66617D97914005EBF21 /* hibana5.png in Resources */,
+				0D31F66717D97914005EBF21 /* hibana4.png in Resources */,
+				0D31F66817D97914005EBF21 /* hibana3.png in Resources */,
+				0D31F66917D97914005EBF21 /* hibana2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,6 +243,7 @@
 				0D31F62917D8B5C8005EBF21 /* AppDelegate.m in Sources */,
 				0D31F63517D8B5C8005EBF21 /* ViewController.m in Sources */,
 				0D31F63D17D8B60E005EBF21 /* fadeObject.m in Sources */,
+				0D31F65F17D97231005EBF21 /* fire.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
