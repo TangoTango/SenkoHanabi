@@ -9,11 +9,12 @@
 #import <Foundation/Foundation.h>
 
 @interface fire : NSObject{
-    UIImageView* image;
-    float x, y, w, h;
-    float maxw, maxh;
-    int deleteFlg;
-    int alphaFlg;
+    UIImageView* image; // 画像
+    float x, y, w, h; // 位置と高さ・幅
+    float maxw, maxh; // 高さ・幅の最大値
+    int deleteFlg; // 使われていないかどうか
+    int alphaFlg; //
+    
 }
 @property int deleteFlg;
 -(id)initWithObject:(UIImageView*)img view:(UIView*)view point:(CGPoint)p;

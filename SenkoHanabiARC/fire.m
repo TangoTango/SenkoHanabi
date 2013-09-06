@@ -38,9 +38,10 @@
     
     //int r = ((rand() % 240) - 30.0f);
     //CGFloat angle = (r * M_PI / 180.0f);
-    int r = (rand() % 5);
-    CGFloat angle = (r * 48 * M_PI / 180.0f);
     
+    int r = (rand() % 5);
+    NSMutableArray *angleArray = [NSMutableArray arrayWithObjects:[NSNumber numberWithFloat:30.0f], [NSNumber numberWithFloat:60.0f], [NSNumber numberWithFloat:90.0f], [NSNumber numberWithFloat:120.0f], [NSNumber numberWithFloat:150.0f], nil];
+    CGFloat angle = ([[angleArray objectAtIndex:r] floatValue] * 48.0 * M_PI / 180.0f);
     
     img.transform = CGAffineTransformMakeRotation(angle);
     
