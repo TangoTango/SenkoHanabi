@@ -21,6 +21,7 @@
 UILabel *titleLabel;
 UILabel *howLabel;
 UIImageView *senkoImage;
+UIImageView *hinotamaImage;
 
 NSArray *imageNames;
 NSArray *textNames;
@@ -124,16 +125,30 @@ int sceneNumber;
         case 3://「線香花火」隠蔽アニメ、線香花火設定、「遊び方」設定
             titleLabel.alpha -= 0.02f;
             if(titleLabel.alpha < 0.0f){
+                // 線香花火の画像
                 if(!senkoImage){
                     senkoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"senkohanabi.png"]];
-                    senkoImage.layer.anchorPoint = CGPointMake(0.5, 0);
-                    senkoImage.frame = CGRectMake(160-20, -10, 61, 337);//122 × 675
+                    senkoImage.layer.anchorPoint = CGPointMake(0.5, 0); // (170, -10)が回転の原点
+                    // ハードコーディングすると火種の処理で困りそう
+                    senkoImage.frame = CGRectMake(140, -10, 61, 337);//122 × 675
                     senkoImage.alpha = 0.0f;
                     [self.view addSubview:senkoImage];
                 }else{
                     senkoImage.alpha = 0.0f;
                 }
                 
+                // 火種の画像
+                if(!hinotamaImage){
+                    hinotamaImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hinotama.png"]];
+                    hinotamaImage.layer.anchorPoint = CGPointMake(0.5, -13.6); // 直すべき
+                    hinotamaImage.frame = CGRectMake(141, 305, 120/6, 140/6);
+                    hinotamaImage.alpha = 0.0f;
+                    [self.view addSubview:hinotamaImage];
+                }else{
+                    hinotamaImage.alpha = 0.0f;
+                }
+
+                // 「遊び方」
                 if(!howLabel){
                     howLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,50,320,300)];
                     howLabel.font = [UIFont fontWithName:@"Hiragino Mincho ProN" size:40];
@@ -153,17 +168,20 @@ int sceneNumber;
             break;
         case 4://線香花火アニメ、「遊び方」表示アニメ
             senkoImage.alpha += 0.02f;
+            hinotamaImage.alpha += 0.02f;
             if(initLaunch){
                 howLabel.alpha += 0.02f;
             }
             
             if(3.0f < howLabel.alpha){
                 senkoImage.alpha = 1.0f;
+                hinotamaImage.alpha += 1.0f;
                 howLabel.alpha = 1.0f;
                 sceneNumber = 5;
             }
             if( isTapped || (!initLaunch && 1.0f < senkoImage.alpha) ){
                 senkoImage.alpha = 1.0f;
+                hinotamaImage.alpha += 1.0f;
                 howLabel.alpha = 0.0f;
                 sceneNumber = 6;
             }
@@ -172,6 +190,7 @@ int sceneNumber;
             howLabel.alpha -= 0.02f;
             if(howLabel.alpha < 0.0f || isTapped){
                 senkoImage.alpha = 1.0f;
+                hinotamaImage.alpha += 1.0f;
                 howLabel.alpha = 0.0f;
                 fadeselect = 0;
                 sceneNumber = 6;
@@ -305,6 +324,8 @@ int sceneNumber;
             prevAngle = (-manager.accelerometerData.acceleration.x* 90.0f * M_PI / 180.0f);
             
             senkoImage.transform = CGAffineTransformMakeRotation(angle);
+            hinotamaImage.transform = CGAffineTransformMakeRotation(angle);
+            
         }
     }
     

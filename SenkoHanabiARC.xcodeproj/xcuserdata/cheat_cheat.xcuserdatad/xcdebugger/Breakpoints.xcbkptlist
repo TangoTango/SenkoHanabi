@@ -13,8 +13,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "318"
          endingLineNumber = "318"
-         landmarkName = "@implementation ViewController"
-         landmarkType = "3">
+         landmarkName = "-loop"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -182,7 +182,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "328"
          endingLineNumber = "328"
-         landmarkName = "-addimageButtonTapped:"
+         landmarkName = "-loop"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -195,7 +195,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "329"
          endingLineNumber = "329"
-         landmarkName = "-addimageButtonTapped:"
+         landmarkName = "-loop"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -234,7 +234,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "333"
          endingLineNumber = "333"
-         landmarkName = "-addimageButtonTapped:"
+         landmarkName = "-loop"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -247,8 +247,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "335"
          endingLineNumber = "335"
-         landmarkName = "-addimageButtonTapped:"
-         landmarkType = "5">
+         landmarkName = "@implementation ViewController"
+         landmarkType = "3">
       </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>
