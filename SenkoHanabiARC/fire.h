@@ -12,8 +12,9 @@
     UIImageView* image; // 画像
     float x, y, w, h; // 位置と高さ・幅
     float maxw, maxh; // 高さ・幅の最大値
+    float angle; // 角度
     int deleteFlg; // 使われていないかどうか
-    int alphaFlg; //
+    int alphaFlg; // 見えているかどうか
     
 }
 @property int deleteFlg;

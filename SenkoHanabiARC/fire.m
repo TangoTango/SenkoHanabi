@@ -20,8 +20,18 @@
     
     maxw = 100;
     maxh = 100;
+    
+    int r = (arc4random() % 5);
+    
+    NSMutableArray *offsetArray = [NSMutableArray arrayWithObjects:[NSValue valueWithCGPoint:CGPointMake(-30.0f, 30.0f)], [NSValue valueWithCGPoint:CGPointMake(-10.0f, 10.0f)], [NSValue valueWithCGPoint:CGPointMake(0.0f, 0.0f)], [NSValue valueWithCGPoint:CGPointMake(10.0f, 10.0f)], [NSValue valueWithCGPoint:CGPointMake(30.0f, 30.0f)], nil];
+    CGPoint offset = [[offsetArray objectAtIndex:r] CGPointValue];
+    
+    NSMutableArray *angleArray = [NSMutableArray arrayWithObjects:[NSNumber numberWithFloat:160.0f], [NSNumber numberWithFloat:140.0f], [NSNumber numberWithFloat:120.0f], [NSNumber numberWithFloat:100.0f], [NSNumber numberWithFloat:80.0f], nil];
+    
+    CGPoint position = CGPointMake(p.x + offset.x, p.y + offset.y);
+    
     if(img.image.size.height < img.image.size.width){
-        img.frame = CGRectMake(p.x, p.y, maxw, img.image.size.height*(maxw/img.image.size.width));
+        img.frame = CGRectMake(p.x + offset.x, p.y + offset.y, maxw, img.image.size.height*(maxw/img.image.size.width));
     }else{
         img.frame = CGRectMake(p.x, p.y, img.image.size.width*(maxw/img.image.size.height), maxh);
     }
@@ -38,12 +48,12 @@
     
     //int r = ((rand() % 240) - 30.0f);
     //CGFloat angle = (r * M_PI / 180.0f);
+    NSLog(@"x: %lf, y: %lf", position.x, position.y);
+    NSLog(@"angleArray:%lf", [[angleArray objectAtIndex:r] floatValue]);
+    angle = ([[angleArray objectAtIndex:r] floatValue] * M_PI / 180.0f);
     
-    int r = (rand() % 5);
-    NSMutableArray *angleArray = [NSMutableArray arrayWithObjects:[NSNumber numberWithFloat:30.0f], [NSNumber numberWithFloat:60.0f], [NSNumber numberWithFloat:90.0f], [NSNumber numberWithFloat:120.0f], [NSNumber numberWithFloat:150.0f], nil];
-    CGFloat angle = ([[angleArray objectAtIndex:r] floatValue] * 48.0 * M_PI / 180.0f);
-    
-    img.transform = CGAffineTransformMakeRotation(angle);
+    img.transform = CGAffineTransformMakeRotation(1.5f);
+    // img.transform = CGAffineTransformMakeRotation(angle);
     
     [view addSubview:img];
     return self;
