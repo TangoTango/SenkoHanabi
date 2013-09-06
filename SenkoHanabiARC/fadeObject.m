@@ -57,6 +57,7 @@ static UIImageView *bokashiImage;
             img.frame = CGRectMake(f.origin.x + 1.5f + w * 0.01f, f.origin.y + h * 0.01f,
                                    f.size.width - w * 0.02f, f.size.height - h * 0.02f);
             if(img.alpha < 0){
+                [img removeFromSuperview];
                 deleteFlg = 1;
             }
         }
@@ -74,6 +75,7 @@ static UIImageView *bokashiImage;
                                f.size.width - w * 0.01f, f.size.height - h * 0.01f);
         
         if(img.alpha < 0){
+            [img removeFromSuperview];
             deleteFlg = 1;
         }
         

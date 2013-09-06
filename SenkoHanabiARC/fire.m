@@ -32,10 +32,15 @@
     w = f.size.width;
     h = f.size.height;
     
+    img.frame = CGRectMake(x, y, 0, h);
+    
     img.layer.anchorPoint = CGPointMake(0, 0.5);
     
-    int r = ((rand() % 240) - 30.0f);
-    CGFloat angle = (r * M_PI / 180.0f);
+    //int r = ((rand() % 240) - 30.0f);
+    //CGFloat angle = (r * M_PI / 180.0f);
+    int r = (rand() % 5);
+    CGFloat angle = (r * 48 * M_PI / 180.0f);
+    
     
     img.transform = CGAffineTransformMakeRotation(angle);
     
@@ -47,7 +52,8 @@
     UIImageView *img = image;
     if(alphaFlg == 1){
         img.alpha += 0.5f;
-        if(1.0f < img.alpha){
+        img.frame = CGRectMake(x, y, w*img.alpha, h);
+        if(1.0f <= img.alpha){
             alphaFlg = -1;
         }
     }else if(alphaFlg == -1){

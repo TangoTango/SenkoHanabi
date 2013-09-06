@@ -300,7 +300,7 @@ int sceneNumber;
                     
                 if (result) {
                     result = result;
-                    id d = [result valueForProperty:ALAssetPropertyDate];
+                    //id d = [result valueForProperty:ALAssetPropertyDate];
                     int i = 0;
                     i++;
                 }else{
