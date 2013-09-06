@@ -261,8 +261,26 @@ int sceneNumber;
         if (group){
             id d = [group valueForProperty:ALAssetPropertyDate];
             [groups addObject:group];
+            
+            
+            //assetsEnumerationBlock
+            ALAssetsGroupEnumerationResultsBlock assetsEnumerationBlock = ^(ALAsset *result, NSUInteger index, BOOL *stop) {
+                    
+                if (result) {
+                    result = result;
+                    result = result;
+                    
+                    int i = 0;
+                    i++;
+                }else{
+                }
+            };
+                
+            //アルバム(group)からALAssetの取得
+            [group enumerateAssetsUsingBlock:assetsEnumerationBlock];
+            
         }else{
-            //ALAssetsGroup *group = groups[0];
+            ALAssetsGroup *group = groups[0];
             
             //CGImageRef posterImageRef = [group posterImage];
         }
