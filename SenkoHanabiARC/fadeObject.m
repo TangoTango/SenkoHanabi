@@ -143,7 +143,6 @@ static UIImageView *bokashiImage;
                 l = uilabels[i];
                 [l removeFromSuperview];
             }
-            
             deleteFlg = 1;
         }
         
@@ -165,6 +164,24 @@ static UIImageView *bokashiImage;
         bokashiImage.alpha = img.alpha;
         bokashiImage.frame = img.frame;
         [bokashiImage.superview bringSubviewToFront:bokashiImage];
+    }else{
+        int deletecount = 0;
+        UILabel* l;
+        for(int i = 0; i < [uilabels count]; i++){
+            l = uilabels[i];
+            l.alpha -= 0.04f;
+            if(l.alpha < 0.0f){
+                deletecount++;
+            }
+        }
+        if(deletecount == [uilabels count]){
+            for(int i = 0; i < [uilabels count]; i++){
+                l = uilabels[i];
+                [l removeFromSuperview];
+            }
+            deleteFlg = 1;
+        }
+        
     }
 }
 @end

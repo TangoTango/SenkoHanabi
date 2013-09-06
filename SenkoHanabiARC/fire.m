@@ -21,17 +21,18 @@
     maxw = 100;
     maxh = 100;
     
-    int r = (arc4random() % 5);
+    //int r = (arc4random() % 5);
     
-    NSMutableArray *offsetArray = [NSMutableArray arrayWithObjects:[NSValue valueWithCGPoint:CGPointMake(-30.0f, 30.0f)], [NSValue valueWithCGPoint:CGPointMake(-10.0f, 10.0f)], [NSValue valueWithCGPoint:CGPointMake(0.0f, 0.0f)], [NSValue valueWithCGPoint:CGPointMake(10.0f, 10.0f)], [NSValue valueWithCGPoint:CGPointMake(30.0f, 30.0f)], nil];
+    /*NSMutableArray *offsetArray = [NSMutableArray arrayWithObjects:[NSValue valueWithCGPoint:CGPointMake(-30.0f, 30.0f)], [NSValue valueWithCGPoint:CGPointMake(-10.0f, 10.0f)], [NSValue valueWithCGPoint:CGPointMake(0.0f, 0.0f)], [NSValue valueWithCGPoint:CGPointMake(10.0f, 10.0f)], [NSValue valueWithCGPoint:CGPointMake(30.0f, 30.0f)], nil];
     CGPoint offset = [[offsetArray objectAtIndex:r] CGPointValue];
     
     NSMutableArray *angleArray = [NSMutableArray arrayWithObjects:[NSNumber numberWithFloat:160.0f], [NSNumber numberWithFloat:140.0f], [NSNumber numberWithFloat:120.0f], [NSNumber numberWithFloat:100.0f], [NSNumber numberWithFloat:80.0f], nil];
-    
-    CGPoint position = CGPointMake(p.x + offset.x, p.y + offset.y);
+    */
+    //CGPoint position = CGPointMake(p.x + offset.x, p.y + offset.y);
     
     if(img.image.size.height < img.image.size.width){
-        img.frame = CGRectMake(p.x + offset.x, p.y + offset.y, maxw, img.image.size.height*(maxw/img.image.size.width));
+        img.frame = CGRectMake(p.x, p.y, maxw, img.image.size.height*(maxw/img.image.size.width));
+        //img.frame = CGRectMake(p.x + offset.x, p.y + offset.y, maxw, img.image.size.height*(maxw/img.image.size.width));
     }else{
         img.frame = CGRectMake(p.x, p.y, img.image.size.width*(maxw/img.image.size.height), maxh);
     }
@@ -42,18 +43,19 @@
     w = f.size.width;
     h = f.size.height;
     
-    img.frame = CGRectMake(x, y, 0, h);
+    img.frame = CGRectMake(x, y, w, h);
     
-    img.layer.anchorPoint = CGPointMake(0, 0.5);
+    img.layer.anchorPoint = CGPointMake(-0.3, 0.5);
+    //img.frame = CGRectMake(x,y,w,h);
     
-    //int r = ((rand() % 240) - 30.0f);
-    //CGFloat angle = (r * M_PI / 180.0f);
-    NSLog(@"x: %lf, y: %lf", position.x, position.y);
-    NSLog(@"angleArray:%lf", [[angleArray objectAtIndex:r] floatValue]);
-    angle = ([[angleArray objectAtIndex:r] floatValue] * M_PI / 180.0f);
+    int r = ((rand() % 240) - 30.0f);
+    angle = (r * M_PI / 180.0f);
+    //NSLog(@"x: %lf, y: %lf", position.x, position.y);
+    //NSLog(@"angleArray:%lf", [[angleArray objectAtIndex:r] floatValue]);
+    //angle = ([[angleArray objectAtIndex:r] floatValue] * M_PI / 180.0f);
     
-    img.transform = CGAffineTransformMakeRotation(1.5f);
-    // img.transform = CGAffineTransformMakeRotation(angle);
+    //img.transform = CGAffineTransformMakeRotation(1.5f);
+     img.transform = CGAffineTransformMakeRotation(angle);
     
     [view addSubview:img];
     return self;
@@ -63,7 +65,7 @@
     UIImageView *img = image;
     if(alphaFlg == 1){
         img.alpha += 0.5f;
-        img.frame = CGRectMake(x, y, w*img.alpha, h);
+        //img.frame = CGRectMake(x, y, w, h);
         if(1.0f <= img.alpha){
             alphaFlg = -1;
         }

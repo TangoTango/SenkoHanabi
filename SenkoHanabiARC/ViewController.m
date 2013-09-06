@@ -23,17 +23,22 @@ UILabel *howLabel;
 UIImageView *senkoImage;
 
 NSArray *imageNames;
-NSMutableArray *fadeImages;
-NSMutableArray *fadeObjects;
-NSMutableArray* fadeSelects;
+NSArray *textNames;
+fadeObject *showFadeObject;
+NSMutableArray *fadeSelects;
 int fadeselect = 0;
+
+ALAssetsLibrary* assetsLibrary;
+NSMutableArray *assets;
+NSMutableDictionary *assetsURL;
+int assetsflg = 0;
 
 NSMutableArray* fires;
 
 UIButton *nextButton;
 UIButton *addimageButton;
 
-int senkoTime = 10000;//線香が落ちるまでの時間
+int senkoTime = 50;//線香が落ちるまでの時間
 int isTapped = 0;//タップしたか
 int initLaunch = 1;//最初の起動かどうか
 
@@ -49,13 +54,18 @@ int sceneNumber;
     [super viewDidLoad];
     
     imageNames = [NSArray arrayWithObjects:@"fade1.png",@"fade2.png", nil];
+    textNames = [NSArray arrayWithObjects:@"気づいたら\nカラオケで\n\n\n\nざこ寝",
+                 @"セミの\n\n\n\n\n\n抜け殻",
+                 @"プールで\n監視員に\n\n\n\n怒られる",nil];
+    assetsURL = [NSMutableDictionary dictionary];
+    assets = [NSMutableArray array];
+    fadeSelects = [self randomList:[imageNames count] + [textNames count] + [assets count]];
     
-    fadeImages = [NSMutableArray array];
+    /*fadeImages = [NSMutableArray array];
     for(int i = 0; i < [imageNames count]; i++){
         UIImageView* img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageNames[i]]];
         [fadeImages addObject:img];
-    }
-    fadeSelects = [self randomList:[fadeImages count]];
+    }*/
     
     fires = [NSMutableArray array];
     
@@ -155,7 +165,6 @@ int sceneNumber;
             if( isTapped || (!initLaunch && 1.0f < senkoImage.alpha) ){
                 senkoImage.alpha = 1.0f;
                 howLabel.alpha = 0.0f;
-                fadeObjects = [NSMutableArray array];
                 sceneNumber = 6;
             }
             break;
@@ -164,12 +173,12 @@ int sceneNumber;
             if(howLabel.alpha < 0.0f || isTapped){
                 senkoImage.alpha = 1.0f;
                 howLabel.alpha = 0.0f;
-                fadeObjects = [NSMutableArray array];
                 fadeselect = 0;
                 sceneNumber = 6;
             }
             break;
         case 6:
+            //火花作成、Do
         {
             int r = (rand() % 2);
             if( r == 0 ){
@@ -178,11 +187,10 @@ int sceneNumber;
                 angle = -angle - 0.15f;
                 float nx = 160 + 320 * sin(angle);
                 float ny = 330 * cos(angle);
-                fire* f = [[fire alloc] initWithObject:[[UIImageView alloc]
+                /*fire* f = [[fire alloc] initWithObject:[[UIImageView alloc]
                                                         initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"hibana%d.png", kind]]] view:self.view point:CGPointMake(nx, ny)];
-                [fires addObject:f];
+                [fires addObject:f];*/
             }
-        }
             
             for(int i = 0; i < [fires count]; i++){
                 fire* f = fires[i];
@@ -192,38 +200,48 @@ int sceneNumber;
                     i--;
                 }
             }
+        }
             
-            
-            if([fadeObjects count] == 0){
-                fadeObject *fd = [[fadeObject alloc] initWithImage:fadeImages[[fadeSelects[fadeselect] intValue]] view:self.view];
-                [fadeObjects addObject:fd];
-                fadeselect = (fadeselect + 1) % [fadeImages count];
+            //フェードオブジェクト削除
+            if(showFadeObject.deleteFlg){
+                showFadeObject = nil;
             }
-            for(int i = 0; i < [fadeObjects count]; i++){
-                fadeObject *obj = fadeObjects[i];
-                [obj Do];
-                if(obj.deleteFlg){
-                    [fadeObjects removeObject:obj];
-                    i--;
+            //フェードオブジェクト追加
+            if(!showFadeObject){
+                int i = [fadeSelects[fadeselect] intValue];
+                if( i < [imageNames count]){
+                    //画像の追加
+                    showFadeObject =
+                    [[fadeObject alloc] initWithImage:[[UIImageView alloc] initWithImage:[UIImage imageNamed:imageNames[i]]] view:self.view];
+                }else if(i - [imageNames count] < [textNames count]){
+                    //文字の追加
+                    showFadeObject =
+                    [[fadeObject alloc] initWithString:textNames[i - [imageNames count]] view:self.view];
+                }else{
+                    ALAsset *asset = assets[i - [imageNames count] - [textNames count]];
+                    UIImage *img = [UIImage imageWithCGImage:[asset thumbnail]];
                     
-                    fadeObject* fd = [[fadeObject alloc] initWithString:@"気づいたら\nカラオケで\n\n\n\nざこ寝" view:self.view];
-                    [fadeObjects addObject:fd];
+                    /*ALAssetRepresentation *representation = [asset defaultRepresentation];
+                    UIImage *img = [UIImage imageWithCGImage:[representation fullResolutionImage]
+                                                       scale:[representation scale]
+                                                 orientation:[[asset valueForProperty:@"ALAssetPropertyOrientation"] intValue]];*/
+                    showFadeObject =
+                    [[fadeObject alloc] initWithImage:[[UIImageView alloc] initWithImage:img] view:self.view];
                 }
+                fadeselect = (fadeselect + 1) % ([imageNames count] + [textNames count] + [assets count]);
             }
+            //フェードオブジェクトアニメーション
+            [showFadeObject Do];
             
             if(senkoTime-- < 0){
                 sceneNumber = 7;
             }
             break;
         case 7:
-            //フェードオブジェクト消し
-            for(int i = 0; i < [fadeObjects count]; i++){
-                fadeObject *obj = fadeObjects[i];
-                [obj DeleteDo];
-                if(obj.deleteFlg){
-                    [fadeObjects removeObject:obj];
-                    i--;
-                }
+            //フェードオブジェクト削除
+            [showFadeObject DeleteDo];
+            if(showFadeObject.deleteFlg){
+                showFadeObject = nil;
             }
             //火花オブジェクト消し
             for(int i = 0; i < [fires count]; i++){
@@ -238,10 +256,10 @@ int sceneNumber;
             senkoImage.alpha -= 0.01f;
             
             //全部消えたら
-            if([fires count] == 0 && [fadeObjects count] == 0 && senkoImage.alpha < 0.0f){
+            if([fires count] == 0 && !showFadeObject && senkoImage.alpha < 0.0f){
                 //もう一度ボタン
                 if(!nextButton){
-                    UIImage *img = [UIImage imageNamed:@"addPicture2.gif"];
+                    UIImage *img = [UIImage imageNamed:@"again2.gif"];
                     nextButton = [[UIButton alloc] initWithFrame:CGRectMake(160-75, 230, 150, 45)];
                     [nextButton setBackgroundImage:img forState:UIControlStateNormal];
                     [nextButton addTarget:self action:@selector(nextButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
@@ -251,14 +269,19 @@ int sceneNumber;
                 }
                 //画像追加ボタン
                 if(!addimageButton){
-                    UIImage *img = [UIImage imageNamed:@"again2.gif"];
-                    addimageButton = [[UIButton alloc] initWithFrame:CGRectMake(160-75, 300, 150, 45)];
+                    UIImage *img = [UIImage imageNamed:@"addPicture2.gif"];
+                    addimageButton = [[UIButton alloc] initWithFrame:CGRectMake(160-75, 350, 150, 45)];
                     [addimageButton setBackgroundImage:img forState:UIControlStateNormal];
                     [addimageButton addTarget:self action:@selector(addimageButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
                     [self.view addSubview:addimageButton];
                 }else{
                     [addimageButton setHidden:NO];
                 }
+                
+                if(assetsflg){
+                    assetsflg = 0;
+                }
+                
             }
             break;
         case 8:
@@ -266,7 +289,7 @@ int sceneNumber;
             [nextButton setHidden:YES];
             [addimageButton setHidden:YES];
             initLaunch = 0;
-            fadeSelects = [self randomList:[fadeImages count]];
+            fadeSelects = [self randomList:([imageNames count] + [textNames count] + [assets count])];
             fadeselect = 0;
             sceneNumber = 3;
             break;
@@ -295,56 +318,50 @@ int sceneNumber;
 
 //画像選択ボタン　タップ
 - (void)addimageButtonTapped:(UIButton *)button{
-    ALAssetsLibrary* assetsLibrary = [[ALAssetsLibrary alloc] init];
-    ALAssetsLibraryGroupsEnumerationResultsBlock listGroupBlock = ^(ALAssetsGroup *group, BOOL *stop)
-    {
+    if(!assetsLibrary){
+        assetsLibrary = [[ALAssetsLibrary alloc] init];
+    }
+    NSDate *startDate = [NSDate date];
+    ALAssetsLibraryGroupsEnumerationResultsBlock listGroupBlock = ^(ALAssetsGroup *group, BOOL *stop){
         if (group){
             ALAssetsGroupEnumerationResultsBlock assetsEnumerationBlock = ^(ALAsset *result, NSUInteger index, BOOL *stop) {
-                
                 if (result) {
-                    result = result;
-                    //id d = [result valueForProperty:ALAssetPropertyDate];
-                    int i = 0;
-                    i++;
+                    NSDate* d = [result valueForProperty:ALAssetPropertyDate];
+                    NSCalendar *cal = [NSCalendar currentCalendar];
+                    NSDateComponents *dcom = [cal components:NSYearCalendarUnit | NSMonthCalendarUnit fromDate:d];
+                    if( 6 <= dcom.month && dcom.month <= 9){
+                        NSString *URL = [[result valueForProperty:ALAssetPropertyURLs] objectForKey:[[result defaultRepresentation] UTI]];
+                        if(!assetsURL[URL]){
+                            [assets addObject:result];
+                            assetsURL[URL] = [NSNumber numberWithBool:1];
+                        }
+                    }
                 }else{
+                    NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:startDate];
+                    NSLog(@"time is %lf (sec)", interval);
+                    NSLog(@"終了！");
+                    assetsflg = 1;
                 }
             };
+            
+            NSLog(@"%d", [group numberOfAssets]);
             [group enumerateAssetsUsingBlock:assetsEnumerationBlock];
         }
     };
     
-    ALAssetsLibraryAccessFailureBlock failureBlock = ^(NSError *error)
-    {
+    ALAssetsLibraryAccessFailureBlock failureBlock = ^(NSError *error){
         NSLog(@"Error");
     };
     
-    NSUInteger groupTypes = ALAssetsGroupSavedPhotos;
-    
-    
     // iphoneに保存された全てのGroupを取得する
-    [assetsLibrary enumerateGroupsWithTypes:groupTypes usingBlock:listGroupBlock failureBlock:failureBlock];
-    
-    /*if([UIImagePickerController
-     isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]){
-     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-     imagePicker.delegate = self;
-     imagePicker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-     [self presentViewController:imagePicker animated:YES completion:nil];
-     }*/
+    [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:listGroupBlock failureBlock:failureBlock];
 }
 
 
 //画像選択完了
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    /*UIImage *image = [info objectForKey: UIImagePickerControllerOriginalImage];
-     
-     imgView = [[UIImageView alloc] initWithImage:image];
-     imgView.frame = CGRectMake(0, 0, image.size.width/2, image.size.height/2);
-     [self.view addSubview:imgView];*/
-    
     [self dismissViewControllerAnimated:YES completion:nil];
-    
 }
 
 //画像選択キャンセル
@@ -373,8 +390,7 @@ int sceneNumber;
     srand([[NSDate date] timeIntervalSinceReferenceDate]);
     
     int inListL = [inList count];
-    while (inListL)
-    {
+    while (inListL){
         randomNumber = rand() % (max-j);
         
         NSNumber *nm_ = [inList objectAtIndex:randomNumber];
