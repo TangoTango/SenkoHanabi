@@ -18,6 +18,13 @@
 		0D31F62F17D8B5C8005EBF21 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D31F62E17D8B5C8005EBF21 /* Default-568h@2x.png */; };
 		0D31F63217D8B5C8005EBF21 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D31F63017D8B5C8005EBF21 /* MainStoryboard.storyboard */; };
 		0D31F63517D8B5C8005EBF21 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D31F63417D8B5C8005EBF21 /* ViewController.m */; };
+		0D31F63D17D8B60E005EBF21 /* fadeObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D31F63C17D8B60E005EBF21 /* fadeObject.m */; };
+		0D31F64317D8CC7B005EBF21 /* fade1.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D31F63F17D8CC7B005EBF21 /* fade1.png */; };
+		0D31F64417D8CC7B005EBF21 /* fade2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D31F64017D8CC7B005EBF21 /* fade2.png */; };
+		0D31F64517D8CC7B005EBF21 /* gradation2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D31F64117D8CC7B005EBF21 /* gradation2.png */; };
+		0D31F64617D8CC7B005EBF21 /* senkohanabi.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D31F64217D8CC7B005EBF21 /* senkohanabi.png */; };
+		0D31F64817D8CC95005EBF21 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D31F64717D8CC95005EBF21 /* CoreMotion.framework */; };
+		0D31F64A17D8CFBA005EBF21 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D31F64917D8CFBA005EBF21 /* AssetsLibrary.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +44,14 @@
 		0D31F63117D8B5C8005EBF21 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		0D31F63317D8B5C8005EBF21 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		0D31F63417D8B5C8005EBF21 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		0D31F63B17D8B60E005EBF21 /* fadeObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fadeObject.h; sourceTree = "<group>"; };
+		0D31F63C17D8B60E005EBF21 /* fadeObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = fadeObject.m; sourceTree = "<group>"; };
+		0D31F63F17D8CC7B005EBF21 /* fade1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fade1.png; sourceTree = "<group>"; };
+		0D31F64017D8CC7B005EBF21 /* fade2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fade2.png; sourceTree = "<group>"; };
+		0D31F64117D8CC7B005EBF21 /* gradation2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gradation2.png; sourceTree = "<group>"; };
+		0D31F64217D8CC7B005EBF21 /* senkohanabi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = senkohanabi.png; sourceTree = "<group>"; };
+		0D31F64717D8CC95005EBF21 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		0D31F64917D8CFBA005EBF21 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +59,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D31F64A17D8CFBA005EBF21 /* AssetsLibrary.framework in Frameworks */,
+				0D31F64817D8CC95005EBF21 /* CoreMotion.framework in Frameworks */,
 				0D31F61917D8B5C8005EBF21 /* UIKit.framework in Frameworks */,
 				0D31F61B17D8B5C8005EBF21 /* Foundation.framework in Frameworks */,
 				0D31F61D17D8B5C8005EBF21 /* CoreGraphics.framework in Frameworks */,
@@ -56,6 +73,8 @@
 		0D31F60C17D8B5C8005EBF21 = {
 			isa = PBXGroup;
 			children = (
+				0D31F64917D8CFBA005EBF21 /* AssetsLibrary.framework */,
+				0D31F64717D8CC95005EBF21 /* CoreMotion.framework */,
 				0D31F61E17D8B5C8005EBF21 /* SenkoHanabiARC */,
 				0D31F61717D8B5C8005EBF21 /* Frameworks */,
 				0D31F61617D8B5C8005EBF21 /* Products */,
@@ -83,11 +102,14 @@
 		0D31F61E17D8B5C8005EBF21 /* SenkoHanabiARC */ = {
 			isa = PBXGroup;
 			children = (
+				0D31F63E17D8CC58005EBF21 /* images */,
 				0D31F62717D8B5C8005EBF21 /* AppDelegate.h */,
 				0D31F62817D8B5C8005EBF21 /* AppDelegate.m */,
 				0D31F63017D8B5C8005EBF21 /* MainStoryboard.storyboard */,
 				0D31F63317D8B5C8005EBF21 /* ViewController.h */,
 				0D31F63417D8B5C8005EBF21 /* ViewController.m */,
+				0D31F63B17D8B60E005EBF21 /* fadeObject.h */,
+				0D31F63C17D8B60E005EBF21 /* fadeObject.m */,
 				0D31F61F17D8B5C8005EBF21 /* Supporting Files */,
 			);
 			path = SenkoHanabiARC;
@@ -105,6 +127,17 @@
 				0D31F62E17D8B5C8005EBF21 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0D31F63E17D8CC58005EBF21 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				0D31F63F17D8CC7B005EBF21 /* fade1.png */,
+				0D31F64017D8CC7B005EBF21 /* fade2.png */,
+				0D31F64117D8CC7B005EBF21 /* gradation2.png */,
+				0D31F64217D8CC7B005EBF21 /* senkohanabi.png */,
+			);
+			name = images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,6 +196,10 @@
 				0D31F62D17D8B5C8005EBF21 /* Default@2x.png in Resources */,
 				0D31F62F17D8B5C8005EBF21 /* Default-568h@2x.png in Resources */,
 				0D31F63217D8B5C8005EBF21 /* MainStoryboard.storyboard in Resources */,
+				0D31F64317D8CC7B005EBF21 /* fade1.png in Resources */,
+				0D31F64417D8CC7B005EBF21 /* fade2.png in Resources */,
+				0D31F64517D8CC7B005EBF21 /* gradation2.png in Resources */,
+				0D31F64617D8CC7B005EBF21 /* senkohanabi.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,6 +213,7 @@
 				0D31F62517D8B5C8005EBF21 /* main.m in Sources */,
 				0D31F62917D8B5C8005EBF21 /* AppDelegate.m in Sources */,
 				0D31F63517D8B5C8005EBF21 /* ViewController.m in Sources */,
+				0D31F63D17D8B60E005EBF21 /* fadeObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

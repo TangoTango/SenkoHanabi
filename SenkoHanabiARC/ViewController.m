@@ -1,23 +1,353 @@
 //
 //  ViewController.m
-//  SenkoHanabiARC
+//  SenkoHanabi
 //
-//  Created by 丹後 偉也 on 2013/09/05.
+//  Created by lethe on 2013/09/04.
 //  Copyright (c) 2013年 PTA. All rights reserved.
 //
 
 #import "ViewController.h"
+#import <CoreMotion/CoreMotion.h>
+#import <QuartzCore/QuartzCore.h>
+#import <AssetsLibrary/AssetsLibrary.h>
+#import "fadeObject.h"
 
 @interface ViewController ()
 
 @end
-
 @implementation ViewController
+
+UILabel *titleLabel;
+UILabel *howLabel;
+UIImageView *senkoImage;
+NSArray *imageNames;
+NSMutableArray *fadeImages;
+NSMutableArray *fadeObjects;
+NSMutableArray* fadeSelects;
+int fadeselect = 0;
+UIButton *nextButton;
+UIButton *addimageButton;
+int senkoTime = 300;
+int isTapped = 0;
+int initLaunch = 1;
+CMMotionManager *manager;
+
+int sceneNumber;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    
+    imageNames = [NSArray arrayWithObjects:@"fade1.png",@"fade2.png", nil];
+    
+    fadeImages = [NSMutableArray array];
+    for(int i = 0; i < [imageNames count]; i++){
+        UIImageView* img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageNames[i]]];
+        [fadeImages addObject:img];
+    }
+    fadeSelects = [self randomList:[fadeImages count]];
+    
+    sceneNumber = 1;
+    
+    UITapGestureRecognizer *tapGesture =
+    [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(view_Tapped:)];
+    
+    // ビューにジェスチャーを追加
+    [self.view addGestureRecognizer:tapGesture];
+    
+    //センサー設定
+    manager = [[CMMotionManager alloc] init];
+    // 現在、加速度センサー無しのデバイスは存在しないが念のための確認
+    if (!manager.accelerometerAvailable) {
+        manager = nil;
+    }
+    
+    //ループ開始
+    [NSTimer scheduledTimerWithTimeInterval:0.03f
+                                     target:self
+                                   selector:@selector(loop)
+                                   userInfo:nil
+                                    repeats:YES];
+}
+
+-(void)loop{
+    if(manager){
+        [manager startAccelerometerUpdates];
+    }
+    
+    switch (sceneNumber) {
+        case 1://「線香花火」設定
+            if(!titleLabel){
+                titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,50,320,100)];
+                titleLabel.font = [UIFont fontWithName:@"Hiragino Mincho ProN" size:40];
+                titleLabel.textAlignment = NSTextAlignmentCenter;
+                titleLabel.text = @"線香花火";
+                titleLabel.backgroundColor = [UIColor clearColor];
+                titleLabel.textColor = [UIColor whiteColor];
+                titleLabel.alpha = 0.0f;
+                [self.view addSubview:titleLabel];
+            }else{
+                titleLabel.alpha = 0.0f;
+            }
+            
+            sceneNumber = 2;
+            break;
+            
+        case 2://「線香花火」表示アニメ
+            titleLabel.alpha += 0.02f;
+            if(1.0f < titleLabel.alpha || isTapped){
+                sceneNumber = 3;
+            }
+            break;
+        case 3://「線香花火」隠蔽アニメ、線香花火設定、「遊び方」設定
+            titleLabel.alpha -= 0.02f;
+            if(titleLabel.alpha < 0.0f){
+                if(!senkoImage){
+                    senkoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"senkohanabi.png"]];
+                    senkoImage.frame = CGRectMake(160-20, -168, 61, 337);//122 × 675
+                    senkoImage.alpha = 0.0f;
+                    senkoImage.layer.anchorPoint = CGPointMake(0.5, 0);
+                    [self.view addSubview:senkoImage];
+                }else{
+                    senkoImage.alpha = 0.0f;
+                }
+                
+                if(!howLabel){
+                    howLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,50,320,300)];
+                    howLabel.font = [UIFont fontWithName:@"Hiragino Mincho ProN" size:40];
+                    howLabel.textAlignment = NSTextAlignmentCenter;
+                    howLabel.text = @"遊び方\nそんなこんなで\nそんなこんなやで";
+                    howLabel.backgroundColor = [UIColor clearColor];
+                    howLabel.textColor = [UIColor whiteColor];
+                    howLabel.numberOfLines = 3;
+                    howLabel.alpha = 0.0f;
+                    [self.view addSubview:howLabel];
+                }else{
+                    howLabel.alpha = 0.0f;
+                }
+                
+                sceneNumber = 4;
+            }
+            break;
+        case 4://線香花火アニメ、「遊び方」表示アニメ
+            senkoImage.alpha += 0.02f;
+            if(initLaunch){
+                howLabel.alpha += 0.02f;
+            }
+            
+            if(3.0f < howLabel.alpha){
+                senkoImage.alpha = 1.0f;
+                howLabel.alpha = 1.0f;
+                sceneNumber = 5;
+            }
+            if( isTapped || (!initLaunch && 1.0f < senkoImage.alpha) ){
+                senkoImage.alpha = 1.0f;
+                howLabel.alpha = 0.0f;
+                fadeObjects = [NSMutableArray array];
+                sceneNumber = 6;
+            }
+            break;
+        case 5://「遊び方」隠蔽アニメ
+            howLabel.alpha -= 0.02f;
+            if(howLabel.alpha < 0.0f || isTapped){
+                senkoImage.alpha = 1.0f;
+                howLabel.alpha = 0.0f;
+                fadeObjects = [NSMutableArray array];
+                fadeselect = 0;
+                sceneNumber = 6;
+            }
+            break;
+        case 6:
+            //とりあえず配列が0なら追加
+            if([fadeObjects count] == 0){
+                fadeObject *fd = [[fadeObject alloc] initWithObject:fadeImages[[fadeSelects[fadeselect] intValue]] isImage:1 view:self.view];
+                [fadeObjects addObject:fd];
+                fadeselect = (fadeselect + 1) % [fadeImages count];
+            }
+            for(int i = 0; i < [fadeObjects count]; i++){
+                fadeObject *obj = fadeObjects[i];
+                [obj Do];
+                if(obj.deleteFlg){
+                    [fadeObjects removeObject:obj];
+                    i--;
+                }
+            }
+            
+            if(senkoTime-- < 0){
+                sceneNumber = 7;
+            }
+            break;
+        case 7:
+            for(int i = 0; i < [fadeObjects count]; i++){
+                fadeObject *obj = fadeObjects[i];
+                [obj DeleteDo];
+                if(obj.deleteFlg){
+                    [fadeObjects removeObject:obj];
+                    i--;
+                }
+            }
+            senkoImage.alpha -= 0.01f;
+            if([fadeObjects count] == 0 && senkoImage.alpha < 0.0f){
+                //もう一度ボタン
+                if(!nextButton){
+                    nextButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+                    nextButton.frame = CGRectMake(50, 300, 80, 30);
+                    [nextButton setTitle:@"もう一度" forState:UIControlStateNormal];
+                    [nextButton addTarget:self action:@selector(nextButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+                    [self.view addSubview:nextButton];
+                }else{
+                    [nextButton setHidden:NO];
+                }
+                //画像追加ボタン
+                if(!addimageButton){
+                    addimageButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+                    addimageButton.frame = CGRectMake(160, 300, 80, 30);
+                    [addimageButton setTitle:@"画像追加" forState:UIControlStateNormal];
+                    [addimageButton addTarget:self action:@selector(addimageButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+                    [self.view addSubview:addimageButton];
+                }else{
+                    [addimageButton setHidden:NO];
+                }
+            }
+            break;
+        case 8:
+            senkoTime = 400;
+            [nextButton setHidden:YES];
+            [addimageButton setHidden:YES];
+            initLaunch = 0;
+            fadeSelects = [self randomList:[fadeImages count]];
+            fadeselect = 0;
+            sceneNumber = 3;
+            break;
+    }
+    
+    //線香花火がある間
+    if(4 <= sceneNumber && sceneNumber <= 8){
+        if(manager){
+            CGFloat angle = -manager.accelerometerData.acceleration.x* 90.0 * M_PI / 180.0;
+            senkoImage.transform = CGAffineTransformMakeRotation(angle);
+        }
+    }
+    
+    isTapped = 0;
+}
+
+//もう一度ボタン　タップ
+- (void)nextButtonTapped:(UIButton *)button
+{
+    sceneNumber = 8;
+}
+
+//画像選択ボタン　タップ
+- (void)addimageButtonTapped:(UIButton *)button
+{
+    ALAssetsLibrary* assetsLibrary = [[ALAssetsLibrary alloc] init];
+    NSMutableArray *groups;
+    if(!assetsLibrary)
+    {
+        assetsLibrary = [[ALAssetsLibrary alloc]init];
+    }
+    
+    if(!groups)
+    {
+        groups = [[NSMutableArray alloc] init];
+    }else
+    {
+        [groups removeAllObjects];
+    }
+    
+    ALAssetsLibraryGroupsEnumerationResultsBlock listGroupBlock = ^(ALAssetsGroup *group, BOOL *stop)
+    {
+        if (group){
+            id d = [group valueForProperty:ALAssetPropertyDate];
+            [groups addObject:group];
+        }else{
+            //ALAssetsGroup *group = groups[0];
+            
+            //CGImageRef posterImageRef = [group posterImage];
+        }
+    };
+    
+    ALAssetsLibraryAccessFailureBlock failureBlock = ^(NSError *error)
+    {
+        NSLog(@"Error");
+    };
+    
+    NSUInteger groupTypes = ALAssetsGroupSavedPhotos;
+    
+    
+    // iphoneに保存された全てのGroupを取得する
+    [assetsLibrary enumerateGroupsWithTypes:groupTypes usingBlock:listGroupBlock failureBlock:failureBlock];
+
+    /*if([UIImagePickerController
+        isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]){
+        UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+        imagePicker.delegate = self;
+        imagePicker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+        [self presentViewController:imagePicker animated:YES completion:nil];
+    }*/
+}
+
+
+//画像選択完了
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    /*UIImage *image = [info objectForKey: UIImagePickerControllerOriginalImage];
+     
+     imgView = [[UIImageView alloc] initWithImage:image];
+     imgView.frame = CGRectMake(0, 0, image.size.width/2, image.size.height/2);
+     [self.view addSubview:imgView];*/
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+}
+
+//画像選択キャンセル
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+//ビュー　タップ
+- (void)view_Tapped:(UITapGestureRecognizer *)sender
+{
+    isTapped = 1;
+}
+- (NSMutableArray*)randomList:(int)max
+{
+    NSMutableArray *inList  = [[NSMutableArray alloc] init];
+    NSMutableArray *outList = [[NSMutableArray alloc] init];
+    int j = 0;
+    int randomNumber = 0;
+    for (int i=0; i<max; i++)
+    {
+        NSNumber *nsNum = [NSNumber numberWithInt:i];
+        [inList insertObject:nsNum atIndex:i];
+    }
+    
+    // 現在の日時を用いて乱数を初期化する
+    srand([[NSDate date] timeIntervalSinceReferenceDate]);
+    
+    int inListL = [inList count];
+    while (inListL)
+    {
+        randomNumber = rand() % (max-j);
+        
+        NSNumber *nm_ = [inList objectAtIndex:randomNumber];
+        [outList addObject:nm_];
+        [inList removeObjectAtIndex:randomNumber];
+        j++;
+        inListL = [inList count];
+        NSLog(@"%d:%d",inListL,[nm_ intValue]);
+    }
+    return outList;
+}
+
+
+-(void)viewDidAppear:(BOOL)animated{
+    // センサーの停止
+    if (manager.accelerometerActive) {
+        [manager stopAccelerometerUpdates];
+    }
 }
 
 - (void)didReceiveMemoryWarning

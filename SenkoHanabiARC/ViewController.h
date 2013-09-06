@@ -1,13 +1,13 @@
 //
 //  ViewController.h
-//  SenkoHanabiARC
+//  SenkoHanabi
 //
-//  Created by 丹後 偉也 on 2013/09/05.
+//  Created by lethe on 2013/09/04.
 //  Copyright (c) 2013年 PTA. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIAccelerometerDelegate>
 
 @end
