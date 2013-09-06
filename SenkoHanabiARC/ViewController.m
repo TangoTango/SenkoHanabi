@@ -195,7 +195,7 @@ int sceneNumber;
             
             
             if([fadeObjects count] == 0){
-                fadeObject *fd = [[fadeObject alloc] initWithObject:fadeImages[[fadeSelects[fadeselect] intValue]] isImage:1 view:self.view];
+                fadeObject *fd = [[fadeObject alloc] initWithImage:fadeImages[[fadeSelects[fadeselect] intValue]] view:self.view];
                 [fadeObjects addObject:fd];
                 fadeselect = (fadeselect + 1) % [fadeImages count];
             }
@@ -205,6 +205,9 @@ int sceneNumber;
                 if(obj.deleteFlg){
                     [fadeObjects removeObject:obj];
                     i--;
+                    
+                    fadeObject* fd = [[fadeObject alloc] initWithString:@"気づいたら\nカラオケで\n\n\n\nざこ寝" view:self.view];
+                    [fadeObjects addObject:fd];
                 }
             }
             
@@ -235,7 +238,7 @@ int sceneNumber;
             senkoImage.alpha -= 0.01f;
             
             //全部消えたら
-            if([fadeObjects count] == 0 && senkoImage.alpha < 0.0f){
+            if([fires count] == 0 && [fadeObjects count] == 0 && senkoImage.alpha < 0.0f){
                 //もう一度ボタン
                 if(!nextButton){
                     UIImage *img = [UIImage imageNamed:@"addPicture2.gif"];
@@ -277,7 +280,7 @@ int sceneNumber;
             
             prevprevAngle  = prevAngle;
             prevAngle = (-manager.accelerometerData.acceleration.x* 90.0f * M_PI / 180.0f);
-
+            
             senkoImage.transform = CGAffineTransformMakeRotation(angle);
         }
     }
@@ -297,7 +300,7 @@ int sceneNumber;
     {
         if (group){
             ALAssetsGroupEnumerationResultsBlock assetsEnumerationBlock = ^(ALAsset *result, NSUInteger index, BOOL *stop) {
-                    
+                
                 if (result) {
                     result = result;
                     //id d = [result valueForProperty:ALAssetPropertyDate];
@@ -320,14 +323,14 @@ int sceneNumber;
     
     // iphoneに保存された全てのGroupを取得する
     [assetsLibrary enumerateGroupsWithTypes:groupTypes usingBlock:listGroupBlock failureBlock:failureBlock];
-
+    
     /*if([UIImagePickerController
-        isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]){
-        UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-        imagePicker.delegate = self;
-        imagePicker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-        [self presentViewController:imagePicker animated:YES completion:nil];
-    }*/
+     isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]){
+     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+     imagePicker.delegate = self;
+     imagePicker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+     [self presentViewController:imagePicker animated:YES completion:nil];
+     }*/
 }
 
 

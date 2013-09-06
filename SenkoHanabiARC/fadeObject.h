@@ -11,12 +11,15 @@
 @interface fadeObject : NSObject {
     id object;
     int isImage;
+    NSMutableArray* uilabels;
+    NSMutableArray* alphaFlags;
     float x, y, w, h;
     float maxw, maxh;
     int deleteFlg;
 }
 @property int deleteFlg;
--(id)initWithObject:(UIImageView*)obj isImage:(int)isimg view:(UIView*)view;
+-(id)initWithImage:(UIImageView*)img view:(UIView*)view;
+-(id)initWithString:(NSString*)str view:(UIView*)view;
 -(void)Do;
 -(void)DeleteDo;
 
