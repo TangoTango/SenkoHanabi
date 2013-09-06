@@ -32,6 +32,9 @@ int isTapped = 0;
 int initLaunch = 1;
 CMMotionManager *manager;
 
+CGFloat prevAngle = 0.0f;
+CGFloat prevprevAngle = 0.0f;
+
 int sceneNumber;
 
 - (void)viewDidLoad
@@ -224,7 +227,12 @@ int sceneNumber;
     //線香花火がある間
     if(4 <= sceneNumber && sceneNumber <= 8){
         if(manager){
-            CGFloat angle = -manager.accelerometerData.acceleration.x* 90.0 * M_PI / 180.0;
+            // 角度には平滑化した値を使用
+            CGFloat angle = ((-manager.accelerometerData.acceleration.x* 90.0 * M_PI / 180.0) + prevAngle + prevprevAngle) / 3;
+            
+            prevprevAngle  = prevAngle;
+            prevAngle = angle;
+
             senkoImage.transform = CGAffineTransformMakeRotation(angle);
         }
     }
