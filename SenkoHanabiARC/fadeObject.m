@@ -61,7 +61,6 @@ static UIImageView *bokashiImage;
             }
         }
         
-        bokashiImage.alpha = img.alpha;
         bokashiImage.frame = img.frame;
         [bokashiImage.superview bringSubviewToFront:bokashiImage];
     }
@@ -78,6 +77,7 @@ static UIImageView *bokashiImage;
             deleteFlg = 1;
         }
         
+        bokashiImage.alpha = img.alpha;
         bokashiImage.frame = img.frame;
         [bokashiImage.superview bringSubviewToFront:bokashiImage];
     }
