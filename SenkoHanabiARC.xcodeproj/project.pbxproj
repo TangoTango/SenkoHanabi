@@ -32,6 +32,12 @@
 		0D31F66717D97914005EBF21 /* hibana4.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D31F66217D97914005EBF21 /* hibana4.png */; };
 		0D31F66817D97914005EBF21 /* hibana3.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D31F66317D97914005EBF21 /* hibana3.png */; };
 		0D31F66917D97914005EBF21 /* hibana2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D31F66417D97914005EBF21 /* hibana2.png */; };
+		0DD5B26017DAA6380018E636 /* senkohanabi2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DD5B25F17DAA6380018E636 /* senkohanabi2.png */; };
+		0DD5B26217DAB5000018E636 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DD5B26117DAB5000018E636 /* QuartzCore.framework */; };
+		0DD5B26417DACBCB0018E636 /* senkohanabi3.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DD5B26317DACBCB0018E636 /* senkohanabi3.png */; };
+		0DD5B26617DACC510018E636 /* senkohanabi4.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DD5B26517DACC510018E636 /* senkohanabi4.png */; };
+		0DD5B26817DACCC60018E636 /* senkohanabi5.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DD5B26717DACCC60018E636 /* senkohanabi5.png */; };
+		0DD5B26B17DAD6510018E636 /* fireFlower.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DD5B26A17DAD6510018E636 /* fireFlower.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,6 +73,13 @@
 		0D31F66217D97914005EBF21 /* hibana4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hibana4.png; sourceTree = "<group>"; };
 		0D31F66317D97914005EBF21 /* hibana3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hibana3.png; sourceTree = "<group>"; };
 		0D31F66417D97914005EBF21 /* hibana2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hibana2.png; sourceTree = "<group>"; };
+		0DD5B25F17DAA6380018E636 /* senkohanabi2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = senkohanabi2.png; sourceTree = "<group>"; };
+		0DD5B26117DAB5000018E636 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		0DD5B26317DACBCB0018E636 /* senkohanabi3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = senkohanabi3.png; sourceTree = "<group>"; };
+		0DD5B26517DACC510018E636 /* senkohanabi4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = senkohanabi4.png; sourceTree = "<group>"; };
+		0DD5B26717DACCC60018E636 /* senkohanabi5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = senkohanabi5.png; sourceTree = "<group>"; };
+		0DD5B26917DAD6510018E636 /* fireFlower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fireFlower.h; sourceTree = "<group>"; };
+		0DD5B26A17DAD6510018E636 /* fireFlower.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = fireFlower.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0DD5B26217DAB5000018E636 /* QuartzCore.framework in Frameworks */,
 				0D31F64A17D8CFBA005EBF21 /* AssetsLibrary.framework in Frameworks */,
 				0D31F64817D8CC95005EBF21 /* CoreMotion.framework in Frameworks */,
 				0D31F61917D8B5C8005EBF21 /* UIKit.framework in Frameworks */,
@@ -88,8 +102,6 @@
 		0D31F60C17D8B5C8005EBF21 = {
 			isa = PBXGroup;
 			children = (
-				0D31F64917D8CFBA005EBF21 /* AssetsLibrary.framework */,
-				0D31F64717D8CC95005EBF21 /* CoreMotion.framework */,
 				0D31F61E17D8B5C8005EBF21 /* SenkoHanabiARC */,
 				0D31F61717D8B5C8005EBF21 /* Frameworks */,
 				0D31F61617D8B5C8005EBF21 /* Products */,
@@ -107,6 +119,9 @@
 		0D31F61717D8B5C8005EBF21 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0DD5B26117DAB5000018E636 /* QuartzCore.framework */,
+				0D31F64917D8CFBA005EBF21 /* AssetsLibrary.framework */,
+				0D31F64717D8CC95005EBF21 /* CoreMotion.framework */,
 				0D31F61817D8B5C8005EBF21 /* UIKit.framework */,
 				0D31F61A17D8B5C8005EBF21 /* Foundation.framework */,
 				0D31F61C17D8B5C8005EBF21 /* CoreGraphics.framework */,
@@ -127,6 +142,8 @@
 				0D31F63C17D8B60E005EBF21 /* fadeObject.m */,
 				0D31F65D17D97231005EBF21 /* fire.h */,
 				0D31F65E17D97231005EBF21 /* fire.m */,
+				0DD5B26917DAD6510018E636 /* fireFlower.h */,
+				0DD5B26A17DAD6510018E636 /* fireFlower.m */,
 				0D31F61F17D8B5C8005EBF21 /* Supporting Files */,
 			);
 			path = SenkoHanabiARC;
@@ -149,6 +166,10 @@
 		0D31F63E17D8CC58005EBF21 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				0DD5B26717DACCC60018E636 /* senkohanabi5.png */,
+				0DD5B26517DACC510018E636 /* senkohanabi4.png */,
+				0DD5B26317DACBCB0018E636 /* senkohanabi3.png */,
+				0DD5B25F17DAA6380018E636 /* senkohanabi2.png */,
 				0D31F66017D97914005EBF21 /* hinotama.png */,
 				0D31F66117D97914005EBF21 /* hibana5.png */,
 				0D31F66217D97914005EBF21 /* hibana4.png */,
@@ -229,6 +250,10 @@
 				0D31F66717D97914005EBF21 /* hibana4.png in Resources */,
 				0D31F66817D97914005EBF21 /* hibana3.png in Resources */,
 				0D31F66917D97914005EBF21 /* hibana2.png in Resources */,
+				0DD5B26017DAA6380018E636 /* senkohanabi2.png in Resources */,
+				0DD5B26417DACBCB0018E636 /* senkohanabi3.png in Resources */,
+				0DD5B26617DACC510018E636 /* senkohanabi4.png in Resources */,
+				0DD5B26817DACCC60018E636 /* senkohanabi5.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,6 +269,7 @@
 				0D31F63517D8B5C8005EBF21 /* ViewController.m in Sources */,
 				0D31F63D17D8B60E005EBF21 /* fadeObject.m in Sources */,
 				0D31F65F17D97231005EBF21 /* fire.m in Sources */,
+				0DD5B26B17DAD6510018E636 /* fireFlower.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,6 +392,7 @@
 				0D31F63A17D8B5C8005EBF21 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -18,8 +18,8 @@
     deleteFlg = 0;
     alphaFlg = 1;
     
-    maxw = 100;
-    maxh = 100;
+    maxw = 50;
+    maxh = 50;
     
     //int r = (arc4random() % 5);
     
@@ -31,10 +31,10 @@
     //CGPoint position = CGPointMake(p.x + offset.x, p.y + offset.y);
     
     if(img.image.size.height < img.image.size.width){
-        img.frame = CGRectMake(p.x, p.y, maxw, img.image.size.height*(maxw/img.image.size.width));
+        img.frame = CGRectMake(p.x+12, p.y-10, maxw, img.image.size.height*(maxw/img.image.size.width));
         //img.frame = CGRectMake(p.x + offset.x, p.y + offset.y, maxw, img.image.size.height*(maxw/img.image.size.width));
     }else{
-        img.frame = CGRectMake(p.x, p.y, img.image.size.width*(maxw/img.image.size.height), maxh);
+        img.frame = CGRectMake(p.x+12, p.y-10, img.image.size.width*(maxw/img.image.size.height), maxh);
     }
     
     CGRect f = img.frame;
@@ -44,6 +44,7 @@
     h = f.size.height;
     
     img.frame = CGRectMake(x, y, w, h);
+    img.layer.contentsRect = CGRectMake(0, 0, 4, 1);
     
     img.layer.anchorPoint = CGPointMake(-0.3, 0.5);
     //img.frame = CGRectMake(x,y,w,h);
@@ -65,6 +66,7 @@
     UIImageView *img = image;
     if(alphaFlg == 1){
         img.alpha += 0.5f;
+        img.layer.contentsRect = CGRectMake(0, 0, 4-img.alpha*3, 1);
         //img.frame = CGRectMake(x, y, w, h);
         if(1.0f <= img.alpha){
             alphaFlg = -1;
@@ -72,6 +74,7 @@
     }else if(alphaFlg == -1){
         img.alpha -= 0.3f;
         if(img.alpha < 0){
+            [img removeFromSuperview];
             deleteFlg = 1;
         }
     }

@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AssetsLibrary/AssetsLibrary.h>
 
 @interface ViewController : UIViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIAccelerometerDelegate>
-
++ (ALAssetsLibrary *)defaultAssetsLibrary;
 @end
