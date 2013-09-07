@@ -11,6 +11,8 @@
 @interface fireFlower : NSObject{
     NSMutableArray* layers;
     NSMutableArray* alphaFlags;
+    NSMutableArray* lifeCounts;
+    int maxLifeCount;
     int deleteFlg; // 使われていないかどうか
 }
 @property int deleteFlg;

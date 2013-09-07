@@ -39,6 +39,7 @@ int addedAssetsCount;//追加時追加済Assetカウント
 int initAssetsCount;//起動時Assetカウント
 
 NSMutableArray* fires;
+NSMutableArray* fireFlowers;
 
 UIButton *nextButton;
 UIButton *addimageButton;
@@ -60,6 +61,8 @@ int sceneNumber;
     
     //火花
     fires = [NSMutableArray array];
+    //火花の花
+    fireFlowers = [NSMutableArray array];
     
     //シーン1
     sceneNumber = 1;
@@ -134,8 +137,8 @@ int sceneNumber;
                                         repeats:YES];
     }
 }
-
 -(void)loop{
+    
     if(manager){
         [manager startAccelerometerUpdates];
     }
@@ -280,8 +283,6 @@ int sceneNumber;
                 fire* f = [[fire alloc] initWithObject:[[UIImageView alloc]
                                                         initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"hibana%d.png", kind]]] view:self.view point:CGPointMake(nx, ny)];
                 [fires addObject:f];
-                
-                fireFlower* ff = [[fireFlower alloc] initWithPoint:CGPointMake(nx, ny) view:self.view];
             }
             
             for(int i = 0; i < [fires count]; i++){
@@ -289,6 +290,28 @@ int sceneNumber;
                 [f Do];
                 if(f.deleteFlg){
                     [fires removeObject:f];
+                    i--;
+                }
+            }
+        }
+            //火花の花作成、Do
+        {
+            int r = (rand() % 3);
+            if( r == 0 ){
+                CGFloat angle = ((-manager.accelerometerData.acceleration.x* 90.0f * M_PI / 180.0f) + prevAngle + prevprevAngle) / 3.0f;
+                angle = -angle - 0.15f;
+                float nx = 160 + 320 * sin(angle) + (rand() % 200 - 100);
+                float ny = 330 * cos(angle) + (rand() % 200 - 100);
+                
+                fireFlower* ff = [[fireFlower alloc] initWithPoint:CGPointMake(nx, ny) view:self.view];
+                [fireFlowers addObject:ff];
+            }
+            
+            for(int i = 0; i < [fireFlowers count]; i++){
+                fireFlower* ff = fireFlowers[i];
+                [ff Do];
+                if(ff.deleteFlg){
+                    [fireFlowers removeObject:ff];
                     i--;
                 }
             }
@@ -436,6 +459,7 @@ int sceneNumber;
             
         }
     }
+    
     
     isTapped = 0;
 }
