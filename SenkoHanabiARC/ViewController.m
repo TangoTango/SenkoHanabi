@@ -18,15 +18,17 @@
 @end
 @implementation ViewController
 
-UILabel *titleLabel;
-UILabel *howLabel;
-UIImageView *senkoImage;
+UILabel *titleLabel; // タイトルのラベル
+UILabel *howLabel; // 「遊び方」のラベル
+UIImageView *senkoImage; // 線香花火の画像
 UIImageView *hinotamaImage;
-UILabel* addLabel;
+UILabel* addLabel; // 「画像を追加」ボタンを押したときのメッセージのラベル
+CALayer* hi; // 火種のレイヤ
+bool hiFlg = NO; // 火種が落ちたかどうか
 
-NSArray *imageNames;
-NSArray *textNames;
-fadeObject *showFadeObject;
+NSArray *imageNames; // 現れて消えるアニメーション画像の配列
+NSArray *textNames; // 現れて消えるテキストの配列
+fadeObject *showFadeObject; //
 NSMutableArray *fadeSelects;
 int fadeselect = 0;
 
@@ -197,12 +199,17 @@ int sceneNumber;
                     senkoImage.frame = CGRectMake(140, -10, 61, 337);//122 × 675
                     senkoImage.alpha = 0.0f;
                     [self.view addSubview:senkoImage];
-                    CALayer* hi = [CALayer layer];
+                    // 火種の画像
+                    hi = [CALayer layer];
                     hi.contents = (id)[UIImage imageNamed:@"hinotama.png"].CGImage;
                     hi.frame = CGRectMake(3, 317, 120.0/7.5, 140.0/7.5);
                     [senkoImage.layer addSublayer:hi];
                 }else{
                     senkoImage.alpha = 0.0f;
+                    
+                    CGRect hi_init = CGRectMake(3, 317, 120.0/7.5, 140.0/7.5);
+                    hi.frame = hi_init;
+                    
                 }
                 
                 // 火種の画像
@@ -345,12 +352,31 @@ int sceneNumber;
                 }
                 fadeselect = (fadeselect + 1) % ([imageNames count] + [textNames count] + [assets count]);
             }
+            
             //フェードオブジェクトアニメーション
             [showFadeObject Do];
             
-            if(senkoTime-- < 0){
+            // 加速度が大きくなりすぎたら火種を落とす
+            if(manager.accelerometerData.acceleration.x > 0.5 || manager.accelerometerData.acceleration.y < -1.1 || manager.accelerometerData.acceleration.z > 0.5) {
+                hiFlg = YES;
+            }
+            
+            if(hiFlg) {
+                CGRect move = hi.frame;
+                move.origin.x += manager.accelerometerData.acceleration.x;
+                move.origin.y += 25;
+                hi.frame = move;
+            }
+
+            // 火種が画面下に来ると終了
+            if(hi.frame.origin.y > 520) {
                 sceneNumber = 7;
             }
+            
+            // ある程度時間が経ったら終了
+//            if(senkoTime-- < 0){
+//                sceneNumber = 7;
+//            }
             break;
         case 7:
             //フェードオブジェクト削除
@@ -426,6 +452,7 @@ int sceneNumber;
             initLaunch = 0;
             fadeSelects = [self randomList:([imageNames count] + [textNames count] + [assets count])];
             fadeselect = 0;
+            hiFlg = NO;
             sceneNumber = 3;
             break;
         case 9:
