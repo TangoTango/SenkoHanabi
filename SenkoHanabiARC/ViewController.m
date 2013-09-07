@@ -18,17 +18,17 @@
 @end
 @implementation ViewController
 
-UILabel *titleLabel;
-UILabel *howLabel;
-UIImageView *senkoImage;
+UILabel *titleLabel; // タイトルのラベル
+UILabel *howLabel; // 「遊び方」のラベル
+UIImageView *senkoImage; // 線香花火の画像
 UIImageView *hinotamaImage;
-UILabel* addLabel;
+UILabel* addLabel; // 「画像を追加」ボタンを押したときのメッセージのラベル
 CALayer* hi; // 火種のレイヤ
 bool hiFlg = NO; // 火種が落ちたかどうか
 
-NSArray *imageNames;
-NSArray *textNames;
-fadeObject *showFadeObject;
+NSArray *imageNames; // 現れて消えるアニメーション画像の配列
+NSArray *textNames; // 現れて消えるテキストの配列
+fadeObject *showFadeObject; //
 NSMutableArray *fadeSelects;
 int fadeselect = 0;
 
