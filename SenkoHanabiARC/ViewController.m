@@ -76,7 +76,6 @@ CGFloat hidaneAX, hidaneAY, hidaneVX, hidaneVY;
 int sceneNumber;
 
 Bgm* sparkBgm;
-bool soundFlg = NO;
 
 - (void)viewDidLoad
 {
@@ -333,14 +332,16 @@ bool soundFlg = NO;
             
         {
             
-            if(!soundFlg) {
-                soundFlg = YES;
-                
-                sparkBgm = [[Bgm alloc] initWithPath:@"spark.wav"];
-                [sparkBgm prepareToPlay];
-                [sparkBgm setNumberOfLoops:-1];
-                
-            }
+            // 効果音
+//            if(!sparkBgm) {
+//
+//                sparkBgm = [[Bgm alloc] initWithPath:@"spark.wav"];
+//                [sparkBgm prepareToPlay];
+//                [sparkBgm setNumberOfLoops:-1];
+//                
+//            }
+            // [sparkBgm play];
+            
             
             float rate;
             switch (fireScene) {
@@ -348,27 +349,22 @@ bool soundFlg = NO;
                 default:
                     rate = 5;
                     [sparkBgm setVolume:0.05];
-                    [sparkBgm play];
                     break;
                 case 2:
                     rate = 4;
                     [sparkBgm setVolume:0.1];
-                    [sparkBgm play];
                     break;
                 case 3:
                     rate = 3;
                     [sparkBgm setVolume:0.3];
-                    [sparkBgm play];
                     break;
                 case 4:
                     rate = 2;
                     [sparkBgm setVolume:0.4];
-                    [sparkBgm play];
                     break;
                 case 5:
                     rate = 1;
                     [sparkBgm setVolume:0.5];
-                    [sparkBgm play];
                     break;
             }
             

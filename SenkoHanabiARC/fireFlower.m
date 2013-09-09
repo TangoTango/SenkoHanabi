@@ -10,8 +10,15 @@
 #import <QuartzCore/QuartzCore.h>
 
 @implementation fireFlower
+
+Bgm* sparkBgm; // 効果音
+
 @synthesize deleteFlg;
+
 -(id)initWithPoint:(CGPoint)p view:(UIView*)v{
+    
+    self = [super init];
+    
     view = v;
     layers = [NSMutableArray array];
     lifeCounts = [NSMutableArray array];
@@ -59,6 +66,14 @@
     
     [layers addObject:layer];
     [lifeCounts addObject:[NSNumber numberWithInt:maxLifeCount]];
+    
+    // 効果音
+    if(!sparkBgm) {
+        sparkBgm = [[Bgm alloc] initWithPath:@"spark.mp3"];
+        [sparkBgm prepareToPlay];
+    }
+    [sparkBgm play];
+    
     return self;
 }
 
@@ -131,7 +146,7 @@
                 //間隔は41〜80度(2本から4本)
                 r += (rand()% 40) + 41;
             }
-        
+            
         }else{
             //花の火花の場合
             for(int i = 0; i < [layers count]; i++){

@@ -14,6 +14,7 @@
 
 @property (strong)NSString* path; // ファイルパス
 @property (strong)AVAudioPlayer* player; // プレイヤ
+@property (assign)bool played; // 再生されているかどうか
 
 // 文字列型のファイルパスを入力し、対応する音源のインスタンスを得る
 - (id)initWithPath:(NSString*)path;

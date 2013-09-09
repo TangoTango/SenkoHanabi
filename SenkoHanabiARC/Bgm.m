@@ -14,6 +14,7 @@
     self = [super init];
     
     self.path = path;
+    self.played = NO;
     
     // ファイルパスからファイル名を取得
     NSString* fileName = [self.path lastPathComponent];
@@ -48,11 +49,13 @@
 
 // 再生
 - (void)play {
+    self.played = YES;
     [self.player play];
 }
 
 // 停止
 - (void)stop {
+    self.played = NO;
     [self.player stop];
 }
 @end
