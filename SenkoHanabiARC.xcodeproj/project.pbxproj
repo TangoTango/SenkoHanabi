@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		043DFFB317DD6C64009449CC /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 043DFFB217DD6C64009449CC /* AVFoundation.framework */; };
+		043E214317DD532A00AB279F /* fadeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 043E214217DD532A00AB279F /* fadeView.m */; };
+		043E214617DD64E000AB279F /* spark.wav in Resources */ = {isa = PBXBuildFile; fileRef = 043E214517DD64E000AB279F /* spark.wav */; };
+		043E214817DD664900AB279F /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 043E214717DD664900AB279F /* AudioToolbox.framework */; };
+		043E214B17DD666D00AB279F /* Bgm.m in Sources */ = {isa = PBXBuildFile; fileRef = 043E214A17DD666D00AB279F /* Bgm.m */; };
 		0D31F61917D8B5C8005EBF21 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D31F61817D8B5C8005EBF21 /* UIKit.framework */; };
 		0D31F61B17D8B5C8005EBF21 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D31F61A17D8B5C8005EBF21 /* Foundation.framework */; };
 		0D31F61D17D8B5C8005EBF21 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D31F61C17D8B5C8005EBF21 /* CoreGraphics.framework */; };
@@ -41,6 +46,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		043DFFB217DD6C64009449CC /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		043E214117DD532A00AB279F /* fadeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fadeView.h; sourceTree = "<group>"; };
+		043E214217DD532A00AB279F /* fadeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = fadeView.m; sourceTree = "<group>"; };
+		043E214517DD64E000AB279F /* spark.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = spark.wav; sourceTree = "<group>"; };
+		043E214717DD664900AB279F /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		043E214917DD666D00AB279F /* Bgm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bgm.h; sourceTree = "<group>"; };
+		043E214A17DD666D00AB279F /* Bgm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bgm.m; sourceTree = "<group>"; };
 		0D31F61517D8B5C8005EBF21 /* SenkoHanabiARC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SenkoHanabiARC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D31F61817D8B5C8005EBF21 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0D31F61A17D8B5C8005EBF21 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -87,6 +99,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				043DFFB317DD6C64009449CC /* AVFoundation.framework in Frameworks */,
+				043E214817DD664900AB279F /* AudioToolbox.framework in Frameworks */,
 				0DD5B26217DAB5000018E636 /* QuartzCore.framework in Frameworks */,
 				0D31F64A17D8CFBA005EBF21 /* AssetsLibrary.framework in Frameworks */,
 				0D31F64817D8CC95005EBF21 /* CoreMotion.framework in Frameworks */,
@@ -99,6 +113,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		043E214417DD64B200AB279F /* sounds */ = {
+			isa = PBXGroup;
+			children = (
+				043E214517DD64E000AB279F /* spark.wav */,
+			);
+			name = sounds;
+			sourceTree = "<group>";
+		};
 		0D31F60C17D8B5C8005EBF21 = {
 			isa = PBXGroup;
 			children = (
@@ -119,6 +141,8 @@
 		0D31F61717D8B5C8005EBF21 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				043DFFB217DD6C64009449CC /* AVFoundation.framework */,
+				043E214717DD664900AB279F /* AudioToolbox.framework */,
 				0DD5B26117DAB5000018E636 /* QuartzCore.framework */,
 				0D31F64917D8CFBA005EBF21 /* AssetsLibrary.framework */,
 				0D31F64717D8CC95005EBF21 /* CoreMotion.framework */,
@@ -132,6 +156,9 @@
 		0D31F61E17D8B5C8005EBF21 /* SenkoHanabiARC */ = {
 			isa = PBXGroup;
 			children = (
+				043E214417DD64B200AB279F /* sounds */,
+				043E214117DD532A00AB279F /* fadeView.h */,
+				043E214217DD532A00AB279F /* fadeView.m */,
 				0D31F63E17D8CC58005EBF21 /* images */,
 				0D31F62717D8B5C8005EBF21 /* AppDelegate.h */,
 				0D31F62817D8B5C8005EBF21 /* AppDelegate.m */,
@@ -145,6 +172,8 @@
 				0DD5B26917DAD6510018E636 /* fireFlower.h */,
 				0DD5B26A17DAD6510018E636 /* fireFlower.m */,
 				0D31F61F17D8B5C8005EBF21 /* Supporting Files */,
+				043E214917DD666D00AB279F /* Bgm.h */,
+				043E214A17DD666D00AB279F /* Bgm.m */,
 			);
 			path = SenkoHanabiARC;
 			sourceTree = "<group>";
@@ -254,6 +283,7 @@
 				0DD5B26417DACBCB0018E636 /* senkohanabi3.png in Resources */,
 				0DD5B26617DACC510018E636 /* senkohanabi4.png in Resources */,
 				0DD5B26817DACCC60018E636 /* senkohanabi5.png in Resources */,
+				043E214617DD64E000AB279F /* spark.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,6 +300,8 @@
 				0D31F63D17D8B60E005EBF21 /* fadeObject.m in Sources */,
 				0D31F65F17D97231005EBF21 /* fire.m in Sources */,
 				0DD5B26B17DAD6510018E636 /* fireFlower.m in Sources */,
+				043E214317DD532A00AB279F /* fadeView.m in Sources */,
+				043E214B17DD666D00AB279F /* Bgm.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

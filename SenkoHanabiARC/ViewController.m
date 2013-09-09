@@ -9,10 +9,13 @@
 #import "ViewController.h"
 #import <CoreMotion/CoreMotion.h>
 #import <QuartzCore/QuartzCore.h>
+#import <AudioToolbox/AudioToolbox.h>
+#import <AVFoundation/AVFoundation.h>
 #import "fadeObject.h"
 #import "fire.h"
 #import "fireFlower.h"
 #import "fadeView.h"
+#import "Bgm.h"
 
 @interface ViewController ()
 
@@ -69,6 +72,9 @@ CGPoint hidanePoint;
 CGFloat hidaneAX, hidaneAY, hidaneVX, hidaneVY;
 
 int sceneNumber;
+
+Bgm* sparkBgm;
+bool soundFlg = NO;
 
 - (void)viewDidLoad
 {
@@ -145,6 +151,7 @@ int sceneNumber;
     }else{
         assetsURL = [NSMutableDictionary dictionary];
         fadeSelects = [self randomList:[imageNames count] + [textNames count] + [assets count]];
+        
         //ループ開始
         [NSTimer scheduledTimerWithTimeInterval:0.03f
                                          target:self
@@ -425,6 +432,30 @@ int sceneNumber;
                 hinotamaImage.transform = CGAffineTransformMakeRotation(senkoAngle);
                 hinotamaImage.alpha -= 0.06f;
             }
+            
+            if(!soundFlg) {
+                soundFlg = YES;
+                
+                sparkBgm = [[Bgm alloc] initWithPath:@"spark.wav"];
+                
+                [sparkBgm setVolume:0.5];
+                [sparkBgm setNumberOfLoops:-1];
+                [sparkBgm play];
+                
+//                // ファイルのパスを作成します。
+//                NSString *path = [[NSBundle mainBundle] pathForResource:@"spark" ofType:@"wav"];
+//                
+//                // ファイルのパスを NSURL へ変換します。
+//                NSURL* url = [NSURL fileURLWithPath:path];
+//                NSLog(@"path:%@", url);
+//                // ファイルを読み込んで、プレイヤーを作成します。
+//                player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
+//                
+//                [player setNumberOfLoops:-1];
+//                // 再生
+//                [player play];
+            }
+            
 
             // 火種が画面下に来ると終了
             if( hinotamaImage.frame.origin.x < -hinotamaImage.frame.size.width
@@ -433,6 +464,7 @@ int sceneNumber;
                || self.view.frame.size.height < hinotamaImage.frame.origin.y
                || hinotamaImage.alpha < 0.0f
                ) {
+                [sparkBgm stop];
                 sceneNumber = 7;
             }
         }
@@ -466,6 +498,7 @@ int sceneNumber;
             
             //全部消えたら
             if([fires count] == 0 && !showFadeObject && senkoImage.alpha < 0.0f){
+                
                 //もう一度ボタン
                 if(!nextButton){
                     UIImage *img = [UIImage imageNamed:@"again2.gif"];
