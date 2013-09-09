@@ -11,9 +11,6 @@
 @implementation fadeView
 
 @synthesize alphaFlag;
-float upAlpha, downAlpha, topAlpha;
-UIView *superview;
-id obj;
 
 -(id)initWithImageName:(NSString*)name superview:(UIView*)view  upAlpha:(float)up downAlpha:(float)down topAlpha:(float)top{
     obj = [[UIImageView alloc] initWithImage:[UIImage imageNamed:name]];
@@ -36,6 +33,12 @@ id obj;
 }
 -(id)initWithLableText:(NSString*)text point:(CGPoint)p line:(NSInteger)line fontsize:(NSInteger)fontsize upAlpha:(float)up downAlpha:(float)down topAlpha:(float)top superview:(UIView*)view{
     
+    Text = text;
+    P = p;
+    Line = line;
+    fontSize = fontsize;
+    View = view;
+    
     obj = [NSMutableArray array];
     int w = fontsize * line;
     int boxsize = fontsize * 1.5;
@@ -45,11 +48,20 @@ id obj;
     for(int i = 0; i < text.length; i++){
         NSString* c = [text substringWithRange:NSMakeRange(i, 1)];
         if([c rangeOfString:@"\n"].location == NSNotFound){
-            float f = p.x + fontsize * (line-1-ix);
-            UILabel* l = [[UILabel alloc] initWithFrame:CGRectMake(p.x + boxsize * (line-1-ix), p.y + boxsize * iy ,
-                                                                   320,100)];
+            UILabel* l = [[UILabel alloc] initWithFrame:CGRectMake(p.x + fontsize * (line-1-ix), p.y + fontsize * iy ,
+                                                                   boxsize,boxsize)];
             l.font = [UIFont fontWithName:@"Hiragino Mincho ProN" size:fontsize];
-            l.textAlignment = NSTextAlignmentCenter;
+            
+            if( [self isInt:c] ){
+                int number = [c intValue];
+                NSString *numberStr = @[ @"〇", @"一", @"二", @"三", @"四", @"五", @"六", @"七", @"八", @"九"][number];
+                [l setText:numberStr];
+                //CGRect move = l.frame;
+                //move.size.width = move.size.width * 0.7;
+                //move.size.height = move.size.height * 0.7;
+                //l.frame = move;
+                //l.transform = CGAffineTransformMakeRotation(M_PI_2+M_PI);
+            }
             l.text = c;
             l.backgroundColor = [UIColor clearColor];
             l.textColor = [UIColor whiteColor];
@@ -71,7 +83,46 @@ id obj;
     return self;
 }
 
-//二回目用
+-(void)changeTextWithString:(NSString *)newText{
+    
+    for(UIView *ui in obj){
+        [ui removeFromSuperview];
+    }
+    
+    Text = newText;
+    obj = [NSMutableArray array];
+    int boxsize = fontSize * 1.5;
+    int ix = 0;
+    int iy = 0;
+    for(int i = 0; i < Text.length; i++){
+        NSString* c = [Text substringWithRange:NSMakeRange(i, 1)];
+        if([c rangeOfString:@"\n"].location == NSNotFound){
+            UILabel* l = [[UILabel alloc] initWithFrame:CGRectMake(P.x + fontSize * (Line-1-ix), P.y + fontSize * iy ,
+                                                                   boxsize,boxsize)];
+            l.font = [UIFont fontWithName:@"Hiragino Mincho ProN" size:fontSize];
+            
+            if( [self isInt:c] ){
+                int number = [c intValue];
+                NSString *numberStr = @[ @"〇", @"一", @"二", @"三", @"四", @"五", @"六", @"七", @"八", @"九"][number];
+                l.text = numberStr;
+            }else{
+                l.text = c;
+            }
+            l.backgroundColor = [UIColor clearColor];
+            l.textColor = [UIColor whiteColor];
+            l.alpha = 0.0f;
+            [View addSubview:l];
+            [obj addObject:l];
+            iy++;
+        }else{
+            iy = 0;
+            ix++;
+        }
+    }
+    alphaFlag = 1;
+}
+
+//二回目初期化用
 -(void)reInit{
     if( [obj isKindOfClass:[UIView class]] ){
         UIView *ui = obj;
@@ -93,16 +144,15 @@ id obj;
         //UIViewの配列の場合
         int flg = 1;
         NSArray *arr = obj;
-        for(id obj in arr){
-            if([self DoWithView:obj] == 0){
+        for(UIView *ui in arr){
+            if([self DoWithView:ui] == 0){
                 flg = 0;
             }
         }
         return flg;
     }
 }
--(int)DoWithView:(UIView*)obj{
-    UIView* ui = obj;
+-(int)DoWithView:(UIView*)ui{
     if(alphaFlag == 1){
         ui.alpha += upAlpha;
         if(topAlpha < ui.alpha){
@@ -110,10 +160,32 @@ id obj;
         }
     }else{
         ui.alpha -= downAlpha;
-        if(ui.alpha < 0.0f){
+        if(ui.alpha <= 0.0f){
             return 1;
         }
     }
     return 0;
 }
+-(void)hide{
+    if( [obj isKindOfClass:[UIView class]] ){
+        //UIView一つの場合
+        UIView *ui = obj;
+        ui.alpha = 0.0f;
+    }else{
+        //UIViewの配列の場合
+        NSArray *arr = obj;
+        for(UIView *ui in arr){
+            ui.alpha = 0.0f;
+        }
+    }
+}
+
+-(BOOL)isInt:(NSString *)text{
+    NSScanner *aScanner = [NSScanner localizedScannerWithString:text];
+    [aScanner setCharactersToBeSkipped:nil];
+    
+    [aScanner scanInt:NULL];
+    return [aScanner isAtEnd];
+}
+
 @end

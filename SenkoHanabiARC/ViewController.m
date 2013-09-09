@@ -19,9 +19,11 @@
 @end
 @implementation ViewController
 
-fadeView *title;
-UILabel *titleLabel; // タイトルのラベル
-UILabel *howLabel; // 「遊び方」のラベル
+fadeView *title;//タイトル
+fadeView *how;//遊び方
+fadeView *addSuc;//画像追加成功
+fadeView *addAlr;//画像追加失敗　既に追加済
+fadeView *addNot;//画像追加失敗　一個もなかった
 UIImageView *senkoImage; // 線香花火の画像
 UIImageView *hinotamaImage;
 UILabel* addLabel; // 「画像を追加」ボタンを押したときのメッセージのラベル
@@ -173,30 +175,12 @@ int sceneNumber;
                 [title reInit];
             }
             sceneNumber = 3;
-            /*if(!titleLabel){
-                titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,50,320,100)];
-                titleLabel.font = [UIFont fontWithName:@"Hiragino Mincho ProN" size:40];
-                titleLabel.textAlignment = NSTextAlignmentCenter;
-                titleLabel.text = @"線香花火";
-                titleLabel.backgroundColor = [UIColor clearColor];
-                titleLabel.textColor = [UIColor whiteColor];
-                titleLabel.alpha = 0.0f;
-                [self.view addSubview:titleLabel];
-            }else{
-                titleLabel.alpha = 0.0f;
-            }
-            
-            sceneNumber = 2;*/
-            break;
-        case 2://「線香花火」表示アニメ
-            /*titleLabel.alpha += 0.02f;
-            if(1.0f < titleLabel.alpha || isTapped){
-                sceneNumber = 3;
-            }*/
             break;
         case 3://「線香花火」隠蔽アニメ、線香花火設定、「遊び方」設定
-            //titleLabel.alpha -= 0.02f;
-            if([title Do]/*titleLabel.alpha < 0.0f*/){
+            if(isTapped){
+                title.alphaFlag = -1;//タッチしたら消えるように
+            }
+            if([title Do]){//タイトルアニメーション　アニメーションが終了すれば1が返ってくる
                 // 線香花火の画像
                 if(!senkoImage){
                     senkoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"senkohanabi5.png"]];
@@ -221,18 +205,10 @@ int sceneNumber;
                 }
 
                 // 「遊び方」
-                if(!howLabel){
-                    howLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,50,320,300)];
-                    howLabel.font = [UIFont fontWithName:@"Hiragino Mincho ProN" size:40];
-                    howLabel.textAlignment = NSTextAlignmentCenter;
-                    howLabel.text = @"遊び方\nそんなこんなで\nそんなこんなやで";
-                    howLabel.backgroundColor = [UIColor clearColor];
-                    howLabel.textColor = [UIColor whiteColor];
-                    howLabel.numberOfLines = 3;
-                    howLabel.alpha = 0.0f;
-                    [self.view addSubview:howLabel];
+                if(!how){
+                    how = [[fadeView alloc] initWithLableText:@"遊び方\n上部を持って下さい。\n" point:CGPointMake(240,40) line:3 fontsize:40 upAlpha:0.02f downAlpha:0.02f topAlpha:2.0f superview:self.view];
                 }else{
-                    howLabel.alpha = 0.0f;
+                    [how reInit];
                 }
                 
                 sceneNumber = 4;
@@ -241,40 +217,28 @@ int sceneNumber;
         case 4://線香花火アニメ、「遊び方」表示アニメ
             senkoImage.alpha += 0.02f;
             hinotamaImage.alpha += 0.02f;
+            
+            //起動から1回目のプレイかどうか
             if(initLaunch){
-                howLabel.alpha += 0.02f;
-            }
-            
-            if(3.0f < howLabel.alpha){
-                senkoImage.alpha = 1.0f;
-                hinotamaImage.alpha += 1.0f;
-                howLabel.alpha = 1.0f;
-                sceneNumber = 5;
-            }
-            if( isTapped || (!initLaunch && 1.0f < senkoImage.alpha) ){
-                senkoImage.alpha = 1.0f;
-                hinotamaImage.alpha += 1.0f;
-                howLabel.alpha = 0.0f;
-                senkoCount = 0;
-                fireScene = 1;
-                sceneNumber = 6;
-            }
-            break;
-        case 5://「遊び方」隠蔽アニメ
-            howLabel.alpha -= 0.02f;
-            if(howLabel.alpha < 0.0f || isTapped){
-                senkoImage.alpha = 1.0f;
-                hinotamaImage.alpha += 1.0f;
-                howLabel.alpha = 0.0f;
-                fadeselect = 0;
-                senkoCount = 0;
-                fireScene = 1;
-                sceneNumber = 6;
+                if([how Do] || isTapped){//遊び方アニメーション　アニメーションが終了すれば1が返ってくる
+                    senkoImage.alpha = 1.0f;
+                    hinotamaImage.alpha = 1.0f;
+                    [how hide];
+                    fadeselect = 0;
+                    senkoCount = 0;
+                    fireScene = 1;
+                    sceneNumber = 6;
+                }
+            }else{
+                if(1.0f < senkoImage.alpha && 1.0f < hinotamaImage.alpha){
+                    fadeselect = 0;
+                    senkoCount = 0;
+                    fireScene = 1;
+                    sceneNumber = 6;
+                }
             }
             break;
-            
-            
-        case 6:
+        case 6://点火開始〜終了まで
             
             //fireScene設定
             senkoCount++;
@@ -291,7 +255,7 @@ int sceneNumber;
             }
             //火花作成、Do
         {
-            int r = (rand() % 2);
+            int r = (arc4random() % 2);
             if( r == 0 ){
                 /*int kind = (rand() % 4) + 2;
                 CGFloat angle = ((-manager.accelerometerData.acceleration.x* 90.0f * M_PI / 180.0f) + prevAngle + prevprevAngle) / 3.0f;
@@ -315,28 +279,8 @@ int sceneNumber;
             //火花の花作成、Do
         {
             int rate;
-            switch (fireScene) {
-                case 1:
-                default:
-                    rate = 100;
-                    break;
-                case 2:
-                    rate = 50;
-                    break;
-                case 3:
-                    rate = 10;
-                    break;
-                case 4:
-                    rate = 1;
-                    break;
-                case 5:
-                    rate = 10;
-                    break;
-                case 6:
-                    rate = 50;
-                    break;
-            }
-            int r = (rand() % rate);
+            rate = [@[ @100, @50, @10, @1, @10, @50 ][fireScene-1] intValue];
+            int r = (arc4random() % rate);
             if( r == 0 ){
                 fireFlower* ff = [[fireFlower alloc] initWithPoint:hidanePoint view:self.view];
                 [fireFlowers addObject:ff];
@@ -379,7 +323,9 @@ int sceneNumber;
             //フェードオブジェクトアニメーション
             [showFadeObject Do];
             
+            
             // 加速度が大きくなりすぎたら火種を落とす
+        {
             float rate;
             switch (fireScene) {
                 case 1:
@@ -399,7 +345,6 @@ int sceneNumber;
                     rate = 1;
                     break;
             }
-        {
             if( 2 < [prevAccelerations count] ){
                 NSDictionary* now = prevAccelerations[[prevAccelerations count]-1];
                 NSDictionary* prev = prevAccelerations[[prevAccelerations count]-2];
@@ -433,6 +378,7 @@ int sceneNumber;
                || self.view.frame.size.height < hinotamaImage.frame.origin.y
                || hinotamaImage.alpha < 0.0f
                ) {
+                hinotamaImage.alpha = 0.0f;
                 sceneNumber = 7;
             }
         }
@@ -488,29 +434,26 @@ int sceneNumber;
                 }
                 
                 if(assetsflg == 1){
-                    if(!addLabel){
-                        addLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 50, 320, 100)];
-                        addLabel.font = [UIFont fontWithName:@"Hiragino Mincho ProN" size:20];
-                        addLabel.textAlignment = NSTextAlignmentCenter;
-                        addLabel.backgroundColor = [UIColor clearColor];
-                        addLabel.textColor = [UIColor whiteColor];
-                        addLabel.numberOfLines = 3;
-                        addLabel.alpha = 0.0f;
-                        [self.view addSubview:addLabel];
+                    
+                    if(!addSuc){
+                        addSuc = [[fadeView alloc] initWithLableText:[NSString stringWithFormat:@"夏の思い出写真を\n%d枚追加しました。",addAssetsCount] point:CGPointMake(160,40) line:2 fontsize:20 upAlpha:0.04f downAlpha:0.04f topAlpha:1.6f superview:self.view];
                     }else{
-                        addLabel.alpha = 0.0f;
+                        [addSuc changeTextWithString:[NSString stringWithFormat:@"夏の思い出写真を\n%d枚追加しました。",addAssetsCount]];
+                        [addSuc reInit];
                     }
-                    if(0 < addAssetsCount){
-                        addLabel.text = [NSString stringWithFormat:@"夏の思い出写真を\n%d枚追加しました。",addAssetsCount];
-                    }else if(0 < addedAssetsCount){
-                        addLabel.text = [NSString stringWithFormat:@"あなたの\n夏の思い出写真は\nもうありません。"];
+                    if(!addAlr){
+                        addAlr = [[fadeView alloc] initWithLableText:@"あなたの\n夏の思い出写真は\nもうありません。" point:CGPointMake(160,40) line:3 fontsize:20 upAlpha:0.04f downAlpha:0.04f topAlpha:1.6f superview:self.view];
                     }else{
-                        addLabel.text = [NSString stringWithFormat:@"あなたの\n夏の思い出は\nありません。"];
+                        [addAlr reInit];
+                    }
+                    if(!addNot){
+                        addNot = [[fadeView alloc] initWithLableText:@"あなたの\n夏の思い出写真は\nありません。" point:CGPointMake(160,40) line:3 fontsize:20 upAlpha:0.04f downAlpha:0.04f topAlpha:1.6f superview:self.view];
+                    }else{
+                        [addNot reInit];
                     }
                     sceneNumber = 9;
                     assetsflg = 0;
                 }
-                
             }
             break;
         case 8:
@@ -524,18 +467,24 @@ int sceneNumber;
             sceneNumber = 3;
             break;
         case 9:
-            addLabel.alpha += 0.04f;
-            if(1.6f < addLabel.alpha){
-                sceneNumber = 10;
-            }
-            
-            break;
-        case 10:
-            addLabel.alpha -= 0.04f;
-            if(addLabel.alpha < 0.0f){
-                [addimageButton setEnabled:YES];
-                [nextButton setEnabled:YES];
-                sceneNumber = 7;
+            if(0 < addAssetsCount){
+                if([addSuc Do]){
+                    [addimageButton setEnabled:YES];
+                    [nextButton setEnabled:YES];
+                    sceneNumber = 7;
+                }
+            }else if(0 < addedAssetsCount){
+                if([addAlr Do]){
+                    [addimageButton setEnabled:YES];
+                    [nextButton setEnabled:YES];
+                    sceneNumber = 7;
+                }
+            }else{
+                if([addNot Do]){
+                    [addimageButton setEnabled:YES];
+                    [nextButton setEnabled:YES];
+                    sceneNumber = 7;
+                }
             }
             break;
     }
@@ -544,10 +493,6 @@ int sceneNumber;
     if(senkoImage){
         if(manager){
             // 角度には平滑化した値を使用
-            /*senkoAngle = ((-manager.accelerometerData.acceleration.x* 90.0f * M_PI / 180.0f) + prevAngle + prevprevAngle) / 3.0f;
-            prevprevAngle  = prevAngle;
-            prevAngle = (-manager.accelerometerData.acceleration.x* 90.0f * M_PI / 180.0f);*/
-            
             senkoAngle = -[[self getSmoothingaccelerationWithNumber:@3][@"x"] floatValue];
             senkoImage.transform = CGAffineTransformMakeRotation(senkoAngle);
             hidanePoint = [self getHidanePointWithAngle:senkoAngle];
@@ -633,10 +578,10 @@ int sceneNumber;
 -(CGPoint)getHidanePointWithAngle:(CGFloat)angle{
     if(0 <= angle){
         return CGPointMake(senkoImage.frame.origin.x+
-                           + 11 * sin(angle) + 11 * cos(angle),
+                           + senkoRelativeX * sin(angle) + 11 * cos(angle),
                            
                            senkoImage.frame.origin.y+senkoImage.frame.size.height
-                           - 50 * sin(angle) - 11 * cos(angle));
+                           - 50 * sin(angle) - senkoRelativeX * cos(angle));
         
     }else{
         angle = - angle;
@@ -650,23 +595,19 @@ int sceneNumber;
     
 }
 //画像選択完了
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 //画像選択キャンセル
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
-{
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 //ビュー　タップ
-- (void)view_Tapped:(UITapGestureRecognizer *)sender
-{
+- (void)view_Tapped:(UITapGestureRecognizer *)sender{
     isTapped = 1;
 }
-- (NSMutableArray*)randomList:(int)max
-{
+- (NSMutableArray*)randomList:(int)max{
     NSMutableArray *inList  = [[NSMutableArray alloc] init];
     NSMutableArray *outList = [[NSMutableArray alloc] init];
     int j = 0;

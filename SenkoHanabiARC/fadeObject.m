@@ -56,7 +56,10 @@ static UIImageView *bokashiImage;
     alphaFlags = [NSMutableArray array];
     for(int i = 0; i < str.length; i++){
         NSString* c = [str substringWithRange:NSMakeRange(i, 1)];
-        if([c rangeOfString:@"\n"].location == NSNotFound){
+        if([c rangeOfString:@"\n"].location != NSNotFound){
+            iy = 0;
+            ix++;
+        }else{
             UILabel* l = [[UILabel alloc] initWithFrame:CGRectMake(w - fontsize * (1+ix), y + fontsize * iy ,320,100)];
             l.font = [UIFont fontWithName:@"Hiragino Mincho ProN" size:fontsize];
             l.textAlignment = NSTextAlignmentCenter;
@@ -64,13 +67,19 @@ static UIImageView *bokashiImage;
             l.backgroundColor = [UIColor clearColor];
             l.textColor = [UIColor whiteColor];
             l.alpha = 0.0f;
+            if([c rangeOfString:@"ー"].location != NSNotFound){
+                //[l setText:@"|"];
+                //CGRect move = l.frame;
+                //move.size.width = move.size.width * 0.7;
+                //move.size.height = move.size.height * 0.7;
+                //l.frame = move;
+                //l.transform = CGAffineTransformMakeRotation(M_PI_2+M_PI);
+            }
+            
             [view addSubview:l];
             [uilabels addObject:l];
             [alphaFlags addObject:[NSNumber numberWithInt:0]];
             iy++;
-        }else{
-            iy = 0;
-            ix++;
         }
     }
     
