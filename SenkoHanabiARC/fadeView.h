@@ -11,7 +11,7 @@
 @interface fadeView : NSObject{
     float upAlpha, downAlpha, topAlpha;
     UIView *superview;
-    id obj;
+    UIView *obj;
     int fontSize, Line;
     CGPoint P;
     NSString *Text;
@@ -24,4 +24,6 @@
 -(int)Do;
 -(void)hide;
 -(void)changeTextWithString:(NSString *)newText;
+-(void)reverse;
+-(int)hideDo;
 @end
