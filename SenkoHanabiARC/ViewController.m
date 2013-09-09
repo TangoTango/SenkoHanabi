@@ -331,27 +331,48 @@ bool soundFlg = NO;
             [showFadeObject Do];
             
             
-            // 加速度が大きくなりすぎたら火種を落とす
         {
+            
+            if(!soundFlg) {
+                soundFlg = YES;
+                
+                sparkBgm = [[Bgm alloc] initWithPath:@"spark.wav"];
+                [sparkBgm prepareToPlay];
+                [sparkBgm setNumberOfLoops:-1];
+                
+            }
+            
             float rate;
             switch (fireScene) {
                 case 1:
                 default:
                     rate = 5;
+                    [sparkBgm setVolume:0.05];
+                    [sparkBgm play];
                     break;
                 case 2:
                     rate = 4;
+                    [sparkBgm setVolume:0.1];
+                    [sparkBgm play];
                     break;
                 case 3:
                     rate = 3;
+                    [sparkBgm setVolume:0.3];
+                    [sparkBgm play];
                     break;
                 case 4:
                     rate = 2;
+                    [sparkBgm setVolume:0.4];
+                    [sparkBgm play];
                     break;
                 case 5:
                     rate = 1;
+                    [sparkBgm setVolume:0.5];
+                    [sparkBgm play];
                     break;
             }
+            
+            // 加速度が大きくなりすぎたら火種を落とす
             if( 2 < [prevAccelerations count] ){
                 NSDictionary* now = prevAccelerations[[prevAccelerations count]-1];
                 NSDictionary* prev = prevAccelerations[[prevAccelerations count]-2];
@@ -376,29 +397,6 @@ bool soundFlg = NO;
                 hinotamaImage.frame = move;
                 hinotamaImage.transform = CGAffineTransformMakeRotation(senkoAngle);
                 hinotamaImage.alpha -= 0.06f;
-            }
-            
-            if(!soundFlg) {
-                soundFlg = YES;
-                
-                sparkBgm = [[Bgm alloc] initWithPath:@"spark.wav"];
-                
-                [sparkBgm setVolume:0.5];
-                [sparkBgm setNumberOfLoops:-1];
-                [sparkBgm play];
-                
-//                // ファイルのパスを作成します。
-//                NSString *path = [[NSBundle mainBundle] pathForResource:@"spark" ofType:@"wav"];
-//                
-//                // ファイルのパスを NSURL へ変換します。
-//                NSURL* url = [NSURL fileURLWithPath:path];
-//                NSLog(@"path:%@", url);
-//                // ファイルを読み込んで、プレイヤーを作成します。
-//                player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
-//                
-//                [player setNumberOfLoops:-1];
-//                // 再生
-//                [player play];
             }
             
 
