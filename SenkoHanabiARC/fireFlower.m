@@ -11,7 +11,7 @@
 
 @implementation fireFlower
 
-Bgm* sparkBgm; // 効果音
+static Bgm* sparkBgm = nil; // 効果音
 
 @synthesize deleteFlg;
 
