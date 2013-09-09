@@ -89,8 +89,9 @@
         [ui removeFromSuperview];
     }
     
-    Text = newText;
-    obj = [NSMutableArray array];
+    id t = [self initWithLableText:newText point:P line:Line fontsize:fontSize upAlpha:upAlpha downAlpha:downAlpha topAlpha:topAlpha superview:View];
+    t=t;
+    /*obj = [NSMutableArray array];
     int boxsize = fontSize * 1.5;
     int ix = 0;
     int iy = 0;
@@ -119,7 +120,7 @@
             ix++;
         }
     }
-    alphaFlag = 1;
+    alphaFlag = 1;*/
 }
 
 //二回目初期化用
