@@ -31,10 +31,10 @@
     //CGPoint position = CGPointMake(p.x + offset.x, p.y + offset.y);
     
     if(img.image.size.height < img.image.size.width){
-        img.frame = CGRectMake(p.x+12, p.y-10, maxw, img.image.size.height*(maxw/img.image.size.width));
+        img.frame = CGRectMake(p.x, p.y, maxw, img.image.size.height*(maxw/img.image.size.width));
         //img.frame = CGRectMake(p.x + offset.x, p.y + offset.y, maxw, img.image.size.height*(maxw/img.image.size.width));
     }else{
-        img.frame = CGRectMake(p.x+12, p.y-10, img.image.size.width*(maxw/img.image.size.height), maxh);
+        img.frame = CGRectMake(p.x, p.y, img.image.size.width*(maxw/img.image.size.height), maxh);
     }
     
     CGRect f = img.frame;

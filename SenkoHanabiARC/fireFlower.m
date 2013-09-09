@@ -11,67 +11,137 @@
 
 @implementation fireFlower
 @synthesize deleteFlg;
--(id)initWithPoint:(CGPoint)p view:(UIView*)view{
+-(id)initWithPoint:(CGPoint)p view:(UIView*)v{
+    view = v;
     layers = [NSMutableArray array];
-    alphaFlags = [NSMutableArray array];
     lifeCounts = [NSMutableArray array];
     deleteFlg = 0;
-    //50〜90度
-    int r = 0;
-    while (r < 360) {
-        r += (rand()%40) + 50;
-        CALayer* layer = [CALayer layer];
-        int kind = (rand() % 4) + 2;
-        UIImage* img = [UIImage imageNamed:[NSString stringWithFormat:@"hibana%d.png",kind]];
-        layer.contents = (id)(img.CGImage);
-        
-        int maxw = 70;
-        int maxh = 70;
-        
-        if(img.size.height < img.size.width){
-            layer.frame = CGRectMake(p.x, p.y, maxw, img.size.height*(maxw/img.size.width));
-        }else{
-            layer.frame = CGRectMake(p.x, p.y, img.size.width*(maxw/img.size.height), maxh);
-        }
-        
-        layer.anchorPoint = CGPointMake(0, 0.7);
-        layer.transform = CATransform3DMakeRotation( r * M_PI / 180.0f, 0, 0, 1);
-        [view.layer addSublayer:layer];
-        
-        maxLifeCount = 3;
-        
-        [layers addObject:layer];
-        [alphaFlags addObject:[NSNumber numberWithInt:1]];
-        [lifeCounts addObject:[NSNumber numberWithInt:maxLifeCount]];
+    //火種から出ている時フラグ(花が開くときは0)
+    rootFlg = 1;
+    
+    //-120度から120度
+    float r = rand() % 240 - 120;
+    r = (r * M_PI) / 180.0f;
+    rootDirection = r;
+    
+    CALayer* layer = [CALayer layer];
+    int kind = (rand() % 4) + 2;
+    UIImage* img = [UIImage imageNamed:[NSString stringWithFormat:@"hibana%d.png",kind]];
+    layer.contents = (id)(img.CGImage);
+    
+    //30から80の大きさ
+    int maxw = random()%50 + 30;
+    int maxh = maxw;
+    float dist = 15.0;//火種からの距離
+    float imgw;
+    float imgh;
+    
+    if(img.size.height < img.size.width){
+        imgw = maxw;
+        imgh = img.size.height*(maxw/img.size.width);
+    }else{
+        imgw = img.size.width*(maxw/img.size.height);
+        imgh = maxh;
     }
+    layer.frame = CGRectMake(p.x, p.y - imgh/2, imgw, imgh);
+    rootX = p.x;
+    rootY = p.y;
+    toX = rootX + cos(rootDirection+M_PI_2) * (imgw + dist);
+    toY = rootY + sin(rootDirection+M_PI_2) * (imgw + dist);
+    
+    layer.anchorPoint = CGPointMake(-dist/layer.frame.size.width, 0.5);
+    layer.frame = CGRectMake(rootX + dist, rootY - imgh/2, layer.frame.size.width, layer.frame.size.height);
+    
+    layer.transform = CATransform3DMakeRotation( rootDirection + M_PI_2, 0, 0, 1);
+    [view.layer addSublayer:layer];
+    
+    maxLifeCount = 2;
+    
+    [layers addObject:layer];
+    [lifeCounts addObject:[NSNumber numberWithInt:maxLifeCount]];
     return self;
 }
 
--(void)Do{
+-(void)DoWithScene:(NSInteger)scene{
     float deleteCount = 0;
     for(int i = 0; i < [layers count]; i++){
         CALayer* layer = layers[i];
-        if(i==0){
-            NSLog(@"%f", 1 + 3*([lifeCounts[i] floatValue]/maxLifeCount));
-        }
+        
         lifeCounts[i] = [NSNumber numberWithInt:[lifeCounts[i] intValue] - 1];
-        layer.contentsRect = CGRectMake(0, 0, 1 + 1*([lifeCounts[i] floatValue]/maxLifeCount), 1);
-        //layer.contentsRect = CGRectMake(0, 0, 1, 1);
-        if([lifeCounts[i] intValue] < 0){
+        if((rootFlg && [lifeCounts[i] intValue] < 1) || [lifeCounts[i] intValue] < 0){
             deleteCount++;
+        }else{
+            layer.contentsRect = CGRectMake(0, 0, 1.0 + 1.0*([lifeCounts[i] floatValue]/maxLifeCount), 1);
         }
-        
     }
+    
+    //全て寿命が切れた場合
     if(deleteCount == [layers count]){
-        for(int i = 0; i < [layers count]; i++){
-            [layers[i] removeFromSuperlayer];
-        }
-        layers = nil;
-        alphaFlags = nil;
-        lifeCounts = nil;
-        deleteFlg = 1;
-    }
+        //火種からの火花の場合
+        if(rootFlg){
+            rootFlg = 0;
+            //for(int i = 0; i < [layers count]; i++){
+            //    [layers[i] removeFromSuperlayer];
+            //}
+            //layers = [NSMutableArray array];
+            //lifeCounts = [NSMutableArray array];
+            if(scene <= 2 || 6<= scene){
+                for(int i = 0; i < [layers count]; i++){
+                    [layers[i] removeFromSuperlayer];
+                }
+                layers = nil;
+                lifeCounts = nil;
+                deleteFlg = 1;
+                return;
+            }
+            
+            int r = -120 + (rand()% 40);
+            //範囲は-120〜120度
+            while(-120 <= r && r <= 120) {
+                CALayer* layer = [CALayer layer];
+                int kind = (rand() % 4) + 2;
+                UIImage* img = [UIImage imageNamed:[NSString stringWithFormat:@"hibana%d.png",kind]];
+                layer.contents = (id)(img.CGImage);
+                
+                //30から80の大きさ
+                int maxw = random()%50 + 30;
+                int maxh = maxw;
+                int dist = 0;
+                float imgw,imgh;
+                
+                if(img.size.height < img.size.width){
+                    imgw = maxw;
+                    imgh = img.size.height*(maxw/img.size.width);
+                }else{
+                    imgw = img.size.width*(maxw/img.size.height);
+                    imgh = maxh;
+                }
+                layer.frame = CGRectMake(toX, toY-imgh/2, imgw, imgh);
+                layer.contentsRect = CGRectMake(0, 0, 2, 1);
+                
+                layer.anchorPoint = CGPointMake(-dist/layer.frame.size.width, 0.5);
+                layer.frame = CGRectMake(toX + dist, toY - imgh/2, layer.frame.size.width, layer.frame.size.height);
+                
+                layer.transform = CATransform3DMakeRotation( rootDirection + (r*M_PI/180.0f) + M_PI_2, 0, 0, 1);
+                [view.layer addSublayer:layer];
+                
+                [layers addObject:layer];
+                [lifeCounts addObject:[NSNumber numberWithInt:maxLifeCount]];
+                
+                //間隔は41〜80度(2本から4本)
+                r += (rand()% 40) + 41;
+            }
         
+        }else{
+            //花の火花の場合
+            for(int i = 0; i < [layers count]; i++){
+                [layers[i] removeFromSuperlayer];
+            }
+            layers = nil;
+            lifeCounts = nil;
+            deleteFlg = 1;
+        }
+    }
 }
 
 @end

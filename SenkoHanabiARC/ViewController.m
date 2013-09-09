@@ -12,18 +12,20 @@
 #import "fadeObject.h"
 #import "fire.h"
 #import "fireFlower.h"
+#import "fadeView.h"
 
 @interface ViewController ()
 
 @end
 @implementation ViewController
 
+fadeView *title;
 UILabel *titleLabel; // タイトルのラベル
 UILabel *howLabel; // 「遊び方」のラベル
 UIImageView *senkoImage; // 線香花火の画像
 UIImageView *hinotamaImage;
 UILabel* addLabel; // 「画像を追加」ボタンを押したときのメッセージのラベル
-CALayer* hi; // 火種のレイヤ
+//CALayer* hi; // 火種のレイヤ
 bool hiFlg = NO; // 火種が落ちたかどうか
 
 NSArray *imageNames; // 現れて消えるアニメーション画像の配列
@@ -51,9 +53,20 @@ int isTapped = 0;//タップしたか
 int initLaunch = 1;//最初の起動かどうか
 
 CMMotionManager *manager;//センサオブジェクト
+NSMutableArray* prevAccelerations;//センサデータ記録
 
-CGFloat prevAngle = 0.0f;
-CGFloat prevprevAngle = 0.0f;
+//CGFloat prevAngle = 0.0f;
+//CGFloat prevprevAngle = 0.0f;
+
+CGFloat senkoRelativeX = 11.0f;//線香花火の火種の相対座標(画像と表示サイズに依存)
+CGFloat senkoRelativeY = 326.0f;
+CGFloat senkoOriginalW = 61.0f;//線香花火のサイズ(回転したら取得できなくなるので)
+CGFloat senkoOriginalH = 337.0f;
+CGFloat senkoAngle;
+int senkoCount;
+int fireScene;
+CGPoint hidanePoint;
+CGFloat hidaneAX, hidaneAY, hidaneVX, hidaneVY;
 
 int sceneNumber;
 
@@ -80,6 +93,7 @@ int sceneNumber;
     if (!manager.accelerometerAvailable) {
         manager = nil;
     }
+    prevAccelerations = [NSMutableArray array];
     
     //フェードオブジェクト(テキスト、画像の名前、Asset)読み込み
     imageNames = [NSArray arrayWithObjects:@"fade1.png",@"fade2.png", nil];
@@ -140,14 +154,26 @@ int sceneNumber;
     }
 }
 -(void)loop{
-    
     if(manager){
         [manager startAccelerometerUpdates];
+        NSNumber* nowx = [NSNumber numberWithFloat:manager.accelerometerData.acceleration.x];
+        NSNumber* nowy = [NSNumber numberWithFloat:manager.accelerometerData.acceleration.y];
+        NSNumber* nowz = [NSNumber numberWithFloat:manager.accelerometerData.acceleration.z];
+        [prevAccelerations addObject:[NSDictionary dictionaryWithObjectsAndKeys:nowx,@"x",nowy,@"y",nowz,@"z", nil]];
+        if(5 < [prevAccelerations count]){
+            [prevAccelerations removeObjectsInRange:NSMakeRange(0, 1)];
+        }
     }
     
     switch (sceneNumber) {
         case 1://「線香花火」設定
-            if(!titleLabel){
+            if(!title){
+                title = [[fadeView alloc] initWithLableText:@"線香花火" point:CGPointMake(160,100) line:1 fontsize:50 upAlpha:0.02f downAlpha:0.02f topAlpha:1.0f superview:self.view];
+            }else{
+                [title reInit];
+            }
+            sceneNumber = 3;
+            /*if(!titleLabel){
                 titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,50,320,100)];
                 titleLabel.font = [UIFont fontWithName:@"Hiragino Mincho ProN" size:40];
                 titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -160,37 +186,17 @@ int sceneNumber;
                 titleLabel.alpha = 0.0f;
             }
             
-            sceneNumber = 2;
+            sceneNumber = 2;*/
             break;
         case 2://「線香花火」表示アニメ
-            titleLabel.alpha += 0.02f;
+            /*titleLabel.alpha += 0.02f;
             if(1.0f < titleLabel.alpha || isTapped){
                 sceneNumber = 3;
-            }
+            }*/
             break;
         case 3://「線香花火」隠蔽アニメ、線香花火設定、「遊び方」設定
-        /*{
-            
-            CALayer *caLayer = [CALayer layer];
-            caLayer.frame = CGRectMake(0, 0, 100, 100);
-            caLayer.contents = (id) [UIImage imageNamed:@"again2.gif"].CGImage;
-            [self.view.layer addSublayer:caLayer];
-            
-            CABasicAnimation *animation2 = [CABasicAnimation animationWithKeyPath:@"position"];
-            
-            CGPoint finishPoint2 = CGPointMake(100, 100);
-            caLayer.position = finishPoint2;  //終了位置をあらかじめセット
-            
-            animation2.fromValue = [NSValue valueWithCGPoint:CGPointMake(250, 300)];  //開始地点
-            animation2.toValue = [NSValue valueWithCGPoint:CGPointMake(100, 100)];  //終着地点
-            animation2.duration = 1.5;
-            animation2.repeatCount = 3;
-            
-            [caLayer addAnimation:animation2 forKey:@"move"];
-        }*/
-            
-            titleLabel.alpha -= 0.02f;
-            if(titleLabel.alpha < 0.0f){
+            //titleLabel.alpha -= 0.02f;
+            if([title Do]/*titleLabel.alpha < 0.0f*/){
                 // 線香花火の画像
                 if(!senkoImage){
                     senkoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"senkohanabi5.png"]];
@@ -199,32 +205,17 @@ int sceneNumber;
                     senkoImage.frame = CGRectMake(140, -10, 61, 337);//122 × 675
                     senkoImage.alpha = 0.0f;
                     [self.view addSubview:senkoImage];
-                    // 火種の画像
-                    hi = [CALayer layer];
-                    hi.contents = (id)[UIImage imageNamed:@"hinotama.png"].CGImage;
-                    hi.frame = CGRectMake(3, 317, 120.0/7.5, 140.0/7.5);
-                    [senkoImage.layer addSublayer:hi];
+                
                 }else{
                     senkoImage.alpha = 0.0f;
-                    
-                    CGRect hi_init = CGRectMake(3, 317, 120.0/7.5, 140.0/7.5);
-                    hi.frame = hi_init;
-                    
                 }
                 
                 // 火種の画像
                 if(!hinotamaImage){
-                    
-                    /*CALayer *caLayer = [CALayer layer];
-                    caLayer.frame = CGRectMake(0, 0, 100, 100);
-                    caLayer.backgroundColor = [UIColor blueColor].CGColor;
-                    [self.view.layer addSublayer:caLayer];*/
-                    
-                    /*hinotamaImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hinotama.png"]];
-                    hinotamaImage.layer.anchorPoint = CGPointMake(0.5, -13.6); // 直すべき
-                    hinotamaImage.frame = CGRectMake(141, 305, 120/6, 140/6);
+                    UIImage* img = [UIImage imageNamed:@"hinotama.png"];
+                    hinotamaImage = [[UIImageView alloc] initWithImage:img];
                     hinotamaImage.alpha = 0.0f;
-                    [self.view addSubview:hinotamaImage];*/
+                    [self.view addSubview:hinotamaImage];
                 }else{
                     hinotamaImage.alpha = 0.0f;
                 }
@@ -264,6 +255,8 @@ int sceneNumber;
                 senkoImage.alpha = 1.0f;
                 hinotamaImage.alpha += 1.0f;
                 howLabel.alpha = 0.0f;
+                senkoCount = 0;
+                fireScene = 1;
                 sceneNumber = 6;
             }
             break;
@@ -274,22 +267,40 @@ int sceneNumber;
                 hinotamaImage.alpha += 1.0f;
                 howLabel.alpha = 0.0f;
                 fadeselect = 0;
+                senkoCount = 0;
+                fireScene = 1;
                 sceneNumber = 6;
             }
             break;
+            
+            
         case 6:
+            
+            //fireScene設定
+            senkoCount++;
+            if(33*70 < senkoCount){
+                fireScene = 6;//ほぼ何もない
+            }else if(33*60 < senkoCount){
+                fireScene = 5;//盛り下がり
+            }else if(33*40 < senkoCount){
+                fireScene = 4;//絶頂期
+            }else if(33*20 < senkoCount){
+                fireScene = 3;//盛り上がり
+            }else if(33*10 < senkoCount){
+                fireScene = 2;//ちょい出始める
+            }
             //火花作成、Do
         {
             int r = (rand() % 2);
             if( r == 0 ){
-                int kind = (rand() % 4) + 2;
+                /*int kind = (rand() % 4) + 2;
                 CGFloat angle = ((-manager.accelerometerData.acceleration.x* 90.0f * M_PI / 180.0f) + prevAngle + prevprevAngle) / 3.0f;
                 angle = -angle - 0.15f;
-                float nx = 160 + 320 * sin(angle);
-                float ny = 330 * cos(angle);
+                float nx = 160 + 320 * sin(angle)+13;
+                float ny = 330 * cos(angle)-10;
                 fire* f = [[fire alloc] initWithObject:[[UIImageView alloc]
                                                         initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"hibana%d.png", kind]]] view:self.view point:CGPointMake(nx, ny)];
-                [fires addObject:f];
+                [fires addObject:f];*/
             }
             
             for(int i = 0; i < [fires count]; i++){
@@ -303,20 +314,37 @@ int sceneNumber;
         }
             //火花の花作成、Do
         {
-            int r = (rand() % 3);
+            int rate;
+            switch (fireScene) {
+                case 1:
+                default:
+                    rate = 100;
+                    break;
+                case 2:
+                    rate = 50;
+                    break;
+                case 3:
+                    rate = 10;
+                    break;
+                case 4:
+                    rate = 1;
+                    break;
+                case 5:
+                    rate = 10;
+                    break;
+                case 6:
+                    rate = 50;
+                    break;
+            }
+            int r = (rand() % rate);
             if( r == 0 ){
-                CGFloat angle = ((-manager.accelerometerData.acceleration.x* 90.0f * M_PI / 180.0f) + prevAngle + prevprevAngle) / 3.0f;
-                angle = -angle - 0.15f;
-                float nx = 160 + 320 * sin(angle) + (rand() % 200 - 100);
-                float ny = 330 * cos(angle) + (rand() % 200 - 100);
-                
-                fireFlower* ff = [[fireFlower alloc] initWithPoint:CGPointMake(nx, ny) view:self.view];
+                fireFlower* ff = [[fireFlower alloc] initWithPoint:hidanePoint view:self.view];
                 [fireFlowers addObject:ff];
             }
             
             for(int i = 0; i < [fireFlowers count]; i++){
                 fireFlower* ff = fireFlowers[i];
-                [ff Do];
+                [ff DoWithScene:fireScene];
                 if(ff.deleteFlg){
                     [fireFlowers removeObject:ff];
                     i--;
@@ -341,12 +369,7 @@ int sceneNumber;
                     [[fadeObject alloc] initWithString:textNames[i - [imageNames count]] view:self.view];
                 }else{
                     ALAsset *asset = assets[i - [imageNames count] - [textNames count]];
-                    UIImage *img = [UIImage imageWithCGImage:[asset thumbnail]];
-                    
-                    /*ALAssetRepresentation *representation = [asset defaultRepresentation];
-                    UIImage *img = [UIImage imageWithCGImage:[representation fullResolutionImage]
-                                                       scale:[representation scale]
-                                                 orientation:[[asset valueForProperty:@"ALAssetPropertyOrientation"] intValue]];*/
+                    UIImage *img = [UIImage imageWithCGImage:[asset thumbnail]];                    
                     showFadeObject =
                     [[fadeObject alloc] initWithImage:[[UIImageView alloc] initWithImage:img] view:self.view];
                 }
@@ -357,26 +380,62 @@ int sceneNumber;
             [showFadeObject Do];
             
             // 加速度が大きくなりすぎたら火種を落とす
-            if(manager.accelerometerData.acceleration.x > 0.5 || manager.accelerometerData.acceleration.y < -1.1 || manager.accelerometerData.acceleration.z > 0.5) {
-                hiFlg = YES;
+            float rate;
+            switch (fireScene) {
+                case 1:
+                default:
+                    rate = 5;
+                    break;
+                case 2:
+                    rate = 4;
+                    break;
+                case 3:
+                    rate = 3;
+                    break;
+                case 4:
+                    rate = 2;
+                    break;
+                case 5:
+                    rate = 1;
+                    break;
+            }
+        {
+            if( 2 < [prevAccelerations count] ){
+                NSDictionary* now = prevAccelerations[[prevAccelerations count]-1];
+                NSDictionary* prev = prevAccelerations[[prevAccelerations count]-2];
+                if(0.05 * rate< fabs([now[@"x"] floatValue] - [prev[@"x"] floatValue])
+                   || 0.1 * rate < fabs([now[@"y"] floatValue] - [prev[@"y"] floatValue])
+                   || 0.05 * rate < fabs([now[@"z"] floatValue] - [prev[@"z"] floatValue])) {
+                    hiFlg = YES;
+                    hidaneAX =  1.0*([now[@"x"] floatValue]);
+                    hidaneAY = -1.0*([now[@"y"] floatValue]);
+                    hidaneVX = hidaneAX;
+                    hidaneVY = hidaneAY;
+                }
             }
             
             if(hiFlg) {
-                CGRect move = hi.frame;
-                move.origin.x += manager.accelerometerData.acceleration.x;
-                move.origin.y += 25;
-                hi.frame = move;
+                hinotamaImage.transform = CGAffineTransformMakeRotation(0);
+                CGRect move = hinotamaImage.frame;
+                hidaneVX += hidaneAX;
+                hidaneVY += hidaneAY;
+                move.origin.x += hidaneVX;
+                move.origin.y += hidaneVY;
+                hinotamaImage.frame = move;
+                hinotamaImage.transform = CGAffineTransformMakeRotation(senkoAngle);
+                hinotamaImage.alpha -= 0.06f;
             }
 
             // 火種が画面下に来ると終了
-            if(hi.frame.origin.y > 520) {
+            if( hinotamaImage.frame.origin.x < -hinotamaImage.frame.size.width
+               || self.view.frame.size.width < hinotamaImage.frame.origin.x
+               || hinotamaImage.frame.origin.y < -hinotamaImage.frame.size.height
+               || self.view.frame.size.height < hinotamaImage.frame.origin.y
+               || hinotamaImage.alpha < 0.0f
+               ) {
                 sceneNumber = 7;
             }
-            
-            // ある程度時間が経ったら終了
-//            if(senkoTime-- < 0){
-//                sceneNumber = 7;
-//            }
+        }
             break;
         case 7:
             //フェードオブジェクト削除
@@ -390,6 +449,15 @@ int sceneNumber;
                 [f Do];
                 if(f.deleteFlg){
                     [fires removeObject:f];
+                    i--;
+                }
+            }
+            //火花の花オブジェクト消し
+            for(int i = 0; i < [fireFlowers count]; i++){
+                fireFlower* ff = fireFlowers[i];
+                [ff DoWithScene:fireScene];
+                if(ff.deleteFlg){
+                    [fireFlowers removeObject:ff];
                     i--;
                 }
             }
@@ -473,20 +541,28 @@ int sceneNumber;
     }
     
     //線香花火がある間
-    if(4 <= sceneNumber && sceneNumber <= 8){
+    if(senkoImage){
         if(manager){
             // 角度には平滑化した値を使用
-            CGFloat angle = ((-manager.accelerometerData.acceleration.x* 90.0f * M_PI / 180.0f) + prevAngle + prevprevAngle) / 3.0f;
-            
+            /*senkoAngle = ((-manager.accelerometerData.acceleration.x* 90.0f * M_PI / 180.0f) + prevAngle + prevprevAngle) / 3.0f;
             prevprevAngle  = prevAngle;
-            prevAngle = (-manager.accelerometerData.acceleration.x* 90.0f * M_PI / 180.0f);
+            prevAngle = (-manager.accelerometerData.acceleration.x* 90.0f * M_PI / 180.0f);*/
             
-            senkoImage.transform = CGAffineTransformMakeRotation(angle);
-            hinotamaImage.transform = CGAffineTransformMakeRotation(angle);
+            senkoAngle = -[[self getSmoothingaccelerationWithNumber:@3][@"x"] floatValue];
+            senkoImage.transform = CGAffineTransformMakeRotation(senkoAngle);
+            hidanePoint = [self getHidanePointWithAngle:senkoAngle];
             
+            if( !hiFlg ){
+                UIImage* img = [UIImage imageNamed:@"hinotama.png"];
+                float rate = 7.5;
+                float layw = img.size.width/rate;
+                float layh = img.size.height/rate;
+                hinotamaImage.transform = CGAffineTransformMakeRotation(0);
+                hinotamaImage.frame = CGRectMake(hidanePoint.x - layw/2, hidanePoint.y - layh/2, layw, layh);
+                hinotamaImage.transform = CGAffineTransformMakeRotation(senkoAngle);
+            }
         }
     }
-    
     
     isTapped = 0;
 }
@@ -554,7 +630,25 @@ int sceneNumber;
     return library;
 }
 
-
+-(CGPoint)getHidanePointWithAngle:(CGFloat)angle{
+    if(0 <= angle){
+        return CGPointMake(senkoImage.frame.origin.x+
+                           + 11 * sin(angle) + 11 * cos(angle),
+                           
+                           senkoImage.frame.origin.y+senkoImage.frame.size.height
+                           - 50 * sin(angle) - 11 * cos(angle));
+        
+    }else{
+        angle = - angle;
+        return CGPointMake(senkoImage.frame.origin.x+
+                           + senkoRelativeX * cos(angle) + senkoRelativeY * sin(angle),
+                           
+                           senkoImage.frame.origin.y+senkoImage.frame.size.height
+                           - senkoRelativeX * sin(angle)
+                           - (senkoOriginalH - senkoRelativeY) * cos(angle));
+    }
+    
+}
 //画像選択完了
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
@@ -600,6 +694,22 @@ int sceneNumber;
     return outList;
 }
 
+-(NSDictionary*)getSmoothingaccelerationWithNumber:(NSNumber*)n{
+    float sx = 0, sy = 0, sz = 0;
+    for(int i = [prevAccelerations count]-1, count = [n intValue] - 1; 0 <= i && 0 <= count; i--,count--){
+        sx += [prevAccelerations[i][@"x"] floatValue];
+        sy += [prevAccelerations[i][@"y"] floatValue];
+        sz += [prevAccelerations[i][@"z"] floatValue];
+    }
+    sx /= [n floatValue];
+    sy /= [n floatValue];
+    sz /= [n floatValue];
+    
+    NSNumber* ssx = [NSNumber numberWithFloat:sx];
+    NSNumber* ssy = [NSNumber numberWithFloat:sy];
+    NSNumber* ssz = [NSNumber numberWithFloat:sz];
+    return [NSDictionary dictionaryWithObjectsAndKeys:ssx,@"x",ssy,@"y",ssz,@"z", nil];
+}
 
 -(void)viewDidAppear:(BOOL)animated{
     // センサーの停止

@@ -9,14 +9,18 @@
 #import <Foundation/Foundation.h>
 
 @interface fireFlower : NSObject{
-    NSMutableArray* layers;
-    NSMutableArray* alphaFlags;
-    NSMutableArray* lifeCounts;
-    int maxLifeCount;
+    NSMutableArray* layers;//花の火花
+    NSMutableArray* lifeCounts;//花の火花の寿命
+    int rootX, rootY;//火種の座標
+    int toX, toY;//行き先の座標
+    float rootDirection;//火種の飛ぶ方向
+    int rootFlg;//火種からの火花のアニメーションをしているかどうか
+    int maxLifeCount;//全体の寿命上限
     int deleteFlg; // 使われていないかどうか
+    UIView* view;//画面全体のビュー
 }
 @property int deleteFlg;
--(id)initWithPoint:(CGPoint)p view:(UIView*)view;
--(void)Do;
+-(id)initWithPoint:(CGPoint)p view:(UIView*)v;
+-(void)DoWithScene:(NSInteger)scene;
 
 @end
