@@ -27,6 +27,7 @@ fadeView *how;//遊び方
 fadeView *addSuc;//画像追加成功
 fadeView *addAlr;//画像追加失敗　既に追加済
 fadeView *addNot;//画像追加失敗　一個もなかった
+fadeView *yakedo;//火傷しちゃう警告
 UIImageView *senkoImage; // 線香花火の画像
 UIImageView *hinotamaImage;
 UILabel* addLabel; // 「画像を追加」ボタンを押したときのメッセージのラベル
@@ -106,7 +107,7 @@ bool soundFlg = NO;
     //フェードオブジェクト(テキスト、画像の名前、Asset)読み込み
     imageNames = [NSArray arrayWithObjects:@"fade1.png",@"fade2.png", nil];
     textNames = [NSArray arrayWithObjects:@"気づいたら\nカラオケで\n\n\n\nざこ寝",
-                 @"セミの\n\n\n\n\n\n抜け殻",
+                 @"セミのー\n\n\n\n\n\n抜け殻",
                  @"プールで\n監視員に\n\n\n\n怒られる",
                  @"好きな子と\n友達が\n\n\n\n付き合ってた",
                  @"お祭り\n\n\n\n\n騒ぎ",
@@ -116,8 +117,9 @@ bool soundFlg = NO;
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
     assetsURL = [ud objectForKey:@"assetsURL"];
     assets = [NSMutableArray array];
-    if(assetsURL){
+    if(assetsURL && 0 < [assetsURL count]){
         initAssetsCount = 0;
+        
         for (NSString* URLstr in assetsURL) {
             NSURL* URL = [NSURL URLWithString:URLstr];
             assetsLibrary = [self.class defaultAssetsLibrary];
@@ -126,8 +128,14 @@ bool soundFlg = NO;
                                initAssetsCount++;
                                if(asset){
                                    [assets addObject:asset];
+                               }else{
+                                   [assetsURL removeObjectForKey:URLstr];
+                                   initAssetsCount--;
                                }
                                if(initAssetsCount == [assetsURL count]){
+                                   NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+                                   [ud setObject:assetsURL forKey:@"assetsURL"];
+                                   [ud synchronize];
                                    fadeSelects = [self randomList:[imageNames count] + [textNames count] + [assets count]];
                                    //ループ開始
                                    [NSTimer scheduledTimerWithTimeInterval:0.03f
@@ -140,6 +148,9 @@ bool soundFlg = NO;
                           failureBlock:^(NSError *error) {
                               initAssetsCount++;
                               if(initAssetsCount == [assetsURL count]){
+                                  NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+                                  [ud setObject:assetsURL forKey:@"assetsURL"];
+                                  [ud synchronize];
                                   fadeSelects = [self randomList:[imageNames count] + [textNames count] + [assets count]];
                                   //ループ開始
                                   [NSTimer scheduledTimerWithTimeInterval:0.03f
@@ -169,6 +180,11 @@ bool soundFlg = NO;
         NSNumber* nowy = [NSNumber numberWithFloat:manager.accelerometerData.acceleration.y];
         NSNumber* nowz = [NSNumber numberWithFloat:manager.accelerometerData.acceleration.z];
         [prevAccelerations addObject:[NSDictionary dictionaryWithObjectsAndKeys:nowx,@"x",nowy,@"y",nowz,@"z", nil]];
+        if(5 < [prevAccelerations count]){
+            [prevAccelerations removeObjectsInRange:NSMakeRange(0, 1)];
+        }
+    }else{
+        [prevAccelerations addObject:[NSDictionary dictionaryWithObjectsAndKeys:@0,@"x",@0,@"y",@0,@"z", nil]];
         if(5 < [prevAccelerations count]){
             [prevAccelerations removeObjectsInRange:NSMakeRange(0, 1)];
         }
@@ -231,6 +247,13 @@ bool soundFlg = NO;
                     senkoImage.alpha = 1.0f;
                     hinotamaImage.alpha = 1.0f;
                     [how hide];
+                    if( !yakedo ){
+                        yakedo = [[fadeView alloc] initWithLableText:@"火傷しちゃうぅ！" point:CGPointMake(270,30) line:1 fontsize:50 upAlpha:0.03f downAlpha:0.03f topAlpha:1.0f superview:self.view];
+                        yakedo.alphaFlag = 2;
+                        [yakedo reverse];
+                    }else{
+                        [yakedo reInit];
+                    }
                     fadeselect = 0;
                     senkoCount = 0;
                     fireScene = 1;
@@ -246,6 +269,24 @@ bool soundFlg = NO;
             }
             break;
         case 6://点火開始〜終了まで
+            
+            //画像保存しまくるやつ
+        {
+            //[self saveImageToPhotosAlbum:[UIImage imageNamed:@"senkohanabi5.png"]];
+            
+        }
+        {
+            //持ち方がおかしければ警告
+            if( 0 < [prevAccelerations count] ){
+                NSDictionary* now = prevAccelerations[[prevAccelerations count]-1];
+                if( 0.4 < [now[@"y"] floatValue] ){
+                    [yakedo Do];
+                }else{
+                    [yakedo hideDo];
+                }
+            }
+        }
+            
             
             //fireScene設定
             senkoCount++;
@@ -365,7 +406,6 @@ bool soundFlg = NO;
                     hidaneVY = hidaneAY;
                 }
             }
-            
             if(hiFlg) {
                 hinotamaImage.transform = CGAffineTransformMakeRotation(0);
                 CGRect move = hinotamaImage.frame;
@@ -445,7 +485,7 @@ bool soundFlg = NO;
             senkoImage.alpha -= 0.01f;
             
             //全部消えたら
-            if([fires count] == 0 && !showFadeObject && senkoImage.alpha < 0.0f){
+            if([yakedo hideDo] && [fires count] == 0 && !showFadeObject && senkoImage.alpha < 0.0f){
                 
                 //もう一度ボタン
                 if(!nextButton){
@@ -526,21 +566,19 @@ bool soundFlg = NO;
     
     //線香花火がある間
     if(senkoImage){
-        if(manager){
-            // 角度には平滑化した値を使用
-            senkoAngle = -[[self getSmoothingaccelerationWithNumber:@3][@"x"] floatValue];
-            senkoImage.transform = CGAffineTransformMakeRotation(senkoAngle);
-            hidanePoint = [self getHidanePointWithAngle:senkoAngle];
-            
-            if( !hiFlg ){
-                UIImage* img = [UIImage imageNamed:@"hinotama.png"];
-                float rate = 7.5;
-                float layw = img.size.width/rate;
-                float layh = img.size.height/rate;
-                hinotamaImage.transform = CGAffineTransformMakeRotation(0);
-                hinotamaImage.frame = CGRectMake(hidanePoint.x - layw/2, hidanePoint.y - layh/2, layw, layh);
-                hinotamaImage.transform = CGAffineTransformMakeRotation(senkoAngle);
-            }
+        // 角度には平滑化した値を使用
+        senkoAngle = -[[self getSmoothingaccelerationWithNumber:@3][@"x"] floatValue];
+        senkoImage.transform = CGAffineTransformMakeRotation(senkoAngle);
+        hidanePoint = [self getHidanePointWithAngle:senkoAngle];
+        
+        if( !hiFlg ){
+            UIImage* img = [UIImage imageNamed:@"hinotama.png"];
+            float rate = 7.5;
+            float layw = img.size.width/rate;
+            float layh = img.size.height/rate;
+            hinotamaImage.transform = CGAffineTransformMakeRotation(0);
+            hinotamaImage.frame = CGRectMake(hidanePoint.x - layw/2, hidanePoint.y - layh/2, layw, layh);
+            hinotamaImage.transform = CGAffineTransformMakeRotation(senkoAngle);
         }
     }
     
@@ -665,7 +703,6 @@ bool soundFlg = NO;
         [inList removeObjectAtIndex:randomNumber];
         j++;
         inListL = [inList count];
-        NSLog(@"%d:%d",inListL,[nm_ intValue]);
     }
     return outList;
 }
@@ -698,6 +735,94 @@ bool soundFlg = NO;
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+// 写真へのアクセスが許可されている場合はYESを返す。まだ許可するか選択されていない場合はYESを返す。
+- (BOOL)isPhotoAccessEnableWithIsShowAlert:(BOOL)_isShowAlert {
+    // このアプリの写真への認証状態を取得する
+    ALAuthorizationStatus status = [ALAssetsLibrary authorizationStatus];
+    
+    BOOL isAuthorization = NO;
+    
+    switch (status) {
+        case ALAuthorizationStatusAuthorized: // 写真へのアクセスが許可されている
+            isAuthorization = YES;
+            break;
+        case ALAuthorizationStatusNotDetermined: // 写真へのアクセスを許可するか選択されていない
+            isAuthorization = YES; // 許可されるかわからないがYESにしておく
+            break;
+        case ALAuthorizationStatusRestricted: // 設定 > 一般 > 機能制限で利用が制限されている
+        {
+            isAuthorization = NO;
+            if (_isShowAlert) {
+                UIAlertView *alertView = [[UIAlertView alloc]
+                                          initWithTitle:@"エラー"
+                                          message:@"写真へのアクセスが許可されていません。\n設定 > 一般 > 機能制限で許可してください。"
+                                          delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+                [alertView show];
+            }
+        }
+            break;
+            
+        case ALAuthorizationStatusDenied: // 設定 > プライバシー > 写真で利用が制限されている
+        {
+            isAuthorization = NO;
+            if (_isShowAlert) {
+                UIAlertView *alertView = [[UIAlertView alloc]
+                                          initWithTitle:@"エラー"
+                                          message:@"写真へのアクセスが許可されていません。\n設定 > プライバシー > 写真で許可してください。"
+                                          delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+                [alertView show];
+            }
+        }
+            break;
+            
+        default:
+            break;
+    }
+    return isAuthorization;
+}
+
+- (void)saveImageToPhotosAlbum:(UIImage*)_image {
+    
+    BOOL isPhotoAccessEnable = [self isPhotoAccessEnableWithIsShowAlert:YES];
+    
+    /////// フォトアルバムに保存 ///////
+    if (isPhotoAccessEnable) {
+        ALAssetsLibrary* library = [[ALAssetsLibrary alloc] init];
+        [library writeImageToSavedPhotosAlbum:_image.CGImage
+                                  orientation:(ALAssetOrientation)_image.imageOrientation
+                              completionBlock:
+         ^(NSURL *assetURL, NSError *error){
+             NSLog(@"URL:%@", assetURL);
+             NSLog(@"error:%@", error);
+             
+             ALAuthorizationStatus status = [ALAssetsLibrary authorizationStatus];
+             
+             if (status == ALAuthorizationStatusDenied) {
+                 UIAlertView *alertView = [[UIAlertView alloc]
+                                           initWithTitle:@"エラー"
+                                           message:@"写真へのアクセスが許可されていません。\n設定 > 一般 > 機能制限で許可してください。"
+                                           delegate:nil
+                                           cancelButtonTitle:@"OK"
+                                           otherButtonTitles:nil];
+                 [alertView show];
+             } else {
+                 /*UIAlertView *alertView = [[UIAlertView alloc]
+                                           initWithTitle:@""
+                                           message:@"フォトアルバムへ保存しました。"
+                                           delegate:nil
+                                           cancelButtonTitle:@"OK"
+                                           otherButtonTitles:nil];
+                 [alertView show];*/
+             }
+         }];        
+    }
 }
 
 @end

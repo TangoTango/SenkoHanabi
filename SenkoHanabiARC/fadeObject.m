@@ -7,6 +7,7 @@
 //
 
 #import "fadeObject.h"
+#import <QuartzCore/QuartzCore.h>
 
 static UIImageView *bokashiImage;
 
@@ -46,7 +47,60 @@ static UIImageView *bokashiImage;
 }
 
 -(id)initWithString:(NSString*)str view:(UIView*)view{
-    x = 30, y = 30, w = 120, h = 300;
+    
+    uilabels = [NSMutableArray array];
+    alphaFlags = [NSMutableArray array];
+    x = 30, y = 50, w = 270, h = 100;
+    int fontsize = 30;
+    int ix = 0;
+    int iy = 0;
+    for(int i = 0; i < str.length; i++){
+        NSString* c = [str substringWithRange:NSMakeRange(i, 1)];
+        if([c rangeOfString:@"\n"].location != NSNotFound){
+            iy = 0;
+            ix++;
+        }else if([c rangeOfString:@"ー"].location != NSNotFound){
+            UIImageView *img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bo.png"]];
+            img.frame = CGRectMake(w - fontsize * (1+ix), y + fontsize * iy ,fontsize,fontsize);
+            img.alpha = 0.0f;
+            
+            [view addSubview:img];
+            [uilabels addObject:img];
+            [alphaFlags addObject:[NSNumber numberWithInt:0]];
+            iy++;
+        }else if([c rangeOfString:@"。"].location != NSNotFound){
+            UIImageView *img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"maru.png"]];
+            img.frame = CGRectMake(w - fontsize * (1+ix), y + fontsize * iy ,fontsize,fontsize);
+            img.alpha = 0.0f;
+            
+            [view addSubview:img];
+            [uilabels addObject:img];
+            [alphaFlags addObject:[NSNumber numberWithInt:0]];
+            iy++;
+        }else{
+            UILabel* l = [[UILabel alloc] initWithFrame:CGRectMake(w - fontsize * (1+ix), y + fontsize * iy ,fontsize,fontsize*1.5f)];
+            l.font = [UIFont fontWithName:@"Hiragino Mincho ProN" size:fontsize];
+            
+            if( [self isInt:c] ){
+                int number = [c intValue];
+                NSString *numberStr = @[ @"〇", @"一", @"二", @"三", @"四", @"五", @"六", @"七", @"八", @"九"][number];
+                l.text = numberStr;
+            }else{
+                l.text = c;
+            }
+            l.backgroundColor = [UIColor clearColor];
+            l.textColor = [UIColor whiteColor];
+            l.alpha = 0.0f;
+            [view addSubview:l];
+            [uilabels addObject:l];
+            [alphaFlags addObject:[NSNumber numberWithInt:0]];
+            iy++;
+        }
+    }
+    
+    
+    
+    /*x = 30, y = 30, w = 120, h = 300;
     int fontsize = 30;
     int ix = 0;
     int iy = 0;
@@ -81,7 +135,7 @@ static UIImageView *bokashiImage;
             [alphaFlags addObject:[NSNumber numberWithInt:0]];
             iy++;
         }
-    }
+    }*/
     
     return self;
 }
@@ -192,5 +246,13 @@ static UIImageView *bokashiImage;
         }
         
     }
+}
+
+-(BOOL)isInt:(NSString *)text{
+    NSScanner *aScanner = [NSScanner localizedScannerWithString:text];
+    [aScanner setCharactersToBeSkipped:nil];
+    
+    [aScanner scanInt:NULL];
+    return [aScanner isAtEnd];
 }
 @end
