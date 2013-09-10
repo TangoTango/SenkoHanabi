@@ -24,20 +24,17 @@
 
 fadeView *title;//タイトル
 fadeView *how;//遊び方
-fadeView *addSuc;//画像追加成功
-fadeView *addAlr;//画像追加失敗　既に追加済
-fadeView *addNot;//画像追加失敗　一個もなかった
+fadeView *add;//画像追加結果
 fadeView *yakedo;//火傷しちゃう警告
 UIImageView *senkoImage; // 線香花火の画像
-UIImageView *hinotamaImage;
-UILabel* addLabel; // 「画像を追加」ボタンを押したときのメッセージのラベル
-//CALayer* hi; // 火種のレイヤ
+UIImageView *hinotamaImage;//火の玉の画像
+NSMutableArray* fireFlowers;//火花の画像
 bool hiFlg = NO; // 火種が落ちたかどうか
 
 NSArray *imageNames; // 現れて消えるアニメーション画像の配列
 NSArray *textNames; // 現れて消えるテキストの配列
-fadeObject *showFadeObject; //
-NSMutableArray *fadeSelects;
+fadeObject *showFadeObject; //表示中のフェードオブジェクト
+NSMutableArray *fadeSelects;//
 int fadeselect = 0;
 
 ALAssetsLibrary* assetsLibrary;
@@ -48,8 +45,6 @@ int addAssetsCount;//追加時Assetカウント
 int addedAssetsCount;//追加時追加済Assetカウント
 int initAssetsCount;//起動時Assetカウント
 
-NSMutableArray* fires;
-NSMutableArray* fireFlowers;
 
 UIButton *nextButton;
 UIButton *addimageButton;
@@ -81,9 +76,6 @@ Bgm* sparkBgm;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    //火花
-    fires = [NSMutableArray array];
     //火花の花
     fireFlowers = [NSMutableArray array];
     
@@ -106,7 +98,7 @@ Bgm* sparkBgm;
     //フェードオブジェクト(テキスト、画像の名前、Asset)読み込み
     imageNames = [NSArray arrayWithObjects:@"fade1.png",@"fade2.png", nil];
     textNames = [NSArray arrayWithObjects:@"気づいたら\nカラオケで\n\n\n\nざこ寝",
-                 @"セミのー\n\n\n\n\n\n抜け殻",
+                 @"セミの\n\n\n\n\n\n抜け殻",
                  @"プールで\n監視員に\n\n\n\n怒られる",
                  @"好きな子と\n友達が\n\n\n\n付き合ってた",
                  @"お祭り\n\n\n\n\n騒ぎ",
@@ -192,7 +184,7 @@ Bgm* sparkBgm;
     switch (sceneNumber) {
         case 1://「線香花火」設定
             if(!title){
-                title = [[fadeView alloc] initWithLableText:@"線香花火" point:CGPointMake(160,100) line:1 fontsize:50 upAlpha:0.02f downAlpha:0.02f topAlpha:1.0f superview:self.view];
+                title = [[fadeView alloc] initWithLableText:@"線香花火" point:CGPointMake(160,100) fontsize:50 upAlpha:0.02f downAlpha:0.02f topAlpha:1.0f superview:self.view];
             }else{
                 [title reInit];
             }
@@ -228,7 +220,7 @@ Bgm* sparkBgm;
 
                 // 「遊び方」
                 if(!how){
-                    how = [[fadeView alloc] initWithLableText:@"遊び方\n上部を持って下さい。\n" point:CGPointMake(240,40) line:3 fontsize:40 upAlpha:0.02f downAlpha:0.02f topAlpha:2.0f superview:self.view];
+                    how = [[fadeView alloc] initWithLableText:@"遊び方\n上部を持って下さい。\n" point:CGPointMake(240,40) fontsize:40 upAlpha:0.02f downAlpha:0.02f topAlpha:2.0f superview:self.view];
                 }else{
                     [how reInit];
                 }
@@ -247,7 +239,7 @@ Bgm* sparkBgm;
                     hinotamaImage.alpha = 1.0f;
                     [how hide];
                     if( !yakedo ){
-                        yakedo = [[fadeView alloc] initWithLableText:@"火傷しちゃうぅ！" point:CGPointMake(270,30) line:1 fontsize:50 upAlpha:0.03f downAlpha:0.03f topAlpha:1.0f superview:self.view];
+                        yakedo = [[fadeView alloc] initWithLableText:@"火傷しちゃうぅ！" point:CGPointMake(270,30) fontsize:50 upAlpha:0.03f downAlpha:0.03f topAlpha:1.0f superview:self.view];
                         yakedo.alphaFlag = 2;
                         [yakedo reverse];
                     }else{
@@ -267,10 +259,14 @@ Bgm* sparkBgm;
                 }
             }
             break;
-        case 6://点火開始〜終了まで
             
-            //画像保存しまくるやつ
+        case 6:
+            ///////////////////////////////////////////////////////////////////////////////
+            ////////////////////////////////点火開始〜終了まで////////////////////////////////
+            ///////////////////////////////////////////////////////////////////////////////
         {
+            //画像保存しまくるやつ
+            //hiFlg = 1;
             //[self saveImageToPhotosAlbum:[UIImage imageNamed:@"senkohanabi5.png"]];
             
         }
@@ -300,33 +296,10 @@ Bgm* sparkBgm;
             }else if(33*10 < senkoCount){
                 fireScene = 2;//ちょい出始める
             }
-            //火花作成、Do
-        {
-            int r = (arc4random() % 2);
-            if( r == 0 ){
-                /*int kind = (rand() % 4) + 2;
-                CGFloat angle = ((-manager.accelerometerData.acceleration.x* 90.0f * M_PI / 180.0f) + prevAngle + prevprevAngle) / 3.0f;
-                angle = -angle - 0.15f;
-                float nx = 160 + 320 * sin(angle)+13;
-                float ny = 330 * cos(angle)-10;
-                fire* f = [[fire alloc] initWithObject:[[UIImageView alloc]
-                                                        initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"hibana%d.png", kind]]] view:self.view point:CGPointMake(nx, ny)];
-                [fires addObject:f];*/
-            }
             
-            for(int i = 0; i < [fires count]; i++){
-                fire* f = fires[i];
-                [f Do];
-                if(f.deleteFlg){
-                    [fires removeObject:f];
-                    i--;
-                }
-            }
-        }
             //火花の花作成、Do
         {
-            int rate;
-            rate = [@[ @100, @50, @10, @1, @10, @50 ][fireScene-1] intValue];
+            int rate = [@[ @100, @50, @10, @1, @10, @50 ][fireScene-1] intValue];
             int r = (arc4random() % rate);
             if( r == 0 ){
                 fireFlower* ff = [[fireFlower alloc] initWithPoint:hidanePoint view:self.view];
@@ -382,33 +355,10 @@ Bgm* sparkBgm;
 //                
 //            }
             // [sparkBgm play];
+            float volume = [@[ @0.05, @0.1, @0.3, @0.4, @0.5, @0.5][fireScene-1] floatValue];
+            [sparkBgm setVolume:volume];
             
-            
-            float rate;
-            switch (fireScene) {
-                case 1:
-                default:
-                    rate = 5;
-                    [sparkBgm setVolume:0.05];
-                    break;
-                case 2:
-                    rate = 4;
-                    [sparkBgm setVolume:0.1];
-                    break;
-                case 3:
-                    rate = 3;
-                    [sparkBgm setVolume:0.3];
-                    break;
-                case 4:
-                    rate = 2;
-                    [sparkBgm setVolume:0.4];
-                    break;
-                case 5:
-                    rate = 1;
-                    [sparkBgm setVolume:0.5];
-                    break;
-            }
-            
+            float rate = [@[ @3, @3, @2, @2, @1, @1][fireScene-1] floatValue];
             // 加速度が大きくなりすぎたら火種を落とす
             if( 2 < [prevAccelerations count] ){
                 NSDictionary* now = prevAccelerations[[prevAccelerations count]-1];
@@ -423,6 +373,7 @@ Bgm* sparkBgm;
                     hidaneVY = hidaneAY;
                 }
             }
+            //火種が落下
             if(hiFlg) {
                 hinotamaImage.transform = CGAffineTransformMakeRotation(0);
                 CGRect move = hinotamaImage.frame;
@@ -457,15 +408,6 @@ Bgm* sparkBgm;
             if(showFadeObject.deleteFlg){
                 showFadeObject = nil;
             }
-            //火花オブジェクト消し
-            for(int i = 0; i < [fires count]; i++){
-                fire* f = fires[i];
-                [f Do];
-                if(f.deleteFlg){
-                    [fires removeObject:f];
-                    i--;
-                }
-            }
             //火花の花オブジェクト消し
             for(int i = 0; i < [fireFlowers count]; i++){
                 fireFlower* ff = fireFlowers[i];
@@ -479,7 +421,7 @@ Bgm* sparkBgm;
             senkoImage.alpha -= 0.01f;
             
             //全部消えたら
-            if([yakedo hideDo] && [fires count] == 0 && !showFadeObject && senkoImage.alpha < 0.0f){
+            if([yakedo hideDo] && !showFadeObject && senkoImage.alpha < 0.0f){
                 
                 //もう一度ボタン
                 if(!nextButton){
@@ -504,21 +446,18 @@ Bgm* sparkBgm;
                 
                 if(assetsflg == 1){
                     
-                    if(!addSuc){
-                        addSuc = [[fadeView alloc] initWithLableText:[NSString stringWithFormat:@"夏の思い出写真を\n%d枚追加しました。",addAssetsCount] point:CGPointMake(160,40) line:2 fontsize:20 upAlpha:0.04f downAlpha:0.04f topAlpha:1.6f superview:self.view];
+                    NSString *text;
+                    if(0 < addAssetsCount){
+                        text = [NSString stringWithFormat:@"夏の思い出写真を\n%d枚\n追加しました。",addAssetsCount];
+                    }else if(0 < addedAssetsCount){
+                        text = @"あなたの\n夏の思い出写真は\nもうありません。";
                     }else{
-                        [addSuc changeTextWithString:[NSString stringWithFormat:@"夏の思い出写真を\n%d枚追加しました。",addAssetsCount]];
-                        [addSuc reInit];
+                        text = @"あなたの\n夏の思い出写真は\nありません。";
                     }
-                    if(!addAlr){
-                        addAlr = [[fadeView alloc] initWithLableText:@"あなたの\n夏の思い出写真は\nもうありません。" point:CGPointMake(160,40) line:3 fontsize:20 upAlpha:0.04f downAlpha:0.04f topAlpha:1.6f superview:self.view];
+                    if(!add){
+                        add = [[fadeView alloc] initWithLableText:text point:CGPointMake(160,40) fontsize:20 upAlpha:0.04f downAlpha:0.04f topAlpha:1.6f superview:self.view];
                     }else{
-                        [addAlr reInit];
-                    }
-                    if(!addNot){
-                        addNot = [[fadeView alloc] initWithLableText:@"あなたの\n夏の思い出写真は\nありません。" point:CGPointMake(160,40) line:3 fontsize:20 upAlpha:0.04f downAlpha:0.04f topAlpha:1.6f superview:self.view];
-                    }else{
-                        [addNot reInit];
+                        [add changeTextWithString:text];
                     }
                     sceneNumber = 9;
                     assetsflg = 0;
@@ -536,24 +475,11 @@ Bgm* sparkBgm;
             sceneNumber = 3;
             break;
         case 9:
-            if(0 < addAssetsCount){
-                if([addSuc Do]){
-                    [addimageButton setEnabled:YES];
-                    [nextButton setEnabled:YES];
-                    sceneNumber = 7;
-                }
-            }else if(0 < addedAssetsCount){
-                if([addAlr Do]){
-                    [addimageButton setEnabled:YES];
-                    [nextButton setEnabled:YES];
-                    sceneNumber = 7;
-                }
-            }else{
-                if([addNot Do]){
-                    [addimageButton setEnabled:YES];
-                    [nextButton setEnabled:YES];
-                    sceneNumber = 7;
-                }
+            
+            if([add Do]){
+                [addimageButton setEnabled:YES];
+                [nextButton setEnabled:YES];
+                sceneNumber = 7;
             }
             break;
     }
@@ -611,7 +537,6 @@ Bgm* sparkBgm;
                             addedAssetsCount++;
                         }
                     }
-                    //addLabel.layer.transform = CATransform3DMakeRotation(10, 0, 0, 1);
                 }else{
                     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
                     [ud setObject:assetsURL forKey:@"assetsURL"];

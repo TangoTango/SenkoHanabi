@@ -32,11 +32,11 @@
     alphaFlag = 1;
     return self;
 }
--(id)initWithLableText:(NSString*)text point:(CGPoint)p line:(NSInteger)line fontsize:(NSInteger)fontsize upAlpha:(float)up downAlpha:(float)down topAlpha:(float)top superview:(UIView*)view{
+-(id)initWithLableText:(NSString*)text point:(CGPoint)p fontsize:(NSInteger)fontsize upAlpha:(float)up downAlpha:(float)down topAlpha:(float)top superview:(UIView*)view{
     
     Text = text;
     P = p;
-    Line = line;
+    int line = [[text componentsSeparatedByString:@"\n"] count];
     fontSize = fontsize;
     View = view;
     
@@ -96,7 +96,7 @@
 -(void)changeTextWithString:(NSString *)newText{
     [obj removeFromSuperview];
     
-    id t = [self initWithLableText:newText point:P line:Line fontsize:fontSize upAlpha:upAlpha downAlpha:downAlpha topAlpha:topAlpha superview:View];
+    id t = [self initWithLableText:newText point:P fontsize:fontSize upAlpha:upAlpha downAlpha:downAlpha topAlpha:topAlpha superview:View];
     t=t;
 }
 
