@@ -53,6 +53,8 @@ GKSession *currentSession;//友達とのセッション
 NSMutableArray *friendImages;//友達の写真
 NSNumber *myGyanken;//自分のじゃんけんの値
 NSMutableArray *random90s;//受け取ったランダムな配列
+int endNumber;//二人とも終わったら進行するようにカウント
+int sharedFlg;//友達と写真を共有したら1にして文表示
 
 UIButton *nextButton;
 CustomButton *addimageButton;
@@ -352,9 +354,9 @@ int sceneNumber;
                || hinotamaImage.alpha < 0.0f ) {
                 
                 hinotamaImage.alpha = 0.0f;
-                
+                if(currentSession)[self sendEndAndCountEnd];//sceneNumber = 7とセットでお願いします
                 sceneNumber = 7;
-                
+                break;
             }
             
             fireScene = 7;
@@ -366,7 +368,9 @@ int sceneNumber;
                 if (hinotamaBlackLayer.opacity > 1.0f) {
                     
                     hinotamaBlackLayer.opacity = 1.0f;
+                    if(currentSession)[self sendEndAndCountEnd];//sceneNumber = 7とセットでお願いします
                     sceneNumber = 7;
+                    break;
                 }
                 
             }
@@ -397,8 +401,8 @@ int sceneNumber;
             NSLog(@"opacity:%lf", hinotamaBlackLayer.opacity);
             NSLog(@"alpha:%lf", hinotamaImage.alpha);
             
-            //全部消えたら
-            if([yakedo hideDo] && !showFadeObject && senkoImage.alpha < 0.0f){
+            //全部消えたら　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　二人でやっている場合は、二人共消えたら
+            if([yakedo hideDo] && !showFadeObject && senkoImage.alpha < 0.0f && (!currentSession || endNumber == 2)){
                 
                 //もう一度ボタン
                 if(!nextButton){
@@ -430,11 +434,14 @@ int sceneNumber;
                     [connectButton setHidden:NO];
                 }
                 
-                //画像選択完了
-                if(assetsflg == 1){
+                //画像選択完了or写真共有完了
+                if(assetsflg == 1 || sharedFlg == 1){
                     
                     NSString *text;
-                    if(0 < addAssetsCount){
+                    if( sharedFlg ){
+                        sharedFlg = 0;
+                        text = [NSString stringWithFormat:@"友達の写真を\n%d枚\n共有しました。",[friendImages count]];
+                    }else if(0 < addAssetsCount){
                         text = [NSString stringWithFormat:@"夏の思い出写真を\n%d枚\n追加しました。",addAssetsCount];
                     }else if(0 < addedAssetsCount){
                         text = @"あなたの\n夏の思い出写真は\nもうありません。";
@@ -459,6 +466,9 @@ int sceneNumber;
             initLaunch = 0;
             hiFlg = NO;
             hiBlackFlg = NO;
+            if(currentSession){
+                endNumber = 0;
+            }
             sceneNumber = 10;
             [self selectFadeObjectWithCompleteFunc:^{
                 sceneNumber = 3;
@@ -525,9 +535,7 @@ int sceneNumber;
         imageNames = [NSArray array];
         [self fadeSelectUpdate];
         //friendImagesとassetsは通信で受取済
-        //[self setAssets:^{
-            func();
-        //}];
+        func();
     }
 }
 -(void)setAssets:(void (^)())func{
@@ -599,7 +607,46 @@ int sceneNumber;
 
 //もう一度ボタン　タップ
 - (void)nextButtonTapped:(UIButton *)button{
-    sceneNumber = 8;
+    if(!currentSession){
+        //一人ならそのまま開始
+        sceneNumber = 8;
+    }else{
+        //二人ならランダム順番情報送信してから開始
+        [addimageButton setEnabled:NO];
+        [nextButton setEnabled:NO];
+        [connectButton setEnabled:NO];
+        
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        random90s = [self randomList:90];
+        dic[@"random90s"] = random90s;
+        myGyanken = [NSNumber numberWithInt:arc4random()];
+        dic[@"gyanken"] = myGyanken; 
+        
+        // 生成したオブジェクトをNSData型に変換
+        NSData *d = [NSKeyedArchiver archivedDataWithRootObject:dic];
+        NSError *error = nil;
+        [currentSession sendDataToAllPeers:d
+                              withDataMode:GKSendDataReliable
+                                     error:&error];
+        
+        
+        if (error){
+            NSLog(@"%@", [error localizedDescription]);
+            currentSession = nil;
+            UIAlertView *alertView = [[UIAlertView alloc]
+                                      initWithTitle:@""
+                                      message:@"通信エラーが\n発生しました。"
+                                      delegate:nil
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil];
+            [alertView show];
+            [addimageButton setEnabled:YES];
+            [nextButton setEnabled:YES];
+            [connectButton setEnabled:YES];
+        }else{
+            sceneNumber = 8;
+        }
+    }
 }
 
 //画像選択ボタン　タップ
@@ -693,12 +740,11 @@ int sceneNumber;
     session.delegate = self;
     [session setDataReceiveHandler:self withContext:nil];
     
-    id randomCall = self;
+    //id randomCall = self;
     [self setAssets:^{
         
         // 接続中のすべてのピアにデータを送信
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-        NSMutableArray *imgs = [NSMutableArray array];
         int count = 0;
         for(ALAsset *asset in assets){
             UIImage *img = [UIImage imageWithCGImage:[asset thumbnail]];
@@ -706,12 +752,12 @@ int sceneNumber;
             count++;
             if([assets count] <= count || 10 <= count)break;
         }
+        dic[@"shareImg"] = @(YES);
         
-        dic[@"friendImgs"] = imgs;
-        random90s = [randomCall randomList:90];
+        /*random90s = [randomCall randomList:90];
         dic[@"random90s"] = random90s;
         myGyanken = [NSNumber numberWithInt:arc4random()];
-        dic[@"gyanken"] = myGyanken;
+        dic[@"gyanken"] = myGyanken;*/
         
         // 生成したオブジェクトをNSData型に変換
         NSData *d = [NSKeyedArchiver archivedDataWithRootObject:dic];
@@ -722,6 +768,7 @@ int sceneNumber;
         
         if (error){
             NSLog(@"%@", [error localizedDescription]);
+            currentSession = nil;
             UIAlertView *alertView = [[UIAlertView alloc]
                                       initWithTitle:@""
                                       message:@"通信エラーが\n発生しました。"
@@ -743,30 +790,56 @@ int sceneNumber;
     
     // NSData型オブジェクトをNSDictionary型に変換
     NSDictionary *reverse = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    if(reverse[@"random90s"]){
+    if(reverse[@"shareImg"]){
         friendImages = [NSMutableArray array];
         for(int i = 0; i < 30; i++){
             if(reverse[[NSString stringWithFormat:@"%d",i]]){
                 [friendImages addObject:reverse[[NSString stringWithFormat:@"%d",i]] ];
             }
         }
-        //[self fadeSelectUpdate];
-        /*for(NSString *key in reverse[@"friendImgs"]){
-            [friendImages addObject:reverse[key]];
-        }*/
-        
-        //じゃんけんに負けたがわが相手のランダム配列を用いる。
-        if( [myGyanken intValue] < [reverse[@"gyanken"] intValue]){
+        sharedFlg = 1;
+    }else if(reverse[@"gyanken"]){
+        //じゃんけんに負けた側が相手のランダム配列を用いる。
+        if( myGyanken ){
+            if( [myGyanken intValue] < [reverse[@"gyanken"] intValue]){
+                random90s = reverse[@"random90s"];
+            }
+        }else{
             random90s = reverse[@"random90s"];
         }
-        
-        [addimageButton setEnabled:YES];
-        [nextButton setEnabled:YES];
-        [connectButton setEnabled:YES];
-    }else{
-    
+        if(sceneNumber == 7){
+            [addimageButton setEnabled:YES];
+            [nextButton setEnabled:YES];
+            [connectButton setEnabled:YES];
+            sceneNumber = 8;
+        }
+    }else if(reverse[@"end"]){
+        endNumber++;
     }
     
+}
+-(void)sendEndAndCountEnd{
+    endNumber++;
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    dic[@"end"] = @(YES);
+    // 生成したオブジェクトをNSData型に変換
+    NSData *d = [NSKeyedArchiver archivedDataWithRootObject:dic];
+    NSError *error = nil;
+    [currentSession sendDataToAllPeers:d
+                          withDataMode:GKSendDataReliable
+                                 error:&error];
+    
+    if (error){
+        NSLog(@"%@", [error localizedDescription]);
+        currentSession = nil;
+        UIAlertView *alertView = [[UIAlertView alloc]
+                                  initWithTitle:@""
+                                  message:@"通信エラーが\n発生しました。"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+        [alertView show];
+    }
 }
 
 
