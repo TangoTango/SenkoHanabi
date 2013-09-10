@@ -37,7 +37,7 @@ NSArray *imageNames; // 現れて消えるアニメーション画像の配列
 NSArray *textNames; // 現れて消えるテキストの配列
 fadeObject *showFadeObject; //表示中のフェードオブジェクト
 NSMutableArray *fadeSelects;//
-int fadeselect = 0;
+int fadeselect;
 
 ALAssetsLibrary* assetsLibrary;
 NSMutableArray *assets;
@@ -49,6 +49,8 @@ int initAssetsCount;//起動時Assetカウント
 
 GKSession *currentSession;//友達とのセッション
 NSMutableArray *friendImages;//友達の写真
+NSNumber *myGyanken;//自分のじゃんけんの値
+NSMutableArray *random90s;//受け取ったランダムな配列
 
 UIButton *nextButton;
 CustomButton *addimageButton;
@@ -59,9 +61,6 @@ int initLaunch = 1;//最初の起動かどうか
 
 CMMotionManager *manager;//センサオブジェクト
 NSMutableArray* prevAccelerations;//センサデータ記録
-
-//CGFloat prevAngle = 0.0f;
-//CGFloat prevprevAngle = 0.0f;
 
 CGFloat senkoRelativeX = 11.0f;//線香花火の火種の相対座標(画像と表示サイズに依存)
 CGFloat senkoRelativeY = 326.0f;
@@ -111,74 +110,14 @@ Bgm* sparkBgm;
     // 火花の炸裂音読み込み
     [[OALSimpleAudio sharedInstance] preloadEffect:@"spark.mp3"];
     
-    //フェードオブジェクト(テキスト、画像の名前、Asset)読み込み
-    imageNames = [NSArray arrayWithObjects:@"fade1.png",@"fade2.png", nil];
-    textNames = [NSArray arrayWithObjects:@"気づいたら\nカラオケで\n\n\n\nざこ寝",
-                 @"セミの\n\n\n\n\n\n抜け殻",
-                 @"プールで\n監視員に\n\n\n\n怒られる",
-                 @"好きな子と\n友達が\n\n\n\n付き合ってた",
-                 @"お祭り\n\n\n\n\n騒ぎ",
-                 @"山\n\n\n\n\nガール",nil];
-    
-    //既に写真を追加したか確認して読み込み
-    NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-    assetsURL = [ud objectForKey:@"assetsURL"];
-    assets = [NSMutableArray array];
-    if(assetsURL && 0 < [assetsURL count]){
-        initAssetsCount = 0;
-        
-        for (NSString* URLstr in assetsURL) {
-            NSURL* URL = [NSURL URLWithString:URLstr];
-            assetsLibrary = [self.class defaultAssetsLibrary];
-            [assetsLibrary assetForURL:URL
-                           resultBlock:^(ALAsset *asset) {
-                               initAssetsCount++;
-                               if(asset){
-                                   [assets addObject:asset];
-                               }else{
-                                   [assetsURL removeObjectForKey:URLstr];
-                                   initAssetsCount--;
-                               }
-                               if(initAssetsCount == [assetsURL count]){
-                                   NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-                                   [ud setObject:assetsURL forKey:@"assetsURL"];
-                                   [ud synchronize];
-                                   fadeSelects = [self randomList:[imageNames count] + [textNames count] + [assets count] + [friendImages count]];
-                                   //ループ開始
-                                   [NSTimer scheduledTimerWithTimeInterval:0.03f
-                                                                    target:self
-                                                                  selector:@selector(loop)
-                                                                  userInfo:nil
-                                                                   repeats:YES];
-                               }
-                           }
-                          failureBlock:^(NSError *error) {
-                              initAssetsCount++;
-                              if(initAssetsCount == [assetsURL count]){
-                                  NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-                                  [ud setObject:assetsURL forKey:@"assetsURL"];
-                                  [ud synchronize];
-                                  fadeSelects = [self randomList:[imageNames count] + [textNames count] + [assets count] + [friendImages count]];
-                                  //ループ開始
-                                  [NSTimer scheduledTimerWithTimeInterval:0.03f
-                                                                   target:self
-                                                                 selector:@selector(loop)
-                                                                 userInfo:nil
-                                                                  repeats:YES];
-                              }
-                          }];
-        }
-    }else{
-        assetsURL = [NSMutableDictionary dictionary];
-        fadeSelects = [self randomList:[imageNames count] + [textNames count] + [assets count] + [friendImages count]];
-        
-        //ループ開始
+    //フェードオブジェクトを選択して、タイマー開始
+    [self selectFadeObjectWithCompleteFunc:^{
         [NSTimer scheduledTimerWithTimeInterval:0.03f
                                          target:self
                                        selector:@selector(loop)
                                        userInfo:nil
                                         repeats:YES];
-    }
+    }];
 }
 -(void)loop{
     if(manager){
@@ -262,14 +201,12 @@ Bgm* sparkBgm;
                     }else{
                         [yakedo reInit];
                     }
-                    fadeselect = 0;
                     senkoCount = 0;
                     fireScene = 1;
                     sceneNumber = 6;
                 }
             }else{
                 if(1.0f < senkoImage.alpha && 1.0f < hinotamaImage.alpha){
-                    fadeselect = 0;
                     senkoCount = 0;
                     fireScene = 1;
                     sceneNumber = 6;
@@ -360,7 +297,7 @@ Bgm* sparkBgm;
                     int t = i - [imageNames count] - [textNames count] - [assets count];
                     showFadeObject = [[fadeObject alloc] initWithImage:[[UIImageView alloc] initWithImage:friendImages[t]] view:self.view];
                 }
-                fadeselect = (fadeselect + 1) % ([imageNames count] + [textNames count] + [assets count]);
+                fadeselect = (fadeselect + 1) % ([imageNames count] + [textNames count] + [assets count] + [friendImages count]);
             }
             
             //フェードオブジェクトアニメーション
@@ -503,10 +440,11 @@ Bgm* sparkBgm;
             [addimageButton setHidden:YES];
             [connectButton setHidden:YES];
             initLaunch = 0;
-            fadeSelects = [self randomList:([imageNames count] + [textNames count] + [assets count] + [friendImages count])];
-            fadeselect = 0;
             hiFlg = NO;
-            sceneNumber = 3;
+            sceneNumber = 10;
+            [self selectFadeObjectWithCompleteFunc:^{
+                sceneNumber = 3;
+            }];
             break;
         case 9:
             
@@ -516,6 +454,8 @@ Bgm* sparkBgm;
                 [connectButton setEnabled:YES];
                 sceneNumber = 7;
             }
+            break;
+        case 10:
             break;
     }
     
@@ -538,6 +478,98 @@ Bgm* sparkBgm;
     }
     
     isTapped = 0;
+}
+
+//imageNames, textNames, assets, friendImagesを設定する
+-(void)selectFadeObjectWithCompleteFunc:(void (^)())func{
+    textNames = [NSArray arrayWithObjects:@"気づいたら\nカラオケで\n\n\n\nざこ寝",
+                 @"セミの\n\n\n\n\n\n抜け殻",
+                 @"プールで\n監視員に\n\n\n\n怒られる",
+                 @"好きな子と\n友達が\n\n\n\n付き合ってた",
+                 @"お祭り\n\n\n\n\n騒ぎ",
+                 @"山\n\n\n\n\nガール",nil];
+    if(!currentSession){
+        //一人でプレイ
+        imageNames = [NSArray arrayWithObjects:@"fade1.png",@"fade2.png", nil];
+        friendImages = [NSArray array];
+        [self setAssets:^{
+            func();
+        }];
+    }else{
+        //二人でプレイ
+        imageNames = [NSArray array];
+        [self fadeSelectUpdate];
+        //friendImagesとassetsは通信で受取済
+        //[self setAssets:^{
+            func();
+        //}];
+    }
+}
+-(void)setAssets:(void (^)())func{
+    static int ASSETS_MAX = 30;
+    assetsLibrary = [self.class defaultAssetsLibrary];
+    NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+    assetsURL = [ud objectForKey:@"assetsURL"];
+    assets = [NSMutableArray array];
+    initAssetsCount = 0;
+    if( !assetsURL || [assetsURL count] == 0 ){
+        assetsURL = [NSMutableDictionary dictionary];
+        [self fadeSelectUpdate];
+        func();
+        return;
+    }
+    NSArray *URLstrs = [assetsURL allKeys];
+    NSArray *randomSelects = [self randomList:[URLstrs count]];
+    int min = [URLstrs count] < ASSETS_MAX ? [URLstrs count] : ASSETS_MAX;
+    for(int i = 0; i < min; i++){
+        NSString *URLstr = URLstrs[[randomSelects[i] intValue]];
+        NSURL* URL = [NSURL URLWithString:URLstr];
+        [assetsLibrary assetForURL:URL
+                       resultBlock:^(ALAsset *asset) {
+                           initAssetsCount++;
+                           if(asset){
+                               [assets addObject:asset];
+                           }else{
+                               [assetsURL removeObjectForKey:URLstr];
+                               initAssetsCount--;
+                           }
+                           if(initAssetsCount == min){
+                               //消えてる写真がある場合もあるので、assetsURLは保存し直す
+                               NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+                               [ud setObject:assetsURL forKey:@"assetsURL"];
+                               [ud synchronize];
+                               [self fadeSelectUpdate];
+                               func();
+                           }
+                       }
+                      failureBlock:^(NSError *error) {
+                          initAssetsCount++;
+                          if(initAssetsCount == min){
+                              //消えてる写真がある場合もあるので、assetsURLは保存し直す
+                              NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+                              [ud setObject:assetsURL forKey:@"assetsURL"];
+                              [ud synchronize];
+                              [self fadeSelectUpdate];
+                              func();
+                          }
+                      }];
+    }
+}
+
+-(void)fadeSelectUpdate{
+    fadeselect = 0;
+    if(!random90s){
+        fadeSelects = [self randomList:[imageNames count] + [textNames count] + [assets count] + [friendImages count]];
+    }else{
+        int t = [imageNames count] + [textNames count] + [assets count] + [friendImages count];
+        for(int i = 0; i < [random90s count]; i++){
+            if(t <= [random90s[i] intValue]){
+                [random90s removeObject:random90s[i]];
+                i--;
+            }
+        }
+        fadeSelects = random90s;
+    }
 }
 
 //もう一度ボタン　タップ
@@ -564,8 +596,10 @@ Bgm* sparkBgm;
         if (group){
             ALAssetsGroupEnumerationResultsBlock assetsEnumerationBlock = ^(ALAsset *result, NSUInteger index, BOOL *stop) {
                 if (result) {
+                    
                     progressView.progress += (double)(1.0 / [group numberOfAssets]);
                     [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeInterval:0.001 sinceDate:[NSDate date]]];
+                    
                     NSDate* d = [result valueForProperty:ALAssetPropertyDate];
                     int m = [[[NSString stringWithFormat:@"%@",d] componentsSeparatedByString:@"-"][1] intValue];
                     if( 6 <= m && m <= 9){
@@ -634,39 +668,47 @@ Bgm* sparkBgm;
     session.delegate = self;
     [session setDataReceiveHandler:self withContext:nil];
     
-    
-    // 接続中のすべてのピアにデータを送信
-    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    int count = 0;
-    for(ALAsset *asset in assets){
-        UIImage *img = [UIImage imageWithCGImage:[asset thumbnail]];
-        dic[[NSString stringWithFormat:@"%d",count]] = img;
+    id randomCall = self;
+    [self setAssets:^{
         
-        count++;
-        if([assets count] <= count || 10 <= count)break;
-    }
-    
-    // 生成したオブジェクトをNSData型に変換
-    NSData *d = [NSKeyedArchiver archivedDataWithRootObject:dic];
-    NSError *error = nil;
-    [currentSession sendDataToAllPeers:d
-                          withDataMode:GKSendDataReliable
-                                 error:&error];
-    
-    if (error){
-        NSLog(@"%@", [error localizedDescription]);
-        UIAlertView *alertView = [[UIAlertView alloc]
-                                  initWithTitle:@""
-                                  message:@"通信エラーが\n発生しました。"
-                                  delegate:nil
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil];
-        [alertView show];
-        [addimageButton setEnabled:YES];
-        [nextButton setEnabled:YES];
-        [connectButton setEnabled:YES];
-    }
-    
+        // 接続中のすべてのピアにデータを送信
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        NSMutableArray *imgs = [NSMutableArray array];
+        int count = 0;
+        for(ALAsset *asset in assets){
+            UIImage *img = [UIImage imageWithCGImage:[asset thumbnail]];
+            dic[[NSString stringWithFormat:@"%d",count]] = img;
+            count++;
+            if([assets count] <= count || 10 <= count)break;
+        }
+        
+        dic[@"friendImgs"] = imgs;
+        random90s = [randomCall randomList:90];
+        dic[@"random90s"] = random90s;
+        myGyanken = [NSNumber numberWithInt:arc4random()];
+        dic[@"gyanken"] = myGyanken;
+        
+        // 生成したオブジェクトをNSData型に変換
+        NSData *d = [NSKeyedArchiver archivedDataWithRootObject:dic];
+        NSError *error = nil;
+        [currentSession sendDataToAllPeers:d
+                              withDataMode:GKSendDataReliable
+                                     error:&error];
+        
+        if (error){
+            NSLog(@"%@", [error localizedDescription]);
+            UIAlertView *alertView = [[UIAlertView alloc]
+                                      initWithTitle:@""
+                                      message:@"通信エラーが\n発生しました。"
+                                      delegate:nil
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil];
+            [alertView show];
+            [addimageButton setEnabled:YES];
+            [nextButton setEnabled:YES];
+            [connectButton setEnabled:YES];
+        }
+    }];
     
     // ピアピッカーを閉じる
     picker.delegate = nil;
@@ -676,13 +718,30 @@ Bgm* sparkBgm;
     
     // NSData型オブジェクトをNSDictionary型に変換
     NSDictionary *reverse = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    for(NSString *key in reverse){
-        [friendImages addObject:reverse[key]];
+    if(reverse[@"random90s"]){
+        friendImages = [NSMutableArray array];
+        for(int i = 0; i < 30; i++){
+            if(reverse[[NSString stringWithFormat:@"%d",i]]){
+                [friendImages addObject:reverse[[NSString stringWithFormat:@"%d",i]] ];
+            }
+        }
+        //[self fadeSelectUpdate];
+        /*for(NSString *key in reverse[@"friendImgs"]){
+            [friendImages addObject:reverse[key]];
+        }*/
+        
+        //じゃんけんに負けたがわが相手のランダム配列を用いる。
+        if( [myGyanken intValue] < [reverse[@"gyanken"] intValue]){
+            random90s = reverse[@"random90s"];
+        }
+        
+        [addimageButton setEnabled:YES];
+        [nextButton setEnabled:YES];
+        [connectButton setEnabled:YES];
+    }else{
+    
     }
     
-    [addimageButton setEnabled:YES];
-    [nextButton setEnabled:YES];
-    [connectButton setEnabled:YES];
 }
 
 

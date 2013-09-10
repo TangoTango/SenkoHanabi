@@ -430,7 +430,6 @@
 		0D31F60C17D8B5C8005EBF21 = {
 			isa = PBXGroup;
 			children = (
-				0DAD6FF817DEBB7500E52067 /* GameKit.framework */,
 				0D31F61E17D8B5C8005EBF21 /* SenkoHanabiARC */,
 				0D31F61717D8B5C8005EBF21 /* Frameworks */,
 				0D31F61617D8B5C8005EBF21 /* Products */,
@@ -448,6 +447,7 @@
 		0D31F61717D8B5C8005EBF21 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0DAD6FF817DEBB7500E52067 /* GameKit.framework */,
 				04A3D5F817DEBB7B009E2AE7 /* OpenAL.framework */,
 				043DFFB217DD6C64009449CC /* AVFoundation.framework */,
 				043E214717DD664900AB279F /* AudioToolbox.framework */,

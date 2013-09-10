@@ -82,13 +82,13 @@
 -(void)DoWithScene:(NSInteger)scene{
     float deleteCount = 0;
     for(int i = 0; i < [layers count]; i++){
-        CALayer* layer = layers[i];
+        //CALayer* layer = layers[i];
         
         lifeCounts[i] = [NSNumber numberWithInt:[lifeCounts[i] intValue] - 1];
         if([lifeCounts[i] intValue] < 0){
             deleteCount++;
         }else{
-            layer.contentsRect = CGRectMake(0, 0, 1.0 + 1.0*([lifeCounts[i] floatValue]/maxLifeCount), 1);
+            //layer.contentsRect = CGRectMake(0, 0, 1.0 + 1.0*([lifeCounts[i] floatValue]/maxLifeCount), 1);
         }
     }
     
@@ -97,11 +97,6 @@
         //火種からの火花の場合
         if(rootFlg){
             rootFlg = 0;
-            //for(int i = 0; i < [layers count]; i++){
-            //    [layers[i] removeFromSuperlayer];
-            //}
-            //layers = [NSMutableArray array];
-            //lifeCounts = [NSMutableArray array];
             if(scene <= 2 || 6<= scene){
                 for(int i = 0; i < [layers count]; i++){
                     [layers[i] removeFromSuperlayer];
@@ -121,8 +116,8 @@
                 UIImage* img = [UIImage imageNamed:[NSString stringWithFormat:@"hibana%d.png",kind]];
                 layer.contents = (id)(img.CGImage);
                 
-                //30から80の大きさ
-                int maxw = random()%50 + 30;
+                //30から70の大きさ
+                int maxw = random()%40 + 30;
                 int maxh = maxw;
                 int dist = 0;
                 float imgw,imgh;
@@ -135,7 +130,7 @@
                     imgh = maxh;
                 }
                 layer.frame = CGRectMake(toX, toY-imgh/2, imgw, imgh);
-                layer.contentsRect = CGRectMake(0, 0, 2, 1);
+                //layer.contentsRect = CGRectMake(0, 0, 2, 1);
                 
                 layer.anchorPoint = CGPointMake(-dist/layer.frame.size.width, 0.5);
                 layer.frame = CGRectMake(toX + dist, toY - imgh/2, layer.frame.size.width, layer.frame.size.height);
