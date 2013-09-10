@@ -68,8 +68,11 @@
     [lifeCounts addObject:[NSNumber numberWithInt:maxLifeCount]];
     
     // 効果音
+    // 音量設定
     NSArray* volumeArray = [NSArray arrayWithObjects:@0.03, @0.05, @0.08, @0.1, @0.3, @0.4, @0.5, @0.5, nil];
     [[OALSimpleAudio sharedInstance] setEffectsVolume:[volumeArray[arc4random()%[volumeArray count]] floatValue]];
+    
+    // 再生
     [[OALSimpleAudio sharedInstance] playEffect:@"spark.mp3"];
     
     return self;

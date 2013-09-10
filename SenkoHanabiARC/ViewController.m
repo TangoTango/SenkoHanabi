@@ -95,6 +95,15 @@ Bgm* sparkBgm;
     }
     prevAccelerations = [NSMutableArray array];
     
+    // ひぐらしの鳴き声読み込み
+    [[OALSimpleAudio sharedInstance] preloadBg:@"higurashi.mp3"];
+    
+    // ひぐらしの鳴き声再生
+    [[OALSimpleAudio sharedInstance] playBg:@"higurashi.mp3" volume:0.2 pan:0.0 loop:YES];
+    
+    // 火花の炸裂音読み込み
+    [[OALSimpleAudio sharedInstance] preloadEffect:@"spark.mp3"];
+    
     //フェードオブジェクト(テキスト、画像の名前、Asset)読み込み
     imageNames = [NSArray arrayWithObjects:@"fade1.png",@"fade2.png", nil];
     textNames = [NSArray arrayWithObjects:@"気づいたら\nカラオケで\n\n\n\nざこ寝",
