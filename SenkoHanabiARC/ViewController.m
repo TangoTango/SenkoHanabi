@@ -29,9 +29,11 @@ fadeView *add;//画像追加結果
 fadeView *yakedo;//火傷しちゃう警告
 UIImageView *senkoImage; // 線香花火の画像
 UIImageView *hinotamaImage;//火の玉の画像
+CALayer* hinotamaBlackLayer; // 消えた火の玉の画像のレイヤ
 UIButton *connectButton;//通信ボタン
 NSMutableArray* fireFlowers;//火花の画像
 bool hiFlg = NO; // 火種が落ちたかどうか
+bool hiBlackFlg = NO; // 火種の火が消えたかどうか
 
 NSArray *imageNames; // 現れて消えるアニメーション画像の配列
 NSArray *textNames; // 現れて消えるテキストの配列
@@ -74,8 +76,6 @@ CGFloat hidaneAX, hidaneAY, hidaneVX, hidaneVY;
 
 int sceneNumber;
 
-Bgm* sparkBgm;
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -100,7 +100,7 @@ Bgm* sparkBgm;
     
     //友達の写真の初期化
     friendImages = [NSMutableArray array];
-
+    
     // ひぐらしの鳴き声読み込み
     [[OALSimpleAudio sharedInstance] preloadBg:@"higurashi.mp3"];
     
@@ -155,11 +155,10 @@ Bgm* sparkBgm;
                 if(!senkoImage){
                     senkoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"senkohanabi5.png"]];
                     senkoImage.layer.anchorPoint = CGPointMake(0.5, 0); // (170, -10)が回転の原点
-                    // ハードコーディングすると火種の処理で困りそう
                     senkoImage.frame = CGRectMake(140, -10, 61, 337);//122 × 675
                     senkoImage.alpha = 0.0f;
                     [self.view addSubview:senkoImage];
-                
+                    
                 }else{
                     senkoImage.alpha = 0.0f;
                 }
@@ -169,11 +168,18 @@ Bgm* sparkBgm;
                     UIImage* img = [UIImage imageNamed:@"hinotama.png"];
                     hinotamaImage = [[UIImageView alloc] initWithImage:img];
                     hinotamaImage.alpha = 0.0f;
+                    
+                    // 消えた後の火の玉の画像をレイヤとして取得
+                    hinotamaBlackLayer = [CALayer layer];
+                    hinotamaBlackLayer.contents = (id) [UIImage imageNamed:@"hinotama_black.png"].CGImage;
+                    hinotamaBlackLayer.opacity = 0.0f;
+                    [hinotamaImage.layer addSublayer:hinotamaBlackLayer];
+                    
                     [self.view addSubview:hinotamaImage];
                 }else{
                     hinotamaImage.alpha = 0.0f;
                 }
-
+                
                 // 「遊び方」
                 if(!how){
                     how = [[fadeView alloc] initWithLableText:@"遊び方\n上部を持って下さい。\n" point:CGPointMake(240,40) fontsize:40 upAlpha:0.02f downAlpha:0.02f topAlpha:2.0f superview:self.view];
@@ -239,7 +245,9 @@ Bgm* sparkBgm;
             
             //fireScene設定
             senkoCount++;
-            if(33*70 < senkoCount){
+            if(33*80 == senkoCount) {
+                fireScene = 7; // 火が消える
+            }else if(33*70 < senkoCount){
                 fireScene = 6;//ほぼ何もない
             }else if(33*60 < senkoCount){
                 fireScene = 5;//盛り下がり
@@ -253,7 +261,7 @@ Bgm* sparkBgm;
             
             //火花の花作成、Do
         {
-            int rate = [@[ @100, @50, @10, @1, @10, @50 ][fireScene-1] intValue];
+            int rate = [@[ @100, @50, @10, @1, @10, @50, @9999][fireScene-1] intValue];
             int r = (arc4random() % rate);
             if( r == 0 ){
                 fireFlower* ff = [[fireFlower alloc] initWithPoint:hidanePoint view:self.view];
@@ -307,18 +315,7 @@ Bgm* sparkBgm;
         {
             
             // 効果音
-//            if(!sparkBgm) {
-//
-//                sparkBgm = [[Bgm alloc] initWithPath:@"spark.wav"];
-//                [sparkBgm prepareToPlay];
-//                [sparkBgm setNumberOfLoops:-1];
-//                
-//            }
-            // [sparkBgm play];
-//            float volume = [@[ @0.05, @0.1, @0.3, @0.4, @0.5, @0.5][fireScene-1] floatValue];
-//            [sparkBgm setVolume:volume];
-            
-            float rate = [@[ @3, @3, @2, @2, @1, @1][fireScene-1] floatValue];
+            float rate = [@[ @3.0f, @3.0f, @2.0f, @2.0f, @1.0f, @1.0f, @1.0f][fireScene-1] floatValue];
             // 加速度が大きくなりすぎたら火種を落とす
             if( 2 < [prevAccelerations count] ){
                 NSDictionary* now = prevAccelerations[[prevAccelerations count]-1];
@@ -346,20 +343,34 @@ Bgm* sparkBgm;
                 hinotamaImage.alpha -= 0.06f;
             }
             
-
+            
             // 火種が画面下に来ると終了
             if( hinotamaImage.frame.origin.x < -hinotamaImage.frame.size.width
                || self.view.frame.size.width < hinotamaImage.frame.origin.x
                || hinotamaImage.frame.origin.y < -hinotamaImage.frame.size.height
                || self.view.frame.size.height < hinotamaImage.frame.origin.y
-               || hinotamaImage.alpha < 0.0f
-               ) {
+               || hinotamaImage.alpha < 0.0f ) {
                 
                 hinotamaImage.alpha = 0.0f;
-                [sparkBgm stop];
                 
                 sceneNumber = 7;
+                
             }
+            
+            fireScene = 7;
+            
+            if( fireScene == 7) {
+                
+                hinotamaBlackLayer.opacity += 0.2f;
+
+                if (hinotamaBlackLayer.opacity > 1.0f) {
+                    
+                    hinotamaBlackLayer.opacity = 1.0f;
+                    sceneNumber = 7;
+                }
+                
+            }
+            
         }
             break;
         case 7:
@@ -377,8 +388,14 @@ Bgm* sparkBgm;
                     i--;
                 }
             }
+            
             //線香花火消し
             senkoImage.alpha -= 0.01f;
+            
+            // 火種を消す
+            hinotamaImage.alpha -= 0.01f;
+            NSLog(@"opacity:%lf", hinotamaBlackLayer.opacity);
+            NSLog(@"alpha:%lf", hinotamaImage.alpha);
             
             //全部消えたら
             if([yakedo hideDo] && !showFadeObject && senkoImage.alpha < 0.0f){
@@ -441,6 +458,7 @@ Bgm* sparkBgm;
             [connectButton setHidden:YES];
             initLaunch = 0;
             hiFlg = NO;
+            hiBlackFlg = NO;
             sceneNumber = 10;
             [self selectFadeObjectWithCompleteFunc:^{
                 sceneNumber = 3;
@@ -473,6 +491,13 @@ Bgm* sparkBgm;
             float layh = img.size.height/rate;
             hinotamaImage.transform = CGAffineTransformMakeRotation(0);
             hinotamaImage.frame = CGRectMake(hidanePoint.x - layw/2, hidanePoint.y - layh/2, layw, layh);
+            
+            // 消えた火の玉の大きさ
+            CGRect hinotamaRect = hinotamaImage.frame;
+            hinotamaRect.origin.x = 0.0f;
+            hinotamaRect.origin.y = 0.0f;
+            hinotamaBlackLayer.frame = hinotamaRect;
+
             hinotamaImage.transform = CGAffineTransformMakeRotation(senkoAngle);
         }
     }
@@ -586,8 +611,8 @@ Bgm* sparkBgm;
     UIProgressView *progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
     progressView.frame = CGRectMake(20, 200, 280, 37);
     progressView.progress = 0;
-    [self.view addSubview:progressView];        
-
+    [self.view addSubview:progressView];
+    
     addAssetsCount = 0;
     addedAssetsCount = 0;
     assetsLibrary = [self.class defaultAssetsLibrary];
@@ -911,14 +936,14 @@ Bgm* sparkBgm;
                  [alertView show];
              } else {
                  /*UIAlertView *alertView = [[UIAlertView alloc]
-                                           initWithTitle:@""
-                                           message:@"フォトアルバムへ保存しました。"
-                                           delegate:nil
-                                           cancelButtonTitle:@"OK"
-                                           otherButtonTitles:nil];
-                 [alertView show];*/
+                  initWithTitle:@""
+                  message:@"フォトアルバムへ保存しました。"
+                  delegate:nil
+                  cancelButtonTitle:@"OK"
+                  otherButtonTitles:nil];
+                  [alertView show];*/
              }
-         }];        
+         }];
     }
 }
 

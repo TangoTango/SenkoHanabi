@@ -403,7 +403,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "506"
          endingLineNumber = "506"
-         landmarkName = "-selectFadeObjectWithCompleteFunc:"
+         landmarkName = "-loop"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -416,7 +416,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "491"
          endingLineNumber = "491"
-         landmarkName = "-selectFadeObjectWithCompleteFunc:"
+         landmarkName = "-loop"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -468,7 +468,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "564"
          endingLineNumber = "564"
-         landmarkName = "-fadeSelectUpdate"
+         landmarkName = "-setAssets:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -481,7 +481,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "734"
          endingLineNumber = "734"
-         landmarkName = "-receiveData:fromPeer:inSession:context:"
+         landmarkName = "-peerPickerController:didConnectPeer:toSession:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -494,7 +494,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "560"
          endingLineNumber = "560"
-         landmarkName = "-fadeSelectUpdate"
+         landmarkName = "-setAssets:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -507,8 +507,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "675"
          endingLineNumber = "675"
-         landmarkName = "-peerPickerController:didConnectPeer:toSession:"
-         landmarkType = "5">
+         landmarkName = "@implementation ViewController"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -520,7 +520,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "685"
          endingLineNumber = "685"
-         landmarkName = "-peerPickerController:didConnectPeer:toSession:"
+         landmarkName = "-connectButtonTapped:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -533,7 +533,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "565"
          endingLineNumber = "565"
-         landmarkName = "-fadeSelectUpdate"
+         landmarkName = "-setAssets:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -546,7 +546,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "738"
          endingLineNumber = "738"
-         landmarkName = "-receiveData:fromPeer:inSession:context:"
+         landmarkName = "-peerPickerController:didConnectPeer:toSession:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -559,7 +559,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "571"
          endingLineNumber = "571"
-         landmarkName = "-fadeSelectUpdate"
+         landmarkName = "-setAssets:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -572,7 +572,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "500"
          endingLineNumber = "500"
-         landmarkName = "-selectFadeObjectWithCompleteFunc:"
+         landmarkName = "-loop"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
