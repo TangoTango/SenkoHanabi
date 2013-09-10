@@ -6,7 +6,7 @@
 //  Copyright (c) 2013年 PTA. All rights reserved.
 //
 
-#import "Bgm.h"
+#import "ObjectAL.h"
 #import <Foundation/Foundation.h>
 
 @interface fireFlower : NSObject{

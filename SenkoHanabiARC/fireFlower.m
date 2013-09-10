@@ -11,7 +11,7 @@
 
 @implementation fireFlower
 
-static Bgm* sparkBgm = nil; // 効果音
+
 
 @synthesize deleteFlg;
 
@@ -68,11 +68,9 @@ static Bgm* sparkBgm = nil; // 効果音
     [lifeCounts addObject:[NSNumber numberWithInt:maxLifeCount]];
     
     // 効果音
-    if(!sparkBgm) {
-        sparkBgm = [[Bgm alloc] initWithPath:@"spark.mp3"];
-        [sparkBgm prepareToPlay];
-    }
-    [sparkBgm play];
+    NSArray* volumeArray = [NSArray arrayWithObjects:@0.03, @0.05, @0.08, @0.1, @0.3, @0.4, @0.5, @0.5, nil];
+    [[OALSimpleAudio sharedInstance] setEffectsVolume:[volumeArray[arc4random()%[volumeArray count]] floatValue]];
+    [[OALSimpleAudio sharedInstance] playEffect:@"spark.mp3"];
     
     return self;
 }

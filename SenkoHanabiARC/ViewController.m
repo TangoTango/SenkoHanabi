@@ -355,8 +355,8 @@ Bgm* sparkBgm;
 //                
 //            }
             // [sparkBgm play];
-            float volume = [@[ @0.05, @0.1, @0.3, @0.4, @0.5, @0.5][fireScene-1] floatValue];
-            [sparkBgm setVolume:volume];
+//            float volume = [@[ @0.05, @0.1, @0.3, @0.4, @0.5, @0.5][fireScene-1] floatValue];
+//            [sparkBgm setVolume:volume];
             
             float rate = [@[ @3, @3, @2, @2, @1, @1][fireScene-1] floatValue];
             // 加速度が大きくなりすぎたら火種を落とす
