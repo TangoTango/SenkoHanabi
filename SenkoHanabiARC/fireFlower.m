@@ -32,7 +32,8 @@ static Bgm* sparkBgm = nil; // 効果音
     rootDirection = r;
     
     CALayer* layer = [CALayer layer];
-    int kind = (rand() % 4) + 2;
+    //int kind = (rand() % 2) + 6;
+    int kind = 8;
     UIImage* img = [UIImage imageNamed:[NSString stringWithFormat:@"hibana%d.png",kind]];
     layer.contents = (id)(img.CGImage);
     
@@ -83,7 +84,7 @@ static Bgm* sparkBgm = nil; // 効果音
         CALayer* layer = layers[i];
         
         lifeCounts[i] = [NSNumber numberWithInt:[lifeCounts[i] intValue] - 1];
-        if((rootFlg && [lifeCounts[i] intValue] < 1) || [lifeCounts[i] intValue] < 0){
+        if([lifeCounts[i] intValue] < 0){
             deleteCount++;
         }else{
             layer.contentsRect = CGRectMake(0, 0, 1.0 + 1.0*([lifeCounts[i] floatValue]/maxLifeCount), 1);
@@ -114,7 +115,8 @@ static Bgm* sparkBgm = nil; // 効果音
             //範囲は-120〜120度
             while(-120 <= r && r <= 120) {
                 CALayer* layer = [CALayer layer];
-                int kind = (rand() % 4) + 2;
+                //int kind = (rand() % 4) + 2;
+                int kind = 8;
                 UIImage* img = [UIImage imageNamed:[NSString stringWithFormat:@"hibana%d.png",kind]];
                 layer.contents = (id)(img.CGImage);
                 

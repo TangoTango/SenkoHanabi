@@ -40,6 +40,11 @@
 		0D31F66917D97914005EBF21 /* hibana2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D31F66417D97914005EBF21 /* hibana2.png */; };
 		0DAD6FC017DDFAB900E52067 /* bo.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DAD6FBE17DDFAB900E52067 /* bo.png */; };
 		0DAD6FC117DDFAB900E52067 /* maru.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DAD6FBF17DDFAB900E52067 /* maru.png */; };
+		0DAD6FC417DEA86700E52067 /* CustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DAD6FC317DEA86700E52067 /* CustomButton.m */; };
+		0DAD6FF517DEB7B500E52067 /* hibana6.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DAD6FF417DEB7B500E52067 /* hibana6.png */; };
+		0DAD6FF717DEB7C200E52067 /* hibana7.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DAD6FF617DEB7C200E52067 /* hibana7.png */; };
+		0DAD6FF917DEBB7500E52067 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DAD6FF817DEBB7500E52067 /* GameKit.framework */; };
+		0DAD6FFB17DEF22900E52067 /* hibana8.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DAD6FFA17DEF22900E52067 /* hibana8.png */; };
 		0DD5B26017DAA6380018E636 /* senkohanabi2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DD5B25F17DAA6380018E636 /* senkohanabi2.png */; };
 		0DD5B26217DAB5000018E636 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DD5B26117DAB5000018E636 /* QuartzCore.framework */; };
 		0DD5B26417DACBCB0018E636 /* senkohanabi3.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DD5B26317DACBCB0018E636 /* senkohanabi3.png */; };
@@ -91,6 +96,12 @@
 		0D31F66417D97914005EBF21 /* hibana2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hibana2.png; sourceTree = "<group>"; };
 		0DAD6FBE17DDFAB900E52067 /* bo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bo.png; sourceTree = "<group>"; };
 		0DAD6FBF17DDFAB900E52067 /* maru.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = maru.png; sourceTree = "<group>"; };
+		0DAD6FC217DEA86700E52067 /* CustomButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomButton.h; sourceTree = "<group>"; };
+		0DAD6FC317DEA86700E52067 /* CustomButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomButton.m; sourceTree = "<group>"; };
+		0DAD6FF417DEB7B500E52067 /* hibana6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hibana6.png; sourceTree = "<group>"; };
+		0DAD6FF617DEB7C200E52067 /* hibana7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hibana7.png; sourceTree = "<group>"; };
+		0DAD6FF817DEBB7500E52067 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		0DAD6FFA17DEF22900E52067 /* hibana8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hibana8.png; sourceTree = "<group>"; };
 		0DD5B25F17DAA6380018E636 /* senkohanabi2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = senkohanabi2.png; sourceTree = "<group>"; };
 		0DD5B26117DAB5000018E636 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		0DD5B26317DACBCB0018E636 /* senkohanabi3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = senkohanabi3.png; sourceTree = "<group>"; };
@@ -105,6 +116,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0DAD6FF917DEBB7500E52067 /* GameKit.framework in Frameworks */,
 				043DFFB317DD6C64009449CC /* AVFoundation.framework in Frameworks */,
 				043E214817DD664900AB279F /* AudioToolbox.framework in Frameworks */,
 				0DD5B26217DAB5000018E636 /* QuartzCore.framework in Frameworks */,
@@ -131,6 +143,7 @@
 		0D31F60C17D8B5C8005EBF21 = {
 			isa = PBXGroup;
 			children = (
+				0DAD6FF817DEBB7500E52067 /* GameKit.framework */,
 				0D31F61E17D8B5C8005EBF21 /* SenkoHanabiARC */,
 				0D31F61717D8B5C8005EBF21 /* Frameworks */,
 				0D31F61617D8B5C8005EBF21 /* Products */,
@@ -170,6 +183,8 @@
 				0D31F63017D8B5C8005EBF21 /* MainStoryboard.storyboard */,
 				0D31F63317D8B5C8005EBF21 /* ViewController.h */,
 				0D31F63417D8B5C8005EBF21 /* ViewController.m */,
+				0DAD6FC217DEA86700E52067 /* CustomButton.h */,
+				0DAD6FC317DEA86700E52067 /* CustomButton.m */,
 				0D31F63B17D8B60E005EBF21 /* fadeObject.h */,
 				0D31F63C17D8B60E005EBF21 /* fadeObject.m */,
 				0D31F65D17D97231005EBF21 /* fire.h */,
@@ -209,10 +224,13 @@
 				0DD5B26317DACBCB0018E636 /* senkohanabi3.png */,
 				0DD5B25F17DAA6380018E636 /* senkohanabi2.png */,
 				0D31F66017D97914005EBF21 /* hinotama.png */,
-				0D31F66117D97914005EBF21 /* hibana5.png */,
-				0D31F66217D97914005EBF21 /* hibana4.png */,
-				0D31F66317D97914005EBF21 /* hibana3.png */,
 				0D31F66417D97914005EBF21 /* hibana2.png */,
+				0D31F66317D97914005EBF21 /* hibana3.png */,
+				0D31F66217D97914005EBF21 /* hibana4.png */,
+				0D31F66117D97914005EBF21 /* hibana5.png */,
+				0DAD6FF417DEB7B500E52067 /* hibana6.png */,
+				0DAD6FF617DEB7C200E52067 /* hibana7.png */,
+				0DAD6FFA17DEF22900E52067 /* hibana8.png */,
 				0D31F65917D971D2005EBF21 /* again2.gif */,
 				0D31F65517D9710C005EBF21 /* addPicture2.gif */,
 				0D31F63F17D8CC7B005EBF21 /* fade1.png */,
@@ -296,6 +314,9 @@
 				043DFFB717DDDCEC009449CC /* spark.mp3 in Resources */,
 				0DAD6FC017DDFAB900E52067 /* bo.png in Resources */,
 				0DAD6FC117DDFAB900E52067 /* maru.png in Resources */,
+				0DAD6FF517DEB7B500E52067 /* hibana6.png in Resources */,
+				0DAD6FF717DEB7C200E52067 /* hibana7.png in Resources */,
+				0DAD6FFB17DEF22900E52067 /* hibana8.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -314,6 +335,7 @@
 				0DD5B26B17DAD6510018E636 /* fireFlower.m in Sources */,
 				043E214317DD532A00AB279F /* fadeView.m in Sources */,
 				043E214B17DD666D00AB279F /* Bgm.m in Sources */,
+				0DAD6FC417DEA86700E52067 /* CustomButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

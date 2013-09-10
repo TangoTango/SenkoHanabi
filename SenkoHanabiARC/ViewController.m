@@ -16,6 +16,7 @@
 #import "fireFlower.h"
 #import "fadeView.h"
 #import "Bgm.h"
+#import "CustomButton.h"
 
 @interface ViewController ()
 
@@ -28,6 +29,7 @@ fadeView *add;//画像追加結果
 fadeView *yakedo;//火傷しちゃう警告
 UIImageView *senkoImage; // 線香花火の画像
 UIImageView *hinotamaImage;//火の玉の画像
+UIButton *connectButton;//通信ボタン
 NSMutableArray* fireFlowers;//火花の画像
 bool hiFlg = NO; // 火種が落ちたかどうか
 
@@ -45,9 +47,11 @@ int addAssetsCount;//追加時Assetカウント
 int addedAssetsCount;//追加時追加済Assetカウント
 int initAssetsCount;//起動時Assetカウント
 
+GKSession *currentSession;//友達とのセッション
+NSMutableArray *friendImages;//友達の写真
 
 UIButton *nextButton;
-UIButton *addimageButton;
+CustomButton *addimageButton;
 
 int senkoTime = 5000;//線香が落ちるまでの時間
 int isTapped = 0;//タップしたか
@@ -95,6 +99,8 @@ Bgm* sparkBgm;
     }
     prevAccelerations = [NSMutableArray array];
     
+    //友達の写真の初期化
+    friendImages = [NSMutableArray array];
     //フェードオブジェクト(テキスト、画像の名前、Asset)読み込み
     imageNames = [NSArray arrayWithObjects:@"fade1.png",@"fade2.png", nil];
     textNames = [NSArray arrayWithObjects:@"気づいたら\nカラオケで\n\n\n\nざこ寝",
@@ -127,7 +133,7 @@ Bgm* sparkBgm;
                                    NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
                                    [ud setObject:assetsURL forKey:@"assetsURL"];
                                    [ud synchronize];
-                                   fadeSelects = [self randomList:[imageNames count] + [textNames count] + [assets count]];
+                                   fadeSelects = [self randomList:[imageNames count] + [textNames count] + [assets count] + [friendImages count]];
                                    //ループ開始
                                    [NSTimer scheduledTimerWithTimeInterval:0.03f
                                                                     target:self
@@ -142,7 +148,7 @@ Bgm* sparkBgm;
                                   NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
                                   [ud setObject:assetsURL forKey:@"assetsURL"];
                                   [ud synchronize];
-                                  fadeSelects = [self randomList:[imageNames count] + [textNames count] + [assets count]];
+                                  fadeSelects = [self randomList:[imageNames count] + [textNames count] + [assets count] + [friendImages count]];
                                   //ループ開始
                                   [NSTimer scheduledTimerWithTimeInterval:0.03f
                                                                    target:self
@@ -154,7 +160,7 @@ Bgm* sparkBgm;
         }
     }else{
         assetsURL = [NSMutableDictionary dictionary];
-        fadeSelects = [self randomList:[imageNames count] + [textNames count] + [assets count]];
+        fadeSelects = [self randomList:[imageNames count] + [textNames count] + [assets count] + [friendImages count]];
         
         //ループ開始
         [NSTimer scheduledTimerWithTimeInterval:0.03f
@@ -188,6 +194,7 @@ Bgm* sparkBgm;
             }else{
                 [title reInit];
             }
+            
             sceneNumber = 3;
             break;
         case 3://「線香花火」隠蔽アニメ、線香花火設定、「遊び方」設定
@@ -324,18 +331,24 @@ Bgm* sparkBgm;
             if(!showFadeObject){
                 int i = [fadeSelects[fadeselect] intValue];
                 if( i < [imageNames count]){
+                    int t = i;
                     //画像の追加
                     showFadeObject =
-                    [[fadeObject alloc] initWithImage:[[UIImageView alloc] initWithImage:[UIImage imageNamed:imageNames[i]]] view:self.view];
+                    [[fadeObject alloc] initWithImage:[[UIImageView alloc] initWithImage:[UIImage imageNamed:imageNames[t]]] view:self.view];
                 }else if(i - [imageNames count] < [textNames count]){
+                    int t = i - [imageNames count];
                     //文字の追加
                     showFadeObject =
-                    [[fadeObject alloc] initWithString:textNames[i - [imageNames count]] view:self.view];
-                }else{
-                    ALAsset *asset = assets[i - [imageNames count] - [textNames count]];
-                    UIImage *img = [UIImage imageWithCGImage:[asset thumbnail]];                    
+                    [[fadeObject alloc] initWithString:textNames[t] view:self.view];
+                }else if(i - [imageNames count] - [textNames count] < [assets count]){
+                    int t = i - [imageNames count] - [textNames count];
+                    ALAsset *asset = assets[t];
+                    UIImage *img = [UIImage imageWithCGImage:[asset thumbnail]];
                     showFadeObject =
                     [[fadeObject alloc] initWithImage:[[UIImageView alloc] initWithImage:img] view:self.view];
+                }else if(i - [imageNames count] - [textNames count] - [assets count] < [friendImages count]){
+                    int t = i - [imageNames count] - [textNames count] - [assets count];
+                    showFadeObject = [[fadeObject alloc] initWithImage:[[UIImageView alloc] initWithImage:friendImages[t]] view:self.view];
                 }
                 fadeselect = (fadeselect + 1) % ([imageNames count] + [textNames count] + [assets count]);
             }
@@ -436,14 +449,24 @@ Bgm* sparkBgm;
                 //画像追加ボタン
                 if(!addimageButton){
                     UIImage *img = [UIImage imageNamed:@"addPicture2.gif"];
-                    addimageButton = [[UIButton alloc] initWithFrame:CGRectMake(160-75, 350, 150, 45)];
+                    addimageButton = [[CustomButton  alloc] initWithFrame:CGRectMake(160-75, 350, 150, 45)];
                     [addimageButton setBackgroundImage:img forState:UIControlStateNormal];
                     [addimageButton addTarget:self action:@selector(addimageButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
                     [self.view addSubview:addimageButton];
                 }else{
                     [addimageButton setHidden:NO];
                 }
+                if(!connectButton){
+                    connectButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+                    connectButton.frame = CGRectMake(0, 0, 100, 30);
+                    [connectButton setTitle:@"友達と一緒にやる" forState:UIControlStateNormal];
+                    [connectButton addTarget:self action:@selector(connectButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+                    [self.view addSubview:connectButton];
+                }else{
+                    [connectButton setHidden:NO];
+                }
                 
+                //画像選択完了
                 if(assetsflg == 1){
                     
                     NSString *text;
@@ -468,8 +491,9 @@ Bgm* sparkBgm;
             senkoTime = 400;
             [nextButton setHidden:YES];
             [addimageButton setHidden:YES];
+            [connectButton setHidden:YES];
             initLaunch = 0;
-            fadeSelects = [self randomList:([imageNames count] + [textNames count] + [assets count])];
+            fadeSelects = [self randomList:([imageNames count] + [textNames count] + [assets count] + [friendImages count])];
             fadeselect = 0;
             hiFlg = NO;
             sceneNumber = 3;
@@ -479,6 +503,7 @@ Bgm* sparkBgm;
             if([add Do]){
                 [addimageButton setEnabled:YES];
                 [nextButton setEnabled:YES];
+                [connectButton setEnabled:YES];
                 sceneNumber = 7;
             }
             break;
@@ -514,7 +539,13 @@ Bgm* sparkBgm;
 - (void)addimageButtonTapped:(UIButton *)button{
     [addimageButton setEnabled:NO];
     [nextButton setEnabled:NO];
+    [connectButton setEnabled:NO];
     
+    UIProgressView *progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
+    progressView.frame = CGRectMake(20, 200, 280, 37);
+    progressView.progress = 0;
+    [self.view addSubview:progressView];        
+
     addAssetsCount = 0;
     addedAssetsCount = 0;
     assetsLibrary = [self.class defaultAssetsLibrary];
@@ -523,10 +554,11 @@ Bgm* sparkBgm;
         if (group){
             ALAssetsGroupEnumerationResultsBlock assetsEnumerationBlock = ^(ALAsset *result, NSUInteger index, BOOL *stop) {
                 if (result) {
+                    progressView.progress += (double)(1.0 / [group numberOfAssets]);
+                    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeInterval:0.001 sinceDate:[NSDate date]]];
                     NSDate* d = [result valueForProperty:ALAssetPropertyDate];
-                    NSCalendar *cal = [NSCalendar currentCalendar];
-                    NSDateComponents *dcom = [cal components:NSYearCalendarUnit | NSMonthCalendarUnit fromDate:d];
-                    if( 6 <= dcom.month && dcom.month <= 9){
+                    int m = [[[NSString stringWithFormat:@"%@",d] componentsSeparatedByString:@"-"][1] intValue];
+                    if( 6 <= m && m <= 9){
                         NSURL *URL = [[result valueForProperty:ALAssetPropertyURLs] objectForKey:[[result defaultRepresentation] UTI]];
                         NSString* URLstr = [URL absoluteString];
                         if(!assetsURL[URLstr]){
@@ -566,6 +598,83 @@ Bgm* sparkBgm;
     });
     return library;
 }
+
+
+- (void)connectButtonTapped:(UIButton *)button{
+    [addimageButton setEnabled:NO];
+    [nextButton setEnabled:NO];
+    [connectButton setEnabled:NO];
+    
+    // ピアピッカーを作成
+    GKPeerPickerController* picker = [[GKPeerPickerController alloc] init];
+    picker.delegate = self;
+    picker.connectionTypesMask = GKPeerPickerConnectionTypeNearby;
+    [picker show];
+}
+- (void)peerPickerControllerDidCancel:(GKPeerPickerController *)picker{
+    [addimageButton setEnabled:YES];
+    [nextButton setEnabled:YES];
+    [connectButton setEnabled:YES];
+}
+- (void)peerPickerController:(GKPeerPickerController *)picker
+              didConnectPeer:(NSString *)peerID
+                   toSession:(GKSession *)session{
+    // セッションを保管
+    currentSession = session;
+    session.delegate = self;
+    [session setDataReceiveHandler:self withContext:nil];
+    
+    
+    // 接続中のすべてのピアにデータを送信
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    int count = 0;
+    for(ALAsset *asset in assets){
+        UIImage *img = [UIImage imageWithCGImage:[asset thumbnail]];
+        dic[[NSString stringWithFormat:@"%d",count]] = img;
+        
+        count++;
+        if([assets count] <= count || 10 <= count)break;
+    }
+    
+    // 生成したオブジェクトをNSData型に変換
+    NSData *d = [NSKeyedArchiver archivedDataWithRootObject:dic];
+    NSError *error = nil;
+    [currentSession sendDataToAllPeers:d
+                          withDataMode:GKSendDataReliable
+                                 error:&error];
+    
+    if (error){
+        NSLog(@"%@", [error localizedDescription]);
+        UIAlertView *alertView = [[UIAlertView alloc]
+                                  initWithTitle:@""
+                                  message:@"通信エラーが\n発生しました。"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+        [alertView show];
+        [addimageButton setEnabled:YES];
+        [nextButton setEnabled:YES];
+        [connectButton setEnabled:YES];
+    }
+    
+    
+    // ピアピッカーを閉じる
+    picker.delegate = nil;
+    [picker dismiss];
+}
+- (void)receiveData:(NSData *)data fromPeer:(NSString *)peer inSession: (GKSession *)session context:(void *)context{
+    
+    // NSData型オブジェクトをNSDictionary型に変換
+    NSDictionary *reverse = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    for(NSString *key in reverse){
+        [friendImages addObject:reverse[key]];
+    }
+    
+    [addimageButton setEnabled:YES];
+    [nextButton setEnabled:YES];
+    [connectButton setEnabled:YES];
+}
+
 
 -(CGPoint)getHidanePointWithAngle:(CGFloat)angle{
     if(0 <= angle){

@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
+#import <GameKit/GameKit.h>
 
-@interface ViewController : UIViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIAccelerometerDelegate>
+@interface ViewController : UIViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIAccelerometerDelegate, GKPeerPickerControllerDelegate, GKSessionDelegate>
 + (ALAssetsLibrary *)defaultAssetsLibrary;
 @end
