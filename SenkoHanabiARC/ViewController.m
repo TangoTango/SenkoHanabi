@@ -35,7 +35,6 @@ UIButton *connectButton;//通信ボタン
 MyProgressBar *addBar;//画像追加プログレスバー
 NSMutableArray* fireFlowers;//火花の画像
 bool hiFlg = NO; // 火種が落ちたかどうか
-bool hiBlackFlg = NO; // 火種の火が消えたかどうか
 
 NSArray *imageNames; // 現れて消えるアニメーション画像の配列
 NSArray *textNames; // 現れて消えるテキストの配列
@@ -264,7 +263,7 @@ int sceneNumber;
                 fireScene = 6;//ほぼ何もない
             }else if(33*60 < senkoCount){
                 fireScene = 5;//盛り下がり
-            }else if(33*40 < senkoCount){
+            }else if(33*5 < senkoCount){
                 fireScene = 4;//絶頂期
             }else if(33*20 < senkoCount){
                 fireScene = 3;//盛り上がり
@@ -277,7 +276,7 @@ int sceneNumber;
             int rate = [@[ @100, @50, @10, @1, @10, @50, @9999][fireScene-1] intValue];
             int r = (arc4random() % rate);
             if( r == 0 ){
-                fireFlower* ff = [[fireFlower alloc] initWithPoint:hidanePoint view:self.view];
+                fireFlower* ff = [[fireFlower alloc] initWithPoint:hidanePoint view:self.view scene:fireScene];
                 [fireFlowers addObject:ff];
             }
             
@@ -449,10 +448,10 @@ int sceneNumber;
                 }else{
                     [nextButton setHidden:NO];
                 }
-                //画像追加ボタン
+                // 「画像を追加」ボタン
                 if(!addimageButton){
                     UIImage *img = [UIImage imageNamed:@"addPicture2.gif"];
-                    addimageButton = [[CustomButton  alloc] initWithFrame:CGRectMake(160-75, 350, 150, 45)];
+                    addimageButton = [[CustomButton  alloc] initWithFrame:CGRectMake(160-75, 300, 150, 45)];
                     [addimageButton setBackgroundImage:img forState:UIControlStateNormal];
                     [addimageButton addTarget:self action:@selector(addimageButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
                     [self.view addSubview:addimageButton];
@@ -460,10 +459,11 @@ int sceneNumber;
                 }else{
                     [addimageButton setHidden:NO];
                 }
+                //「写真を共有」ボタン
                 if(!connectButton){
-                    connectButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-                    connectButton.frame = CGRectMake(0, 0, 100, 30);
-                    [connectButton setTitle:@"友達と一緒にやる" forState:UIControlStateNormal];
+                    UIImage *img = [UIImage imageNamed:@"sharePicture.gif"];
+                    connectButton = [[CustomButton alloc] initWithFrame:CGRectMake(85, 370, 150, 45)];
+                    [connectButton setBackgroundImage:img forState:UIControlStateNormal];
                     [connectButton addTarget:self action:@selector(connectButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
                     [self.view addSubview:connectButton];
                 }else{
@@ -503,7 +503,7 @@ int sceneNumber;
             [add hide];
             initLaunch = 0;
             hiFlg = NO;
-            hiBlackFlg = NO;
+            sceneNumber = 10;
             [self selectFadeObjectWithCompleteFunc:^{
                 if(currentSession){
                     endNumber = 0;
@@ -709,67 +709,10 @@ int sceneNumber;
 
 //画像選択ボタン　タップ
 - (void)addimageButtonTapped:(UIButton *)button{
-    [addimageButton setEnabled:NO];
-    [nextButton setEnabled:NO];
-    [connectButton setEnabled:NO];
-    
-    //UIProgressView *progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
-    //progressView.frame = CGRectMake(20, 200, 280, 37);
-    //progressView.progress = 0;
-    //[self.view addSubview:progressView];
-    if(!addBar){
-       addBar = [[MyProgressBar alloc] initWithView:self.view];
-    }else{
-        [addBar reInit];
-    }
-    
-    sceneNumber = 12;
-    addAssetsCount = 0;
-    addedAssetsCount = 0;
-    assetsLibrary = [self.class defaultAssetsLibrary];
-    NSDate *startDate = [NSDate date];
-    ALAssetsLibraryGroupsEnumerationResultsBlock listGroupBlock = ^(ALAssetsGroup *group, BOOL *stop){
-        if (group){
-            ALAssetsGroupEnumerationResultsBlock assetsEnumerationBlock = ^(ALAsset *result, NSUInteger index, BOOL *stop) {
-                if (result) {
-                    
-                    //progressView.progress += (double)(1.0 / [group numberOfAssets]);
-                    [addBar DoWithRate:((double)(addAssetsCount + addedAssetsCount) / [group numberOfAssets])];
-                    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeInterval:0.001 sinceDate:[NSDate date]]];
-                    
-                    NSDate* d = [result valueForProperty:ALAssetPropertyDate];
-                    int m = [[[NSString stringWithFormat:@"%@",d] componentsSeparatedByString:@"-"][1] intValue];
-                    if( 6 <= m && m <= 9){
-                        NSURL *URL = [[result valueForProperty:ALAssetPropertyURLs] objectForKey:[[result defaultRepresentation] UTI]];
-                        NSString* URLstr = [URL absoluteString];
-                        if(!assetsURL[URLstr]){
-                            addAssetsCount++;
-                            //[assets addObject:result];
-                            assetsURL[URLstr] = [NSNumber numberWithBool:1];
-                        }else{
-                            addedAssetsCount++;
-                        }
-                    }
-                }else{
-                    NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-                    [ud setObject:assetsURL forKey:@"assetsURL"];
-                    [ud synchronize];
-                    [addBar DoWithRate:1.1];
-                    assetsflg = 1;
-                    NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:startDate];
-                    NSLog(@"time is %lf (sec)", interval);
-                }
-            };
-            
-            NSLog(@"%d", [group numberOfAssets]);
-            [group enumerateAssetsUsingBlock:assetsEnumerationBlock];
-        }
-    };
-    
-    ALAssetsLibraryAccessFailureBlock failureBlock = ^(NSError *error){
-        NSLog(@"Error");
-    };
-    [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:listGroupBlock failureBlock:failureBlock];
+    // 画像追加に同意させるためのアラートを表示
+    UIAlertView *alert =
+    [[UIAlertView alloc] initWithTitle:@"注意" message:@"カメラロールから画像をアプリに取り込みます" delegate:self cancelButtonTitle:@"キャンセル" otherButtonTitles:@"OK", nil];
+    [alert show];
 }
 
 + (ALAssetsLibrary *)defaultAssetsLibrary {
@@ -1146,6 +1089,73 @@ int sceneNumber;
              }
          }];
     }
+}
+
+// アラートのボタンが押されたとき
+-(void)alertView:(UIAlertView*)alertView
+clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (buttonIndex) {
+        case 0:
+            // "キャンセル"が押されたとき
+            NSLog(@"cancel!");
+            break;
+        case 1:
+            // "OK"が押されたとき
+            NSLog(@"OK!");
+            
+            
+            if(!addBar){
+                addBar = [[MyProgressBar alloc] initWithView:self.view];
+            }else{
+                [addBar reInit];
+            }
+            
+            sceneNumber = 12;
+            addAssetsCount = 0;
+            addedAssetsCount = 0;
+            assetsLibrary = [self.class defaultAssetsLibrary];
+            NSDate *startDate = [NSDate date];
+            ALAssetsLibraryGroupsEnumerationResultsBlock listGroupBlock = ^(ALAssetsGroup *group, BOOL *stop){
+                if (group){
+                    ALAssetsGroupEnumerationResultsBlock assetsEnumerationBlock = ^(ALAsset *result, NSUInteger index, BOOL *stop) {
+                        if (result) {
+                            
+                            //progressView.progress += (double)(1.0 / [group numberOfAssets]);
+                            [addBar DoWithRate:((double)(addAssetsCount + addedAssetsCount) / [group numberOfAssets])];
+                            [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeInterval:0.001 sinceDate:[NSDate date]]];
+                            
+                            NSDate* d = [result valueForProperty:ALAssetPropertyDate];
+                            int m = [[[NSString stringWithFormat:@"%@",d] componentsSeparatedByString:@"-"][1] intValue];
+                            if( 6 <= m && m <= 9){
+                                NSURL *URL = [[result valueForProperty:ALAssetPropertyURLs] objectForKey:[[result defaultRepresentation] UTI]];
+                                NSString* URLstr = [URL absoluteString];
+                                if(!assetsURL[URLstr]){
+                                    addAssetsCount++;
+                                    //[assets addObject:result];
+                                    assetsURL[URLstr] = [NSNumber numberWithBool:1];
+                                }else{
+                                    addedAssetsCount++;
+                                }
+                            }
+                        }else{
+                            NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+                            [ud setObject:assetsURL forKey:@"assetsURL"];
+                            [ud synchronize];
+                            [addBar DoWithRate:1.1];
+                            assetsflg = 1;
+                            NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:startDate];
+                            NSLog(@"time is %lf (sec)", interval);
+                        }
+                    };
+                    
+                    NSLog(@"%d", [group numberOfAssets]);
+                    [group enumerateAssetsUsingBlock:assetsEnumerationBlock];
+                }
+            };
+            
+            break;
+    }
+    
 }
 
 @end

@@ -676,7 +676,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "867"
          endingLineNumber = "867"
-         landmarkName = "-receiveData:fromPeer:inSession:context:"
+         landmarkName = "-peerPickerController:didConnectPeer:toSession:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -689,19 +689,6 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "476"
          endingLineNumber = "476"
-         landmarkName = "-loop"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400575203.746369"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "524"
-         endingLineNumber = "524"
          landmarkName = "-loop"
          landmarkType = "5">
       </FileBreakpoint>
@@ -755,19 +742,6 @@
          startingLineNumber = "530"
          endingLineNumber = "530"
          landmarkName = "-loop"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400575247.829613"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "737"
-         endingLineNumber = "737"
-         landmarkName = "-addimageButtonTapped:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint

@@ -15,7 +15,7 @@
 
 @synthesize deleteFlg;
 
--(id)initWithPoint:(CGPoint)p view:(UIView*)v{
+-(id)initWithPoint:(CGPoint)p view:(UIView*)v scene:(NSInteger)scene{
     
     self = [super init];
     
@@ -73,7 +73,15 @@
     NSArray* volumeArray = [NSArray arrayWithObjects:@0.03, @0.05, @0.08, @0.1, @0.3, @0.4, @0.5, @0.5, nil];
     
     // 再生
-    [[OALSimpleAudio sharedInstance] playEffect:@"spark.mp3" volume:[volumeArray[arc4random()%[volumeArray count]] floatValue] pitch:1.0 pan:0.0 loop:NO];
+    // 負荷軽減のため火花の絶頂期は再生頻度を減らす
+    if (scene == 4) {
+        if (arc4random() % 3 == 0) {
+            [[OALSimpleAudio sharedInstance] playEffect:@"spark.mp3" volume:[volumeArray[arc4random()%[volumeArray count]] floatValue] pitch:1.0 pan:0.0 loop:NO];
+        }
+    }
+    else {
+        [[OALSimpleAudio sharedInstance] playEffect:@"spark.mp3" volume:[volumeArray[arc4random()%[volumeArray count]] floatValue] pitch:1.0 pan:0.0 loop:NO];
+    }
     
     return self;
 }
@@ -154,6 +162,8 @@
             deleteFlg = 1;
         }
     }
+    
+    
 }
 
 @end
