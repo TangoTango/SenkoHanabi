@@ -357,7 +357,7 @@ int sceneNumber;
                 sceneNumber = 7;
                 break;
             }
-            sceneNumber = 7;
+            
             if( fireScene == 7) {
                 
                 hinotamaBlackLayer.opacity += 0.2f;
@@ -973,7 +973,6 @@ int sceneNumber;
 // アラートのボタンが押されたとき
 -(void)alertView:(UIAlertView*)alertView
 clickedButtonAtIndex:(NSInteger)buttonIndex {
-    
     switch (buttonIndex) {
         case 0:
             // "キャンセル"が押されたとき
