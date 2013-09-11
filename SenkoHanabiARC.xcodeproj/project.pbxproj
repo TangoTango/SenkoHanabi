@@ -52,6 +52,7 @@
 		04A3D5F917DEBB7B009E2AE7 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A3D5F817DEBB7B009E2AE7 /* OpenAL.framework */; };
 		04A3D5FF17DEF734009E2AE7 /* higurashi.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 04A3D5FE17DEF734009E2AE7 /* higurashi.mp3 */; };
 		04A3D60E17DF3A21009E2AE7 /* hinotama_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 04A3D60D17DF3A21009E2AE7 /* hinotama_black.png */; };
+		04A3D61117DFFAE1009E2AE7 /* sharePicture.gif in Resources */ = {isa = PBXBuildFile; fileRef = 04A3D61017DFFAE1009E2AE7 /* sharePicture.gif */; };
 		0D31F61917D8B5C8005EBF21 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D31F61817D8B5C8005EBF21 /* UIKit.framework */; };
 		0D31F61B17D8B5C8005EBF21 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D31F61A17D8B5C8005EBF21 /* Foundation.framework */; };
 		0D31F61D17D8B5C8005EBF21 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D31F61C17D8B5C8005EBF21 /* CoreGraphics.framework */; };
@@ -195,6 +196,7 @@
 		04A3D5F817DEBB7B009E2AE7 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		04A3D5FE17DEF734009E2AE7 /* higurashi.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = higurashi.mp3; sourceTree = "<group>"; };
 		04A3D60D17DF3A21009E2AE7 /* hinotama_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hinotama_black.png; sourceTree = "<group>"; };
+		04A3D61017DFFAE1009E2AE7 /* sharePicture.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = sharePicture.gif; sourceTree = "<group>"; };
 		0D31F61517D8B5C8005EBF21 /* SenkoHanabiARC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SenkoHanabiARC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D31F61817D8B5C8005EBF21 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0D31F61A17D8B5C8005EBF21 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -508,6 +510,7 @@
 		0D31F63E17D8CC58005EBF21 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				04A3D61017DFFAE1009E2AE7 /* sharePicture.gif */,
 				0DAD6FBE17DDFAB900E52067 /* bo.png */,
 				0DAD6FBF17DDFAB900E52067 /* maru.png */,
 				04A3D60D17DF3A21009E2AE7 /* hinotama_black.png */,
@@ -644,6 +647,7 @@
 				04A3D5F017DEBB13009E2AE7 /* ObjectAL (OSX)-Info.plist in Resources */,
 				04A3D5FF17DEF734009E2AE7 /* higurashi.mp3 in Resources */,
 				04A3D60E17DF3A21009E2AE7 /* hinotama_black.png in Resources */,
+				04A3D61117DFFAE1009E2AE7 /* sharePicture.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

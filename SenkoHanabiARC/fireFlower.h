@@ -21,7 +21,7 @@
     UIView* view;//画面全体のビュー
 }
 @property int deleteFlg;
--(id)initWithPoint:(CGPoint)p view:(UIView*)v;
+-(id)initWithPoint:(CGPoint)p view:(UIView*)v scene:(NSInteger)scene;
 -(void)DoWithScene:(NSInteger)scene;
 
 @end
