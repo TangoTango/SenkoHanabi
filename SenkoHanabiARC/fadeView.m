@@ -14,17 +14,33 @@
 @synthesize alphaFlag;
 
 -(id)initWithImageName:(NSString*)name frame:(CGRect)frame upAlpha:(float)up downAlpha:(float)down topAlpha:(float)top superview:(UIView*)view{
-    //詳しい初期化を。。。後回し
     obj = [[UIImageView alloc] initWithImage:[UIImage imageNamed:name]];
     obj.frame = frame;
-    obj.alpha = 0.0f;
     [view addSubview:obj];
+    rotation = 0;
     
     superview = view;
     upAlpha = up;
     downAlpha = down;
     topAlpha = top;
     alphaFlag = 1;
+    
+    /* 回転 */
+    
+    // y軸に対して回転．（z軸を指定するとUIViewのアニメーションのように回転）
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+    
+    // アニメーションのオプションを設定
+    animation.duration = 2.5; // アニメーション速度
+    animation.repeatCount = 9999; // 繰り返し回数
+    
+    // 回転角度を設定
+    animation.fromValue = [NSNumber numberWithFloat:0.0]; // 開始時の角度
+    animation.toValue = [NSNumber numberWithFloat:2 * M_PI]; // 終了時の角度
+    
+    // アニメーションを追加
+    [obj.layer addAnimation:animation forKey:@"rotate-layer"];
+    
     return self;
 }
 -(id)initWithLableText:(NSString*)text point:(CGPoint)p fontsize:(NSInteger)fontsize upAlpha:(float)up downAlpha:(float)down topAlpha:(float)top superview:(UIView*)view{
@@ -87,6 +103,11 @@
 -(void)reverse{
     obj.transform = CGAffineTransformMakeRotation(M_PI);
 }
+-(void)rotationDo{
+    obj.alpha += upAlpha;
+    //rotation += 0.05;
+    //obj.transform = CGAffineTransformMakeRotation(rotation);
+}
 
 -(void)changeTextWithString:(NSString *)newText{
     [obj removeFromSuperview];
@@ -99,6 +120,9 @@
 -(void)reInit{
     obj.alpha = 0.0f;
     alphaFlag = 1;
+}
+-(void)show{
+    obj.alpha = 1.0f;
 }
 -(void)hide{
     obj.alpha = 0.0f;

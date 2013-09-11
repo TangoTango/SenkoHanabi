@@ -460,6 +460,13 @@ int sceneNumber;
                 if(friendWait){
                     [friendWait hide];
                 }
+                //画像共有中
+                
+                if(katori){
+                    if(sharedFlg != 1){
+                        [katori hide];
+                    }
+                }
                 
                 //もう一度ボタン
                 if(!nextButton){
@@ -493,11 +500,12 @@ int sceneNumber;
                     [connectButton setHidden:NO];
                 }
                 
+                
                 //画像選択完了or写真共有完了
-                if(assetsflg == 1 || sharedFlg == 1){
+                if(assetsflg == 1 || sharedFlg == 2){
                     
                     NSString *text;
-                    if( sharedFlg ){
+                    if( sharedFlg == 2){
                         sharedFlg = 0;
                         text = [NSString stringWithFormat:@"友達の写真を\n%d枚\n共有しました。",[friendImages count]];
                     }else if(0 < addAssetsCount){
@@ -792,8 +800,15 @@ int sceneNumber;
     session.delegate = self;
     [session setDataReceiveHandler:self withContext:nil];
     
+    UIView *selfview = self.view;
     //id randomCall = self;
     [self setAssets:^{
+        sharedFlg = 1;
+        if(!katori){
+            katori = [[fadeView alloc] initWithImageName:@"katori.png" frame:CGRectMake(100, 50, 120, 120) upAlpha:0.1f downAlpha:0.0f topAlpha:1.0f superview:selfview];
+        }else{
+            [katori show];
+        }
         
         // 接続中のすべてのピアにデータを送信
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
@@ -805,11 +820,6 @@ int sceneNumber;
             if([assets count] <= count || 30 <= count)break;
         }
         dic[@"shareImg"] = @(YES);
-        
-        /*random90s = [randomCall randomList:90];
-         dic[@"random90s"] = random90s;
-         myGyanken = [NSNumber numberWithInt:arc4random()];
-         dic[@"gyanken"] = myGyanken;*/
         
         // 生成したオブジェクトをNSData型に変換
         NSData *d = [NSKeyedArchiver archivedDataWithRootObject:dic];
@@ -831,6 +841,7 @@ int sceneNumber;
             [addimageButton setEnabled:YES];
             [nextButton setEnabled:YES];
             [connectButton setEnabled:YES];
+        }else{
         }
     }];
     
@@ -850,67 +861,11 @@ int sceneNumber;
             }
         }
         endNumber = 2;
-        sharedFlg = 1;
+        sharedFlg = 2;
     }else if(reverse[@"gyanken"]){
         enemyRandom90s = reverse[@"random90s"];
         enemyGyanken = reverse[@"gyanken"];
         startNumber++;
-        //じゃんけんに負けた側が相手のランダム配列を用いる。
-        /*if( myGyanken ){
-         if( [myGyanken intValue] < [reverse[@"gyanken"] intValue]){
-         random90s = reverse[@"random90s"];
-         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-         dic[@"start"] = @(YES);
-         NSData *d = [NSKeyedArchiver archivedDataWithRootObject:dic];
-         NSError *error = nil;
-         [currentSession sendDataToAllPeers:d
-         withDataMode:GKSendDataReliable
-         error:&error];
-         
-         if (error){
-         NSLog(@"%@", [error localizedDescription]);
-         currentSession = nil;
-         UIAlertView *alertView = [[UIAlertView alloc]
-         initWithTitle:@""
-         message:@"通信エラーが\n発生しました。"
-         delegate:nil
-         cancelButtonTitle:@"OK"
-         otherButtonTitles:nil];
-         [alertView show];
-         }else{
-         winner = 0;
-         sceneNumber = 8;
-         }
-         }
-         }else{
-         random90s = reverse[@"random90s"];
-         
-         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-         dic[@"start"] = @(YES);
-         NSData *d = [NSKeyedArchiver archivedDataWithRootObject:dic];
-         NSError *error = nil;
-         [currentSession sendDataToAllPeers:d
-         withDataMode:GKSendDataReliable
-         error:&error];
-         
-         if (error){
-         NSLog(@"%@", [error localizedDescription]);
-         currentSession = nil;
-         UIAlertView *alertView = [[UIAlertView alloc]
-         initWithTitle:@""
-         message:@"通信エラーが\n発生しました。"
-         delegate:nil
-         cancelButtonTitle:@"OK"
-         otherButtonTitles:nil];
-         [alertView show];
-         }else{
-         winner = 0;
-         sceneNumber = 8;
-         }
-         }*/
-    }else if(reverse[@"start"]){
-        //startNumber++;
-        //sceneNumber = 8;
     }else if(reverse[@"end"]){
         endNumber++;
     }
@@ -1220,6 +1175,10 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
             case 1:
                 // "OK"が押されたとき
                 NSLog(@"OK!");
+                
+                [nextButton setEnabled:NO];
+                [addimageButton setEnabled:NO];
+                [connectButton setEnabled:NO];
 
                 // ピアピッカーを作成
                 GKPeerPickerController* picker = [[GKPeerPickerController alloc] init];

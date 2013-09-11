@@ -16,12 +16,15 @@
     CGPoint P;
     NSString *Text;
     UIView *View;
+    float rotation;
 }
 @property int alphaFlag;
 -(id)initWithImageName:(NSString*)name frame:(CGRect)frame upAlpha:(float)up downAlpha:(float)down topAlpha:(float)top superview:(UIView*)view;
 -(id)initWithLableText:(NSString*)text point:(CGPoint)p fontsize:(NSInteger)fontsize upAlpha:(float)up downAlpha:(float)down topAlpha:(float)top superview:(UIView*)view;
 -(void)reInit;
 -(int)Do;
+-(void)rotationDo;
+-(void)show;
 -(void)hide;
 -(void)changeTextWithString:(NSString *)newText;
 -(void)reverse;
