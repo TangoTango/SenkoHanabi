@@ -757,7 +757,7 @@ int sceneNumber;
 - (void)addimageButtonTapped:(UIButton *)button{
     // 写真追加の説明文をアラートで表示
     UIAlertView *alert = 
-    [[UIAlertView alloc] initWithTitle:@"写真を追加" message:@"カメラロールから\n写真をアプリに取り込み，\nスライドショー表示します。" delegate:self cancelButtonTitle:@"キャンセル" otherButtonTitles:@"OK", nil];
+    [[UIAlertView alloc] initWithTitle:@"写真を追加" message:@"カメラロールから\n写真をアプリに取り込み、\nスライドショー表示します。" delegate:self cancelButtonTitle:@"キャンセル" otherButtonTitles:@"OK", nil];
     [alert show];
 }
 
@@ -774,7 +774,7 @@ int sceneNumber;
 - (void)connectButtonTapped:(UIButton *)button{
     // 写真共有の説明文をアラートで表示
     UIAlertView *alert =
-    [[UIAlertView alloc] initWithTitle:@"写真を共有" message:@"Bluetooth通信を行い，\n近くにいる友だちと\n写真を交換します。" delegate:self cancelButtonTitle:@"キャンセル" otherButtonTitles:@"OK", nil];
+    [[UIAlertView alloc] initWithTitle:@"写真を共有" message:@"Bluetooth通信を行い、\n近くにいる友だちと\n写真を交換します。" delegate:self cancelButtonTitle:@"キャンセル" otherButtonTitles:@"OK", nil];
     [alert show];
     
     
