@@ -565,7 +565,7 @@ int sceneNumber;
             hinotamaRect.origin.x = 0.0f;
             hinotamaRect.origin.y = 0.0f;
             hinotamaBlackLayer.frame = hinotamaRect;
-
+            
             hinotamaImage.transform = CGAffineTransformMakeRotation(senkoAngle);
         }
     }
@@ -580,7 +580,14 @@ int sceneNumber;
                  @"プールで\n監視員に\n\n\n\n怒られる",
                  @"好きな子と\n友達が\n\n\n\n付き合ってた",
                  @"お祭り\n\n\n\n\n騒ぎ",
-                 @"山\n\n\n\n\nガール",nil];
+                 @"山\n\n\n\n\nガール",
+                 @"キャンプで\n\n\n\n\n\nバーベキュー",
+                 @"セミの鳴き声で\n\n\n\n\n\n目を覚ます",
+                 @"昼間は\n\n\n\n図書館で\n\n勉強",
+                 @"縁日で\n\n\n\n\n\nくじ引き",
+                 @"アイス食べて\n\n\n\n\n\nお腹を壊す",
+                 @"開発で\n\n\n\n\n\n一日が終わる",
+                 nil];
     if(!currentSession){
         //一人でプレイ
         imageNames = [NSArray arrayWithObjects:@"fade1.png",@"fade2.png", nil];
@@ -679,7 +686,7 @@ int sceneNumber;
         random90s = [self randomList:90];
         dic[@"random90s"] = random90s;
         myGyanken = [NSNumber numberWithInt:arc4random()];
-        dic[@"gyanken"] = myGyanken; 
+        dic[@"gyanken"] = myGyanken;
         
         // 生成したオブジェクトをNSData型に変換
         NSData *d = [NSKeyedArchiver archivedDataWithRootObject:dic];
@@ -707,11 +714,11 @@ int sceneNumber;
     }
 }
 
-//画像選択ボタン　タップ
+// 「写真を追加」ボタンをタップした時
 - (void)addimageButtonTapped:(UIButton *)button{
-    // 画像追加に同意させるためのアラートを表示
+    // 写真追加の説明文をアラートで表示
     UIAlertView *alert =
-    [[UIAlertView alloc] initWithTitle:@"注意" message:@"カメラロールから画像をアプリに取り込みます" delegate:self cancelButtonTitle:@"キャンセル" otherButtonTitles:@"OK", nil];
+    [[UIAlertView alloc] initWithTitle:@"写真を追加" message:@"カメラロールから\n写真をアプリに取り込み，\nスライドショー表示します。" delegate:self cancelButtonTitle:@"キャンセル" otherButtonTitles:@"OK", nil];
     [alert show];
 }
 
@@ -724,17 +731,14 @@ int sceneNumber;
     return library;
 }
 
-
+// 「写真を共有」ボタンをタップした時
 - (void)connectButtonTapped:(UIButton *)button{
-    [addimageButton setEnabled:NO];
-    [nextButton setEnabled:NO];
-    [connectButton setEnabled:NO];
+    // 写真共有の説明文をアラートで表示
+    UIAlertView *alert =
+    [[UIAlertView alloc] initWithTitle:@"写真を共有" message:@"Bluetooth通信を行い，\n近くにいる友だちと\n写真を交換します。" delegate:self cancelButtonTitle:@"キャンセル" otherButtonTitles:@"OK", nil];
+    [alert show];
     
-    // ピアピッカーを作成
-    GKPeerPickerController* picker = [[GKPeerPickerController alloc] init];
-    picker.delegate = self;
-    picker.connectionTypesMask = GKPeerPickerConnectionTypeNearby;
-    [picker show];
+    
 }
 - (void)peerPickerControllerDidCancel:(GKPeerPickerController *)picker{
     [addimageButton setEnabled:YES];
@@ -764,9 +768,9 @@ int sceneNumber;
         dic[@"shareImg"] = @(YES);
         
         /*random90s = [randomCall randomList:90];
-        dic[@"random90s"] = random90s;
-        myGyanken = [NSNumber numberWithInt:arc4random()];
-        dic[@"gyanken"] = myGyanken;*/
+         dic[@"random90s"] = random90s;
+         myGyanken = [NSNumber numberWithInt:arc4random()];
+         dic[@"gyanken"] = myGyanken;*/
         
         // 生成したオブジェクトをNSData型に変換
         NSData *d = [NSKeyedArchiver archivedDataWithRootObject:dic];
@@ -814,57 +818,57 @@ int sceneNumber;
         startNumber++;
         //じゃんけんに負けた側が相手のランダム配列を用いる。
         /*if( myGyanken ){
-            if( [myGyanken intValue] < [reverse[@"gyanken"] intValue]){
-                random90s = reverse[@"random90s"];
-                NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-                dic[@"start"] = @(YES);
-                NSData *d = [NSKeyedArchiver archivedDataWithRootObject:dic];
-                NSError *error = nil;
-                [currentSession sendDataToAllPeers:d
-                                      withDataMode:GKSendDataReliable
-                                             error:&error];
-                
-                if (error){
-                    NSLog(@"%@", [error localizedDescription]);
-                    currentSession = nil;
-                    UIAlertView *alertView = [[UIAlertView alloc]
-                                              initWithTitle:@""
-                                              message:@"通信エラーが\n発生しました。"
-                                              delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-                    [alertView show];
-                }else{
-                    winner = 0;
-                    sceneNumber = 8;
-                }
-            }
-        }else{
-            random90s = reverse[@"random90s"];
-            
-            NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-            dic[@"start"] = @(YES);
-            NSData *d = [NSKeyedArchiver archivedDataWithRootObject:dic];
-            NSError *error = nil;
-            [currentSession sendDataToAllPeers:d
-                                  withDataMode:GKSendDataReliable
-                                         error:&error];
-            
-            if (error){
-                NSLog(@"%@", [error localizedDescription]);
-                currentSession = nil;
-                UIAlertView *alertView = [[UIAlertView alloc]
-                                          initWithTitle:@""
-                                          message:@"通信エラーが\n発生しました。"
-                                          delegate:nil
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
-                [alertView show];
-            }else{
-                winner = 0;
-                sceneNumber = 8;
-            }
-        }*/
+         if( [myGyanken intValue] < [reverse[@"gyanken"] intValue]){
+         random90s = reverse[@"random90s"];
+         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+         dic[@"start"] = @(YES);
+         NSData *d = [NSKeyedArchiver archivedDataWithRootObject:dic];
+         NSError *error = nil;
+         [currentSession sendDataToAllPeers:d
+         withDataMode:GKSendDataReliable
+         error:&error];
+         
+         if (error){
+         NSLog(@"%@", [error localizedDescription]);
+         currentSession = nil;
+         UIAlertView *alertView = [[UIAlertView alloc]
+         initWithTitle:@""
+         message:@"通信エラーが\n発生しました。"
+         delegate:nil
+         cancelButtonTitle:@"OK"
+         otherButtonTitles:nil];
+         [alertView show];
+         }else{
+         winner = 0;
+         sceneNumber = 8;
+         }
+         }
+         }else{
+         random90s = reverse[@"random90s"];
+         
+         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+         dic[@"start"] = @(YES);
+         NSData *d = [NSKeyedArchiver archivedDataWithRootObject:dic];
+         NSError *error = nil;
+         [currentSession sendDataToAllPeers:d
+         withDataMode:GKSendDataReliable
+         error:&error];
+         
+         if (error){
+         NSLog(@"%@", [error localizedDescription]);
+         currentSession = nil;
+         UIAlertView *alertView = [[UIAlertView alloc]
+         initWithTitle:@""
+         message:@"通信エラーが\n発生しました。"
+         delegate:nil
+         cancelButtonTitle:@"OK"
+         otherButtonTitles:nil];
+         [alertView show];
+         }else{
+         winner = 0;
+         sceneNumber = 8;
+         }
+         }*/
     }else if(reverse[@"start"]){
         //startNumber++;
         //sceneNumber = 8;
@@ -1094,73 +1098,101 @@ int sceneNumber;
 // アラートのボタンが押されたとき
 -(void)alertView:(UIAlertView*)alertView
 clickedButtonAtIndex:(NSInteger)buttonIndex {
-    switch (buttonIndex) {
-        case 0:
-            // "キャンセル"が押されたとき
-            NSLog(@"cancel!");
-            break;
-        case 1:
-            // "OK"が押されたとき
-            NSLog(@"OK!");
-            
-            
-            if(!addBar){
-                addBar = [[MyProgressBar alloc] initWithView:self.view];
-            }else{
-                [addBar reInit];
-            }
-            
-            sceneNumber = 12;
-            addAssetsCount = 0;
-            addedAssetsCount = 0;
-            assetsLibrary = [self.class defaultAssetsLibrary];
-            NSDate *startDate = [NSDate date];
-            ALAssetsLibraryGroupsEnumerationResultsBlock listGroupBlock = ^(ALAssetsGroup *group, BOOL *stop){
-                if (group){
-                    ALAssetsGroupEnumerationResultsBlock assetsEnumerationBlock = ^(ALAsset *result, NSUInteger index, BOOL *stop) {
-                        if (result) {
-                            
-                            //progressView.progress += (double)(1.0 / [group numberOfAssets]);
-                            [addBar DoWithRate:((double)(addAssetsCount + addedAssetsCount) / [group numberOfAssets])];
-                            [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeInterval:0.001 sinceDate:[NSDate date]]];
-                            
-                            NSDate* d = [result valueForProperty:ALAssetPropertyDate];
-                            int m = [[[NSString stringWithFormat:@"%@",d] componentsSeparatedByString:@"-"][1] intValue];
-                            if( 6 <= m && m <= 9){
-                                NSURL *URL = [[result valueForProperty:ALAssetPropertyURLs] objectForKey:[[result defaultRepresentation] UTI]];
-                                NSString* URLstr = [URL absoluteString];
-                                if(!assetsURL[URLstr]){
-                                    addAssetsCount++;
-                                    //[assets addObject:result];
-                                    assetsURL[URLstr] = [NSNumber numberWithBool:1];
-                                }else{
-                                    addedAssetsCount++;
-                                }
-                            }
-                        }else{
-                            NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-                            [ud setObject:assetsURL forKey:@"assetsURL"];
-                            [ud synchronize];
-                            [addBar DoWithRate:1.1];
-                            assetsflg = 1;
-                            NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:startDate];
-                            NSLog(@"time is %lf (sec)", interval);
-                        }
-                    };
-                    
-                    NSLog(@"%d", [group numberOfAssets]);
-                    [group enumerateAssetsUsingBlock:assetsEnumerationBlock];
+    
+    NSLog(@"alertView.titie: %@", alertView.title);
+    
+    if ([alertView.title isEqualToString:@"写真を追加"]) {
+        switch (buttonIndex) {
+            case 0:
+                // "キャンセル"が押されたとき
+                NSLog(@"cancel!");
+                break;
+            case 1:
+                // "OK"が押されたとき
+                NSLog(@"OK!");
+                
+                
+                if(!addBar){
+                    addBar = [[MyProgressBar alloc] initWithView:self.view];
+                }else{
+                    [addBar reInit];
                 }
-            };
-            ALAssetsLibraryAccessFailureBlock failureBlock = ^(NSError *error){
-                NSLog(@"Error");
-            };
-            [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:listGroupBlock failureBlock:failureBlock];
-
-            
-            break;
+                
+                sceneNumber = 12;
+                addAssetsCount = 0;
+                addedAssetsCount = 0;
+                assetsLibrary = [self.class defaultAssetsLibrary];
+                NSDate *startDate = [NSDate date];
+                ALAssetsLibraryGroupsEnumerationResultsBlock listGroupBlock = ^(ALAssetsGroup *group, BOOL *stop){
+                    if (group){
+                        ALAssetsGroupEnumerationResultsBlock assetsEnumerationBlock = ^(ALAsset *result, NSUInteger index, BOOL *stop) {
+                            if (result) {
+                                
+                                //progressView.progress += (double)(1.0 / [group numberOfAssets]);
+                                [addBar DoWithRate:((double)(addAssetsCount + addedAssetsCount) / [group numberOfAssets])];
+                                [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeInterval:0.001 sinceDate:[NSDate date]]];
+                                
+                                NSDate* d = [result valueForProperty:ALAssetPropertyDate];
+                                int m = [[[NSString stringWithFormat:@"%@",d] componentsSeparatedByString:@"-"][1] intValue];
+                                if( 6 <= m && m <= 9){
+                                    NSURL *URL = [[result valueForProperty:ALAssetPropertyURLs] objectForKey:[[result defaultRepresentation] UTI]];
+                                    NSString* URLstr = [URL absoluteString];
+                                    if(!assetsURL[URLstr]){
+                                        addAssetsCount++;
+                                        //[assets addObject:result];
+                                        assetsURL[URLstr] = [NSNumber numberWithBool:1];
+                                    }else{
+                                        addedAssetsCount++;
+                                    }
+                                }
+                            }else{
+                                NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+                                [ud setObject:assetsURL forKey:@"assetsURL"];
+                                [ud synchronize];
+                                [addBar DoWithRate:1.1];
+                                assetsflg = 1;
+                                NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:startDate];
+                                NSLog(@"time is %lf (sec)", interval);
+                            }
+                        };
+                        
+                        NSLog(@"%d", [group numberOfAssets]);
+                        [group enumerateAssetsUsingBlock:assetsEnumerationBlock];
+                    }
+                };
+                ALAssetsLibraryAccessFailureBlock failureBlock = ^(NSError *error){
+                    NSLog(@"Error");
+                };
+                [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:listGroupBlock failureBlock:failureBlock];
+                
+                
+                break;
+        }
+        
     }
     
-}
+    
+    if ([alertView.title isEqualToString:@"写真を共有"]) {
+        switch (buttonIndex) {
+            case 0:
+                // "キャンセル"が押されたとき
+                NSLog(@"cancel!");
+                break;
+            case 1:
+                // "OK"が押されたとき
+                NSLog(@"OK!");
 
-@end
+                // ピアピッカーを作成
+                GKPeerPickerController* picker = [[GKPeerPickerController alloc] init];
+                picker.delegate = self;
+                picker.connectionTypesMask = GKPeerPickerConnectionTypeNearby;
+                [picker show];
+                
+                break;
+        }
+        
+    }
+         
+         }
+         
+         @end
