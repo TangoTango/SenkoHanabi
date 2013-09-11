@@ -62,7 +62,7 @@
     parentView.alpha = 0.0f;
 }
 -(int)hideDo{
-    parentView.alpha -= 0.01f;
+    parentView.alpha -= 0.03f;
     if(parentView.alpha < 0.0f){
         return 1;
     }

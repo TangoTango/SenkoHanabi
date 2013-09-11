@@ -28,6 +28,8 @@ fadeView *title;//タイトル
 fadeView *how;//遊び方
 fadeView *add;//画像追加結果
 fadeView *yakedo;//火傷しちゃう警告
+fadeView *friendWait;//友達待ち
+fadeView *katori;//蚊取り線香
 UIImageView *senkoImage; // 線香花火の画像
 UIImageView *hinotamaImage;//火の玉の画像
 CALayer* hinotamaBlackLayer; // 消えた火の玉の画像のレイヤ
@@ -263,7 +265,7 @@ int sceneNumber;
                 fireScene = 6;//ほぼ何もない
             }else if(33*60 < senkoCount){
                 fireScene = 5;//盛り下がり
-            }else if(33*5 < senkoCount){
+            }else if(33*40 < senkoCount){
                 fireScene = 4;//絶頂期
             }else if(33*20 < senkoCount){
                 fireScene = 3;//盛り上がり
@@ -273,7 +275,7 @@ int sceneNumber;
             
             //火花の花作成、Do
         {
-            int rate = [@[ @100, @50, @10, @1, @10, @50, @9999][fireScene-1] intValue];
+            int rate = [@[ @50, @30, @10, @1, @10, @50, @9999][fireScene-1] intValue];
             int r = (arc4random() % rate);
             if( r == 0 ){
                 fireFlower* ff = [[fireFlower alloc] initWithPoint:hidanePoint view:self.view scene:fireScene];
@@ -355,6 +357,17 @@ int sceneNumber;
                     hidaneVY = hidaneAY;
                 }
             }
+            //端にぶつかると落ちる。　終了しているときは落とさない
+            if( (hinotamaImage.frame.origin.x < 0
+                 || self.view.frame.size.width < hinotamaImage.frame.origin.x + hinotamaImage.frame.size.width)
+               && fireScene != 7 ) {
+                hiFlg = YES;
+                NSDictionary* now = prevAccelerations[[prevAccelerations count]-1];
+                hidaneAX =  0;
+                hidaneAY = -2.0*([now[@"y"] floatValue]);
+                hidaneVX = hidaneAX;
+                hidaneVY = hidaneAY;
+            }
             //火種が落下
             if(hiFlg) {
                 hinotamaImage.transform = CGAffineTransformMakeRotation(0);
@@ -431,13 +444,23 @@ int sceneNumber;
                     if(currentSession){
                         myGyanken = nil;
                         [self sendEndAndCountEnd];
+                        if(!friendWait){
+                            friendWait = [[fadeView alloc] initWithLableText:@"友達が終わるのを\n待っています。" point:CGPointMake(160,50)  fontsize:40 upAlpha:0.1f downAlpha:0.0f topAlpha:1.0f superview:self.view];
+                        }else{
+                            [friendWait changeTextWithString:@"友達が終わるのを\n待っています。"];
+                        }
                     }
                     scene7Flg = 0;
                 }
                 //二人でやっている場合は、二人共消えるまでボタン表示しない
                 if(currentSession && endNumber != 2){
+                    [friendWait Do];
                     break;
                 }
+                if(friendWait){
+                    [friendWait hide];
+                }
+                
                 //もう一度ボタン
                 if(!nextButton){
                     UIImage *img = [UIImage imageNamed:@"again2.gif"];
@@ -495,7 +518,8 @@ int sceneNumber;
                 }
             }
             break;
-        case 8:
+        case 8://全体の末尾の初期化
+        {
             senkoTime = 400;
             [nextButton setHidden:YES];
             [addimageButton setHidden:YES];
@@ -508,10 +532,17 @@ int sceneNumber;
                 if(currentSession){
                     endNumber = 0;
                     startNumber++;
+                    if(!friendWait){
+                        friendWait = [[fadeView alloc] initWithLableText:@"友達が始めるのを\n待っています。" point:CGPointMake(160,50)  fontsize:40 upAlpha:0.1f downAlpha:0.0f topAlpha:1.0f superview:self.view];
+                    }else{
+                        [friendWait changeTextWithString:@"友達が始めるのを\n待っています。"];
+                    }
                 }
+                
                 sceneNumber = 11;
             }];
             break;
+        }
         case 9:
             
             if([add Do]){
@@ -523,8 +554,11 @@ int sceneNumber;
             break;
         case 10:
             break;
-        case 11:
+        case 11://全体の末尾
             if( !currentSession ){
+                if(friendWait){
+                    [friendWait hide];
+                }
                 sceneNumber = 3;
             }else if(startNumber == 2){
                 if( [myGyanken intValue] < [enemyGyanken intValue]){
@@ -534,7 +568,12 @@ int sceneNumber;
                     winner = 0;
                 }
                 [self fadeSelectUpdate];
+                if(friendWait){
+                    [friendWait hide];
+                }
                 sceneNumber = 3;
+            }else if(currentSession && startNumber != 2){
+                [friendWait Do];
             }
             break;
         case 12:
@@ -711,7 +750,7 @@ int sceneNumber;
 - (void)addimageButtonTapped:(UIButton *)button{
     // 画像追加に同意させるためのアラートを表示
     UIAlertView *alert =
-    [[UIAlertView alloc] initWithTitle:@"注意" message:@"カメラロールから画像をアプリに取り込みます" delegate:self cancelButtonTitle:@"キャンセル" otherButtonTitles:@"OK", nil];
+    [[UIAlertView alloc] initWithTitle:@"注意" message:@"カメラロールから\n画像をアプリに取り込みます。" delegate:self cancelButtonTitle:@"キャンセル" otherButtonTitles:@"OK", nil];
     [alert show];
 }
 

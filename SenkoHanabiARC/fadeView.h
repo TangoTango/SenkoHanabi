@@ -18,7 +18,7 @@
     UIView *View;
 }
 @property int alphaFlag;
--(id)initWithImageName:(NSString*)name superview:(UIView*)view upAlpha:(float)up downAlpha:(float)down topAlpha:(float)top;
+-(id)initWithImageName:(NSString*)name frame:(CGRect)frame upAlpha:(float)up downAlpha:(float)down topAlpha:(float)top superview:(UIView*)view;
 -(id)initWithLableText:(NSString*)text point:(CGPoint)p fontsize:(NSInteger)fontsize upAlpha:(float)up downAlpha:(float)down topAlpha:(float)top superview:(UIView*)view;
 -(void)reInit;
 -(int)Do;

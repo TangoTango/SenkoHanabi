@@ -13,18 +13,13 @@
 
 @synthesize alphaFlag;
 
--(id)initWithImageName:(NSString*)name superview:(UIView*)view  upAlpha:(float)up downAlpha:(float)down topAlpha:(float)top{
-    obj = [[UIImageView alloc] initWithImage:[UIImage imageNamed:name]];
+-(id)initWithImageName:(NSString*)name frame:(CGRect)frame upAlpha:(float)up downAlpha:(float)down topAlpha:(float)top superview:(UIView*)view{
     //詳しい初期化を。。。後回し
+    obj = [[UIImageView alloc] initWithImage:[UIImage imageNamed:name]];
+    obj.frame = frame;
     obj.alpha = 0.0f;
-    
-    /*UIImage *img = [UIImage imageNamed:@"again2.gif"];
-    nextButton = [[UIButton alloc] initWithFrame:CGRectMake(160-75, 230, 150, 45)];
-    [nextButton setBackgroundImage:img forState:UIControlStateNormal];
-    [nextButton addTarget:self action:@selector(nextButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:nextButton];*/
-    
     [view addSubview:obj];
+    
     superview = view;
     upAlpha = up;
     downAlpha = down;
