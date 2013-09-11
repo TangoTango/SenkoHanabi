@@ -77,6 +77,11 @@
 		0D31F66717D97914005EBF21 /* hibana4.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D31F66217D97914005EBF21 /* hibana4.png */; };
 		0D31F66817D97914005EBF21 /* hibana3.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D31F66317D97914005EBF21 /* hibana3.png */; };
 		0D31F66917D97914005EBF21 /* hibana2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D31F66417D97914005EBF21 /* hibana2.png */; };
+		0D46BECE17DFF98B0031CB69 /* hinotama_black2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D46BECD17DFF98B0031CB69 /* hinotama_black2.png */; };
+		0D46BED417E03BD90031CB69 /* MyProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D46BED317E03BD90031CB69 /* MyProgressBar.m */; };
+		0D46BED817E03D6F0031CB69 /* progress3.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D46BED517E03D6F0031CB69 /* progress3.png */; };
+		0D46BED917E03D6F0031CB69 /* progress1.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D46BED617E03D6F0031CB69 /* progress1.png */; };
+		0D46BEDA17E03D6F0031CB69 /* progress2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D46BED717E03D6F0031CB69 /* progress2.png */; };
 		0DAD6FC017DDFAB900E52067 /* bo.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DAD6FBE17DDFAB900E52067 /* bo.png */; };
 		0DAD6FC117DDFAB900E52067 /* maru.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DAD6FBF17DDFAB900E52067 /* maru.png */; };
 		0DAD6FC417DEA86700E52067 /* CustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DAD6FC317DEA86700E52067 /* CustomButton.m */; };
@@ -227,6 +232,12 @@
 		0D31F66217D97914005EBF21 /* hibana4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hibana4.png; sourceTree = "<group>"; };
 		0D31F66317D97914005EBF21 /* hibana3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hibana3.png; sourceTree = "<group>"; };
 		0D31F66417D97914005EBF21 /* hibana2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hibana2.png; sourceTree = "<group>"; };
+		0D46BECD17DFF98B0031CB69 /* hinotama_black2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hinotama_black2.png; sourceTree = "<group>"; };
+		0D46BED217E03BD90031CB69 /* MyProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyProgressBar.h; sourceTree = "<group>"; };
+		0D46BED317E03BD90031CB69 /* MyProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyProgressBar.m; sourceTree = "<group>"; };
+		0D46BED517E03D6F0031CB69 /* progress3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = progress3.png; sourceTree = "<group>"; };
+		0D46BED617E03D6F0031CB69 /* progress1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = progress1.png; sourceTree = "<group>"; };
+		0D46BED717E03D6F0031CB69 /* progress2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = progress2.png; sourceTree = "<group>"; };
 		0DAD6FBE17DDFAB900E52067 /* bo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bo.png; sourceTree = "<group>"; };
 		0DAD6FBF17DDFAB900E52067 /* maru.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = maru.png; sourceTree = "<group>"; };
 		0DAD6FC217DEA86700E52067 /* CustomButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomButton.h; sourceTree = "<group>"; };
@@ -487,6 +498,8 @@
 				043E214A17DD666D00AB279F /* Bgm.m */,
 				04A3D57717DEBB13009E2AE7 /* ObjectAL */,
 				0D31F61F17D8B5C8005EBF21 /* Supporting Files */,
+				0D46BED217E03BD90031CB69 /* MyProgressBar.h */,
+				0D46BED317E03BD90031CB69 /* MyProgressBar.m */,
 			);
 			path = SenkoHanabiARC;
 			sourceTree = "<group>";
@@ -508,8 +521,12 @@
 		0D31F63E17D8CC58005EBF21 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				0D46BED617E03D6F0031CB69 /* progress1.png */,
+				0D46BED717E03D6F0031CB69 /* progress2.png */,
+				0D46BED517E03D6F0031CB69 /* progress3.png */,
 				0DAD6FBE17DDFAB900E52067 /* bo.png */,
 				0DAD6FBF17DDFAB900E52067 /* maru.png */,
+				0D46BECD17DFF98B0031CB69 /* hinotama_black2.png */,
 				04A3D60D17DF3A21009E2AE7 /* hinotama_black.png */,
 				0DD5B26717DACCC60018E636 /* senkohanabi5.png */,
 				0DD5B26517DACC510018E636 /* senkohanabi4.png */,
@@ -644,6 +661,10 @@
 				04A3D5F017DEBB13009E2AE7 /* ObjectAL (OSX)-Info.plist in Resources */,
 				04A3D5FF17DEF734009E2AE7 /* higurashi.mp3 in Resources */,
 				04A3D60E17DF3A21009E2AE7 /* hinotama_black.png in Resources */,
+				0D46BECE17DFF98B0031CB69 /* hinotama_black2.png in Resources */,
+				0D46BED817E03D6F0031CB69 /* progress3.png in Resources */,
+				0D46BED917E03D6F0031CB69 /* progress1.png in Resources */,
+				0D46BEDA17E03D6F0031CB69 /* progress2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -689,6 +710,7 @@
 				04A3D5EC17DEBB13009E2AE7 /* NSMutableDictionary+WeakReferences.m in Sources */,
 				04A3D5ED17DEBB13009E2AE7 /* OALAudioFile.m in Sources */,
 				04A3D5EE17DEBB13009E2AE7 /* OALTools.m in Sources */,
+				0D46BED417E03BD90031CB69 /* MyProgressBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

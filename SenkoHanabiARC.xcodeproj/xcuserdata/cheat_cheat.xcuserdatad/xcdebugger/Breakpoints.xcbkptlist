@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400521424.133464"
+         timestampString = "400575003.656463"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "394"
-         endingLineNumber = "394"
+         startingLineNumber = "416"
+         endingLineNumber = "416"
          landmarkName = "-loop"
          landmarkType = "5">
       </FileBreakpoint>
@@ -138,11 +138,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400521424.133464"
+         timestampString = "400575003.656463"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "223"
-         endingLineNumber = "223"
+         startingLineNumber = "234"
+         endingLineNumber = "234"
          landmarkName = "-loop"
          landmarkType = "5">
       </FileBreakpoint>
@@ -151,33 +151,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400521424.133464"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "404"
-         endingLineNumber = "404"
-         landmarkName = "-loop"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400521424.133464"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "405"
-         endingLineNumber = "405"
-         landmarkName = "-loop"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400521424.133464"
+         timestampString = "400575003.656463"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "424"
@@ -190,11 +164,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400521424.133464"
+         timestampString = "400575003.656463"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "320"
-         endingLineNumber = "320"
+         startingLineNumber = "437"
+         endingLineNumber = "437"
          landmarkName = "-loop"
          landmarkType = "5">
       </FileBreakpoint>
@@ -203,11 +177,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400521424.133464"
+         timestampString = "400575203.746369"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "410"
-         endingLineNumber = "410"
+         startingLineNumber = "460"
+         endingLineNumber = "460"
          landmarkName = "-loop"
          landmarkType = "5">
       </FileBreakpoint>
@@ -216,11 +190,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400521424.133464"
+         timestampString = "400575003.656463"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "412"
-         endingLineNumber = "412"
+         startingLineNumber = "344"
+         endingLineNumber = "344"
          landmarkName = "-loop"
          landmarkType = "5">
       </FileBreakpoint>
@@ -229,11 +203,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400521424.133464"
+         timestampString = "400575003.656463"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "438"
-         endingLineNumber = "438"
+         startingLineNumber = "445"
+         endingLineNumber = "445"
          landmarkName = "-loop"
          landmarkType = "5">
       </FileBreakpoint>
@@ -242,11 +216,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400521424.133464"
+         timestampString = "400575003.656463"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "436"
-         endingLineNumber = "436"
+         startingLineNumber = "447"
+         endingLineNumber = "447"
          landmarkName = "-loop"
          landmarkType = "5">
       </FileBreakpoint>
@@ -255,11 +229,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400521424.133464"
+         timestampString = "400575203.746369"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "434"
-         endingLineNumber = "434"
+         startingLineNumber = "474"
+         endingLineNumber = "474"
          landmarkName = "-loop"
          landmarkType = "5">
       </FileBreakpoint>
@@ -268,11 +242,37 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400521424.133464"
+         timestampString = "400575203.746369"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "97"
-         endingLineNumber = "97"
+         startingLineNumber = "472"
+         endingLineNumber = "472"
+         landmarkName = "-loop"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "SenkoHanabiARC/ViewController.m"
+         timestampString = "400575203.746369"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "470"
+         endingLineNumber = "470"
+         landmarkName = "-loop"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "SenkoHanabiARC/ViewController.m"
+         timestampString = "400575003.656463"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "105"
+         endingLineNumber = "105"
          landmarkName = "-viewDidLoad"
          landmarkType = "5">
       </FileBreakpoint>
@@ -281,11 +281,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400521424.133464"
+         timestampString = "400575003.656463"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "96"
-         endingLineNumber = "96"
+         startingLineNumber = "104"
+         endingLineNumber = "104"
          landmarkName = "-viewDidLoad"
          landmarkType = "5">
       </FileBreakpoint>
@@ -346,37 +346,37 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400521424.133464"
+         timestampString = "400575003.656463"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "266"
+         endingLineNumber = "266"
+         landmarkName = "-loop"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "SenkoHanabiARC/ViewController.m"
+         timestampString = "400575003.656463"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "254"
+         endingLineNumber = "254"
+         landmarkName = "-loop"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "SenkoHanabiARC/ViewController.m"
+         timestampString = "400575003.656463"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "255"
          endingLineNumber = "255"
-         landmarkName = "-loop"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400521424.133464"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "243"
-         endingLineNumber = "243"
-         landmarkName = "-loop"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400521424.133464"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "244"
-         endingLineNumber = "244"
          landmarkName = "-loop"
          landmarkType = "5">
       </FileBreakpoint>
@@ -398,11 +398,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400521424.133464"
+         timestampString = "400575203.746369"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "512"
-         endingLineNumber = "512"
+         startingLineNumber = "570"
+         endingLineNumber = "570"
          landmarkName = "-loop"
          landmarkType = "5">
       </FileBreakpoint>
@@ -411,11 +411,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400521424.133464"
+         timestampString = "400575203.746369"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "497"
-         endingLineNumber = "497"
+         startingLineNumber = "555"
+         endingLineNumber = "555"
          landmarkName = "-loop"
          landmarkType = "5">
       </FileBreakpoint>
@@ -424,11 +424,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400521424.133464"
+         timestampString = "400575203.746369"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "445"
-         endingLineNumber = "445"
+         startingLineNumber = "481"
+         endingLineNumber = "481"
          landmarkName = "-loop"
          landmarkType = "5">
       </FileBreakpoint>
@@ -437,11 +437,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400521424.133464"
+         timestampString = "400575203.746369"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "466"
-         endingLineNumber = "466"
+         startingLineNumber = "504"
+         endingLineNumber = "504"
          landmarkName = "-loop"
          landmarkType = "5">
       </FileBreakpoint>
@@ -450,11 +450,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400521424.133464"
+         timestampString = "400575203.746369"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "452"
-         endingLineNumber = "452"
+         startingLineNumber = "488"
+         endingLineNumber = "488"
          landmarkName = "-loop"
          landmarkType = "5">
       </FileBreakpoint>
@@ -463,11 +463,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400521424.133464"
+         timestampString = "400575203.746369"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "568"
-         endingLineNumber = "568"
+         startingLineNumber = "627"
+         endingLineNumber = "627"
          landmarkName = "-setAssets:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -476,11 +476,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400521424.133464"
+         timestampString = "400575962.26212"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "777"
-         endingLineNumber = "777"
+         startingLineNumber = "843"
+         endingLineNumber = "843"
          landmarkName = "-peerPickerController:didConnectPeer:toSession:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -489,11 +489,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400521424.133464"
+         timestampString = "400575203.746369"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "564"
-         endingLineNumber = "564"
+         startingLineNumber = "623"
+         endingLineNumber = "623"
          landmarkName = "-setAssets:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -502,11 +502,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400521424.133464"
+         timestampString = "400575962.26212"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "718"
-         endingLineNumber = "718"
+         startingLineNumber = "784"
+         endingLineNumber = "784"
          landmarkName = "@implementation ViewController"
          landmarkType = "3">
       </FileBreakpoint>
@@ -515,11 +515,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400521424.133464"
+         timestampString = "400575962.26212"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "728"
-         endingLineNumber = "728"
+         startingLineNumber = "794"
+         endingLineNumber = "794"
          landmarkName = "-connectButtonTapped:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -528,11 +528,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400521424.133464"
+         timestampString = "400575203.746369"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "569"
-         endingLineNumber = "569"
+         startingLineNumber = "628"
+         endingLineNumber = "628"
          landmarkName = "-setAssets:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -541,11 +541,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400521424.133464"
+         timestampString = "400575962.26212"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "781"
-         endingLineNumber = "781"
+         startingLineNumber = "847"
+         endingLineNumber = "847"
          landmarkName = "-peerPickerController:didConnectPeer:toSession:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -554,11 +554,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400521424.133464"
+         timestampString = "400575203.746369"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "575"
-         endingLineNumber = "575"
+         startingLineNumber = "634"
+         endingLineNumber = "634"
          landmarkName = "-setAssets:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -567,11 +567,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400521424.133464"
+         timestampString = "400575203.746369"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "506"
-         endingLineNumber = "506"
+         startingLineNumber = "564"
+         endingLineNumber = "564"
          landmarkName = "-loop"
          landmarkType = "5">
       </FileBreakpoint>
@@ -580,20 +580,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400521424.133464"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "281"
-         endingLineNumber = "281"
-         landmarkName = "-loop"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400521424.133464"
+         timestampString = "400575003.656463"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "292"
@@ -606,11 +593,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400521424.133464"
+         timestampString = "400575003.656463"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "299"
-         endingLineNumber = "299"
+         startingLineNumber = "303"
+         endingLineNumber = "303"
          landmarkName = "-loop"
          landmarkType = "5">
       </FileBreakpoint>
@@ -619,12 +606,194 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SenkoHanabiARC/ViewController.m"
-         timestampString = "400521424.133464"
+         timestampString = "400575003.656463"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "293"
-         endingLineNumber = "293"
+         startingLineNumber = "310"
+         endingLineNumber = "310"
          landmarkName = "-loop"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "SenkoHanabiARC/ViewController.m"
+         timestampString = "400575003.656463"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "304"
+         endingLineNumber = "304"
+         landmarkName = "-loop"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "SenkoHanabiARC/ViewController.m"
+         timestampString = "400575003.656463"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "353"
+         endingLineNumber = "353"
+         landmarkName = "-loop"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "SenkoHanabiARC/ViewController.m"
+         timestampString = "400575003.656463"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "352"
+         endingLineNumber = "352"
+         landmarkName = "-loop"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "SenkoHanabiARC/ViewController.m"
+         timestampString = "400575003.656463"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "366"
+         endingLineNumber = "366"
+         landmarkName = "-loop"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "SenkoHanabiARC/ViewController.m"
+         timestampString = "400575962.26212"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "867"
+         endingLineNumber = "867"
+         landmarkName = "-receiveData:fromPeer:inSession:context:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "SenkoHanabiARC/ViewController.m"
+         timestampString = "400575203.746369"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "476"
+         endingLineNumber = "476"
+         landmarkName = "-loop"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "SenkoHanabiARC/ViewController.m"
+         timestampString = "400575203.746369"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "524"
+         endingLineNumber = "524"
+         landmarkName = "-loop"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "SenkoHanabiARC/ViewController.m"
+         timestampString = "400575203.746369"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "549"
+         endingLineNumber = "549"
+         landmarkName = "-loop"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "SenkoHanabiARC/ViewController.m"
+         timestampString = "400575003.656463"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "323"
+         endingLineNumber = "323"
+         landmarkName = "-loop"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "SenkoHanabiARC/ViewController.m"
+         timestampString = "400575203.746369"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "532"
+         endingLineNumber = "532"
+         landmarkName = "-loop"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "SenkoHanabiARC/ViewController.m"
+         timestampString = "400575203.746369"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "530"
+         endingLineNumber = "530"
+         landmarkName = "-loop"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "SenkoHanabiARC/ViewController.m"
+         timestampString = "400575247.829613"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "737"
+         endingLineNumber = "737"
+         landmarkName = "-addimageButtonTapped:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "SenkoHanabiARC/MyProgressBar.m"
+         timestampString = "400575891.694088"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "55"
+         endingLineNumber = "55"
+         landmarkName = "-DoWithRate:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "SenkoHanabiARC/MyProgressBar.m"
+         timestampString = "400575730.487159"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "24"
+         endingLineNumber = "24"
+         landmarkName = "-initWithView:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

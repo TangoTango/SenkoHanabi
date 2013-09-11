@@ -17,6 +17,7 @@
 #import "fadeView.h"
 #import "Bgm.h"
 #import "CustomButton.h"
+#import "MyProgressBar.h"
 
 @interface ViewController ()
 
@@ -31,6 +32,7 @@ UIImageView *senkoImage; // 線香花火の画像
 UIImageView *hinotamaImage;//火の玉の画像
 CALayer* hinotamaBlackLayer; // 消えた火の玉の画像のレイヤ
 UIButton *connectButton;//通信ボタン
+MyProgressBar *addBar;//画像追加プログレスバー
 NSMutableArray* fireFlowers;//火花の画像
 bool hiFlg = NO; // 火種が落ちたかどうか
 bool hiBlackFlg = NO; // 火種の火が消えたかどうか
@@ -52,14 +54,20 @@ int initAssetsCount;//起動時Assetカウント
 GKSession *currentSession;//友達とのセッション
 NSMutableArray *friendImages;//友達の写真
 NSNumber *myGyanken;//自分のじゃんけんの値
+NSNumber *enemyGyanken;//相手のじゃんけんの値
+NSMutableArray *enemyRandom90s;//相手のランダムな配列
 NSMutableArray *random90s;//受け取ったランダムな配列
+int startNumber;//二人とも始めたら進行するようにカウント
 int endNumber;//二人とも終わったら進行するようにカウント
+int scene7Flg;//シーン7の終了一回目
 int sharedFlg;//友達と写真を共有したら1にして文表示
+int winner;//じゃんけんに勝ったかどうか
 
 UIButton *nextButton;
 CustomButton *addimageButton;
 
 int senkoTime = 5000;//線香が落ちるまでの時間
+int hinotamaBlackTime = 0;
 int isTapped = 0;//タップしたか
 int initLaunch = 1;//最初の起動かどうか
 
@@ -173,13 +181,16 @@ int sceneNumber;
                     
                     // 消えた後の火の玉の画像をレイヤとして取得
                     hinotamaBlackLayer = [CALayer layer];
-                    hinotamaBlackLayer.contents = (id) [UIImage imageNamed:@"hinotama_black.png"].CGImage;
+                    hinotamaBlackLayer.contents = (id) [UIImage imageNamed:@"hinotama_black2.png"].CGImage;
                     hinotamaBlackLayer.opacity = 0.0f;
                     [hinotamaImage.layer addSublayer:hinotamaBlackLayer];
+                    hinotamaBlackTime = 0;
                     
                     [self.view addSubview:hinotamaImage];
                 }else{
                     hinotamaImage.alpha = 0.0f;
+                    hinotamaBlackLayer.opacity = 0.0f;
+                    hinotamaBlackTime = 0;
                 }
                 
                 // 「遊び方」
@@ -247,7 +258,7 @@ int sceneNumber;
             
             //fireScene設定
             senkoCount++;
-            if(33*80 == senkoCount) {
+            if(33*80 < senkoCount) {
                 fireScene = 7; // 火が消える
             }else if(33*70 < senkoCount){
                 fireScene = 6;//ほぼ何もない
@@ -297,15 +308,28 @@ int sceneNumber;
                     //文字の追加
                     showFadeObject =
                     [[fadeObject alloc] initWithString:textNames[t] view:self.view];
-                }else if(i - [imageNames count] - [textNames count] < [assets count]){
-                    int t = i - [imageNames count] - [textNames count];
-                    ALAsset *asset = assets[t];
-                    UIImage *img = [UIImage imageWithCGImage:[asset thumbnail]];
-                    showFadeObject =
-                    [[fadeObject alloc] initWithImage:[[UIImageView alloc] initWithImage:img] view:self.view];
-                }else if(i - [imageNames count] - [textNames count] - [assets count] < [friendImages count]){
-                    int t = i - [imageNames count] - [textNames count] - [assets count];
-                    showFadeObject = [[fadeObject alloc] initWithImage:[[UIImageView alloc] initWithImage:friendImages[t]] view:self.view];
+                }else if(!currentSession || winner){
+                    if(i - [imageNames count] - [textNames count] < [assets count]){
+                        int t = i - [imageNames count] - [textNames count];
+                        ALAsset *asset = assets[t];
+                        UIImage *img = [UIImage imageWithCGImage:[asset thumbnail]];
+                        showFadeObject =
+                        [[fadeObject alloc] initWithImage:[[UIImageView alloc] initWithImage:img] view:self.view];
+                    }else if(i - [imageNames count] - [textNames count] - [assets count] < [friendImages count]){
+                        int t = i - [imageNames count] - [textNames count] - [assets count];
+                        showFadeObject = [[fadeObject alloc] initWithImage:[[UIImageView alloc] initWithImage:friendImages[t]] view:self.view];
+                    }
+                }else{
+                    if(i - [imageNames count] - [textNames count] < [friendImages count]){
+                        int t = i - [imageNames count] - [textNames count];
+                        showFadeObject = [[fadeObject alloc] initWithImage:[[UIImageView alloc] initWithImage:friendImages[t]] view:self.view];
+                    }else if(i - [imageNames count] - [textNames count] - [friendImages count] < [assets count]){
+                        int t = i - [imageNames count] - [textNames count] - [friendImages count];
+                        ALAsset *asset = assets[t];
+                        UIImage *img = [UIImage imageWithCGImage:[asset thumbnail]];
+                        showFadeObject =
+                        [[fadeObject alloc] initWithImage:[[UIImageView alloc] initWithImage:img] view:self.view];
+                    }
                 }
                 fadeselect = (fadeselect + 1) % ([imageNames count] + [textNames count] + [assets count] + [friendImages count]);
             }
@@ -318,8 +342,8 @@ int sceneNumber;
             
             // 効果音
             float rate = [@[ @3.0f, @3.0f, @2.0f, @2.0f, @1.0f, @1.0f, @1.0f][fireScene-1] floatValue];
-            // 加速度が大きくなりすぎたら火種を落とす
-            if( 2 < [prevAccelerations count] ){
+            // 加速度が大きくなりすぎたら火種を落とす　終了しているときは落とさない
+            if( 2 < [prevAccelerations count] && fireScene != 7 ){
                 NSDictionary* now = prevAccelerations[[prevAccelerations count]-1];
                 NSDictionary* prev = prevAccelerations[[prevAccelerations count]-2];
                 if(0.05 * rate< fabs([now[@"x"] floatValue] - [prev[@"x"] floatValue])
@@ -336,39 +360,37 @@ int sceneNumber;
             if(hiFlg) {
                 hinotamaImage.transform = CGAffineTransformMakeRotation(0);
                 CGRect move = hinotamaImage.frame;
-                hidaneVX += hidaneAX;
-                hidaneVY += hidaneAY;
+                hidaneVX += 0.3*hidaneAX;
+                hidaneVY += 0.3*hidaneAY;
                 move.origin.x += hidaneVX;
                 move.origin.y += hidaneVY;
                 hinotamaImage.frame = move;
                 hinotamaImage.transform = CGAffineTransformMakeRotation(senkoAngle);
-                hinotamaImage.alpha -= 0.06f;
-            }
-            
-            
-            // 火種が画面下に来ると終了
-            if( hinotamaImage.frame.origin.x < -hinotamaImage.frame.size.width
-               || self.view.frame.size.width < hinotamaImage.frame.origin.x
-               || hinotamaImage.frame.origin.y < -hinotamaImage.frame.size.height
-               || self.view.frame.size.height < hinotamaImage.frame.origin.y
-               || hinotamaImage.alpha < 0.0f ) {
+                //hinotamaImage.alpha -= 0.06f;
+                hinotamaBlackLayer.opacity += 0.03f;
                 
-                hinotamaImage.alpha = 0.0f;
-                if(currentSession)[self sendEndAndCountEnd];//sceneNumber = 7とセットでお願いします
-                sceneNumber = 7;
-                break;
+                // 火種が画面下に来るか火種が消えると終了
+                if( hinotamaImage.frame.origin.x < -hinotamaImage.frame.size.width
+                   || self.view.frame.size.width < hinotamaImage.frame.origin.x
+                   || hinotamaImage.frame.origin.y < -hinotamaImage.frame.size.height
+                   || self.view.frame.size.height < hinotamaImage.frame.origin.y
+                   || 1.0f < hinotamaBlackLayer.opacity ) {
+                    
+                    hinotamaImage.alpha = 0.0f;
+                    scene7Flg = 1;//sceneNumber = 7;とセットでお願いします(泣)
+                    sceneNumber = 7;
+                    break;
+                }
             }
-            
-            fireScene = 7;
             
             if( fireScene == 7) {
+                if( hinotamaBlackLayer.opacity < 0.8f){
+                    hinotamaBlackLayer.opacity += 0.05f;
+                }
                 
-                hinotamaBlackLayer.opacity += 0.2f;
-
-                if (hinotamaBlackLayer.opacity > 1.0f) {
-                    
-                    hinotamaBlackLayer.opacity = 1.0f;
-                    if(currentSession)[self sendEndAndCountEnd];//sceneNumber = 7とセットでお願いします
+                //火の玉が黒ずんで、3秒経てば終了
+                if ( 0.8f < hinotamaBlackLayer.opacity && 33 * 3 < ++hinotamaBlackTime) {
+                    scene7Flg = 1;//sceneNumber = 7;とセットでお願いします(泣)
                     sceneNumber = 7;
                     break;
                 }
@@ -397,13 +419,26 @@ int sceneNumber;
             senkoImage.alpha -= 0.01f;
             
             // 火種を消す
-            hinotamaImage.alpha -= 0.01f;
-            NSLog(@"opacity:%lf", hinotamaBlackLayer.opacity);
-            NSLog(@"alpha:%lf", hinotamaImage.alpha);
+            hinotamaBlackLayer.opacity += 0.01f;
             
-            //全部消えたら　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　二人でやっている場合は、二人共消えたら
-            if([yakedo hideDo] && !showFadeObject && senkoImage.alpha < 0.0f && (!currentSession || endNumber == 2)){
-                
+            //全部消えたら
+            if([yakedo hideDo] && !showFadeObject && senkoImage.alpha < 0.0f){
+                if(scene7Flg){
+                    //初回だけこの中が呼び出される。
+                    startNumber = 0;
+                    [addimageButton setEnabled:YES];
+                    [nextButton setEnabled:YES];
+                    [connectButton setEnabled:YES];
+                    if(currentSession){
+                        myGyanken = nil;
+                        [self sendEndAndCountEnd];
+                    }
+                    scene7Flg = 0;
+                }
+                //二人でやっている場合は、二人共消えるまでボタン表示しない
+                if(currentSession && endNumber != 2){
+                    break;
+                }
                 //もう一度ボタン
                 if(!nextButton){
                     UIImage *img = [UIImage imageNamed:@"again2.gif"];
@@ -421,6 +456,7 @@ int sceneNumber;
                     [addimageButton setBackgroundImage:img forState:UIControlStateNormal];
                     [addimageButton addTarget:self action:@selector(addimageButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
                     [self.view addSubview:addimageButton];
+                    
                 }else{
                     [addimageButton setHidden:NO];
                 }
@@ -452,6 +488,7 @@ int sceneNumber;
                         add = [[fadeView alloc] initWithLableText:text point:CGPointMake(160,40) fontsize:20 upAlpha:0.04f downAlpha:0.04f topAlpha:1.6f superview:self.view];
                     }else{
                         [add changeTextWithString:text];
+                        [add hide];
                     }
                     sceneNumber = 9;
                     assetsflg = 0;
@@ -463,15 +500,16 @@ int sceneNumber;
             [nextButton setHidden:YES];
             [addimageButton setHidden:YES];
             [connectButton setHidden:YES];
+            [add hide];
             initLaunch = 0;
             hiFlg = NO;
             hiBlackFlg = NO;
-            if(currentSession){
-                endNumber = 0;
-            }
-            sceneNumber = 10;
             [self selectFadeObjectWithCompleteFunc:^{
-                sceneNumber = 3;
+                if(currentSession){
+                    endNumber = 0;
+                    startNumber++;
+                }
+                sceneNumber = 11;
             }];
             break;
         case 9:
@@ -484,6 +522,26 @@ int sceneNumber;
             }
             break;
         case 10:
+            break;
+        case 11:
+            if( !currentSession ){
+                sceneNumber = 3;
+            }else if(startNumber == 2){
+                if( [myGyanken intValue] < [enemyGyanken intValue]){
+                    winner = 1;
+                    random90s = enemyRandom90s;
+                }else{
+                    winner = 0;
+                }
+                [self fadeSelectUpdate];
+                sceneNumber = 3;
+            }
+            break;
+        case 12:
+            //共有が終わればプログレスバーが消えていく
+            if(assetsflg && [addBar hideDo]){
+                sceneNumber = 7;
+            }
             break;
     }
     
@@ -551,6 +609,7 @@ int sceneNumber;
         func();
         return;
     }
+    assetsURL = [assetsURL mutableCopy];
     NSArray *URLstrs = [assetsURL allKeys];
     NSArray *randomSelects = [self randomList:[URLstrs count]];
     int min = [URLstrs count] < ASSETS_MAX ? [URLstrs count] : ASSETS_MAX;
@@ -629,7 +688,6 @@ int sceneNumber;
                               withDataMode:GKSendDataReliable
                                      error:&error];
         
-        
         if (error){
             NSLog(@"%@", [error localizedDescription]);
             currentSession = nil;
@@ -655,11 +713,17 @@ int sceneNumber;
     [nextButton setEnabled:NO];
     [connectButton setEnabled:NO];
     
-    UIProgressView *progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
-    progressView.frame = CGRectMake(20, 200, 280, 37);
-    progressView.progress = 0;
-    [self.view addSubview:progressView];
+    //UIProgressView *progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
+    //progressView.frame = CGRectMake(20, 200, 280, 37);
+    //progressView.progress = 0;
+    //[self.view addSubview:progressView];
+    if(!addBar){
+       addBar = [[MyProgressBar alloc] initWithView:self.view];
+    }else{
+        [addBar reInit];
+    }
     
+    sceneNumber = 12;
     addAssetsCount = 0;
     addedAssetsCount = 0;
     assetsLibrary = [self.class defaultAssetsLibrary];
@@ -669,7 +733,8 @@ int sceneNumber;
             ALAssetsGroupEnumerationResultsBlock assetsEnumerationBlock = ^(ALAsset *result, NSUInteger index, BOOL *stop) {
                 if (result) {
                     
-                    progressView.progress += (double)(1.0 / [group numberOfAssets]);
+                    //progressView.progress += (double)(1.0 / [group numberOfAssets]);
+                    [addBar DoWithRate:((double)(addAssetsCount + addedAssetsCount) / [group numberOfAssets])];
                     [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeInterval:0.001 sinceDate:[NSDate date]]];
                     
                     NSDate* d = [result valueForProperty:ALAssetPropertyDate];
@@ -679,7 +744,7 @@ int sceneNumber;
                         NSString* URLstr = [URL absoluteString];
                         if(!assetsURL[URLstr]){
                             addAssetsCount++;
-                            [assets addObject:result];
+                            //[assets addObject:result];
                             assetsURL[URLstr] = [NSNumber numberWithBool:1];
                         }else{
                             addedAssetsCount++;
@@ -689,6 +754,7 @@ int sceneNumber;
                     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
                     [ud setObject:assetsURL forKey:@"assetsURL"];
                     [ud synchronize];
+                    [addBar DoWithRate:1.1];
                     assetsflg = 1;
                     NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:startDate];
                     NSLog(@"time is %lf (sec)", interval);
@@ -750,7 +816,7 @@ int sceneNumber;
             UIImage *img = [UIImage imageWithCGImage:[asset thumbnail]];
             dic[[NSString stringWithFormat:@"%d",count]] = img;
             count++;
-            if([assets count] <= count || 10 <= count)break;
+            if([assets count] <= count || 30 <= count)break;
         }
         dic[@"shareImg"] = @(YES);
         
@@ -797,26 +863,88 @@ int sceneNumber;
                 [friendImages addObject:reverse[[NSString stringWithFormat:@"%d",i]] ];
             }
         }
+        endNumber = 2;
         sharedFlg = 1;
     }else if(reverse[@"gyanken"]){
+        enemyRandom90s = reverse[@"random90s"];
+        enemyGyanken = reverse[@"gyanken"];
+        startNumber++;
         //じゃんけんに負けた側が相手のランダム配列を用いる。
-        if( myGyanken ){
+        /*if( myGyanken ){
             if( [myGyanken intValue] < [reverse[@"gyanken"] intValue]){
                 random90s = reverse[@"random90s"];
+                NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+                dic[@"start"] = @(YES);
+                NSData *d = [NSKeyedArchiver archivedDataWithRootObject:dic];
+                NSError *error = nil;
+                [currentSession sendDataToAllPeers:d
+                                      withDataMode:GKSendDataReliable
+                                             error:&error];
+                
+                if (error){
+                    NSLog(@"%@", [error localizedDescription]);
+                    currentSession = nil;
+                    UIAlertView *alertView = [[UIAlertView alloc]
+                                              initWithTitle:@""
+                                              message:@"通信エラーが\n発生しました。"
+                                              delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+                    [alertView show];
+                }else{
+                    winner = 0;
+                    sceneNumber = 8;
+                }
             }
         }else{
             random90s = reverse[@"random90s"];
-        }
-        if(sceneNumber == 7){
-            [addimageButton setEnabled:YES];
-            [nextButton setEnabled:YES];
-            [connectButton setEnabled:YES];
-            sceneNumber = 8;
-        }
+            
+            NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+            dic[@"start"] = @(YES);
+            NSData *d = [NSKeyedArchiver archivedDataWithRootObject:dic];
+            NSError *error = nil;
+            [currentSession sendDataToAllPeers:d
+                                  withDataMode:GKSendDataReliable
+                                         error:&error];
+            
+            if (error){
+                NSLog(@"%@", [error localizedDescription]);
+                currentSession = nil;
+                UIAlertView *alertView = [[UIAlertView alloc]
+                                          initWithTitle:@""
+                                          message:@"通信エラーが\n発生しました。"
+                                          delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+                [alertView show];
+            }else{
+                winner = 0;
+                sceneNumber = 8;
+            }
+        }*/
+    }else if(reverse[@"start"]){
+        //startNumber++;
+        //sceneNumber = 8;
     }else if(reverse[@"end"]){
         endNumber++;
     }
     
+}
+- (void)session:(GKSession *)session
+           peer:(NSString *)peerID
+ didChangeState:(GKPeerConnectionState)state {
+    switch (state)
+    {
+        case GKPeerStateConnected:
+            NSLog(@"connected");
+            break;
+        case GKPeerStateDisconnected:
+            NSLog(@"disconnected");
+            currentSession = nil;
+            break;
+        default:
+            break;
+    }
 }
 -(void)sendEndAndCountEnd{
     endNumber++;
