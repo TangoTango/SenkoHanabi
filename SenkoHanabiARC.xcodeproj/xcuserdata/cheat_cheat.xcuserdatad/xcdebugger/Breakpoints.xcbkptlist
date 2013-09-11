@@ -481,7 +481,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "843"
          endingLineNumber = "843"
-         landmarkName = "-peerPickerController:didConnectPeer:toSession:"
+         landmarkName = "-receiveData:fromPeer:inSession:context:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -507,8 +507,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "784"
          endingLineNumber = "784"
-         landmarkName = "@implementation ViewController"
-         landmarkType = "3">
+         landmarkName = "-peerPickerController:didConnectPeer:toSession:"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -520,7 +520,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "794"
          endingLineNumber = "794"
-         landmarkName = "-connectButtonTapped:"
+         landmarkName = "-peerPickerController:didConnectPeer:toSession:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -546,7 +546,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "847"
          endingLineNumber = "847"
-         landmarkName = "-peerPickerController:didConnectPeer:toSession:"
+         landmarkName = "-receiveData:fromPeer:inSession:context:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -676,7 +676,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "867"
          endingLineNumber = "867"
-         landmarkName = "-peerPickerController:didConnectPeer:toSession:"
+         landmarkName = "-receiveData:fromPeer:inSession:context:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint

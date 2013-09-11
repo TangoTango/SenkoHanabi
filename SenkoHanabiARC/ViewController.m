@@ -1152,6 +1152,11 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
                     [group enumerateAssetsUsingBlock:assetsEnumerationBlock];
                 }
             };
+            ALAssetsLibraryAccessFailureBlock failureBlock = ^(NSError *error){
+                NSLog(@"Error");
+            };
+            [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:listGroupBlock failureBlock:failureBlock];
+
             
             break;
     }
