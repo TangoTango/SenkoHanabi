@@ -630,11 +630,11 @@ int sceneNumber;
 //imageNames, textNames, assets, friendImagesを設定する
 -(void)selectFadeObjectWithCompleteFunc:(void (^)())func{
     textNames = [NSArray arrayWithObjects:@"気づいたら\nカラオケで\n\n\n\nざこ寝",
-                 @"セミの\n\n\n\n\n\n抜け殻",
+                 @"セミの\n\n\n\n\n抜け殻",
                  @"プールで\n監視員に\n\n\n\n怒られる",
                  @"好きな子と\n友達が\n\n\n\n付き合ってた",
                  @"お祭り\n\n\n\n\n騒ぎ",
-                 @"山\n\n\n\n\nガール",
+                 @"突然の夕立で\n\n\n\n\n雨宿り",
                  @"キャンプで\n\n\n\n\n\nバーベキュー",
                  @"セミの鳴き声で\n\n\n\n\n\n目を覚ます",
                  @"昼間は\n\n\n\n\n図書館で\n勉強",
