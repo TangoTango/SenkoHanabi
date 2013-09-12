@@ -150,7 +150,7 @@ int sceneNumber;
     switch (sceneNumber) {
         case 1://「線香花火」設定
             if(!title){
-                title = [[fadeView alloc] initWithLableText:@"線香花火" point:CGPointMake(160,100) fontsize:50 upAlpha:0.02f downAlpha:0.02f topAlpha:1.0f superview:self.view];
+                title = [[fadeView alloc] initWithLableText:@"おもひではなび" point:CGPointMake(155,60) fontsize:50 upAlpha:0.02f downAlpha:0.02f topAlpha:2.0f superview:self.view];
             }else{
                 [title reInit];
             }
@@ -197,7 +197,7 @@ int sceneNumber;
                 
                 // 「遊び方」
                 if(!how){
-                    how = [[fadeView alloc] initWithLableText:@"遊び方\n上部を持って下さい。\n" point:CGPointMake(240,40) fontsize:40 upAlpha:0.02f downAlpha:0.02f topAlpha:2.0f superview:self.view];
+                    how = [[fadeView alloc] initWithLableText:@"遊び方\n\n端末の上部を持って\n\n\n\n\n線香花火を眺めながら\n夏の思い出に浸りましょう。\n" point:CGPointMake(150,40) fontsize:30 upAlpha:0.02f downAlpha:0.02f topAlpha:3.0f superview:self.view];
                 }else{
                     [how reInit];
                 }
@@ -628,18 +628,18 @@ int sceneNumber;
 
 //imageNames, textNames, assets, friendImagesを設定する
 -(void)selectFadeObjectWithCompleteFunc:(void (^)())func{
-    textNames = [NSArray arrayWithObjects:@"気づい。たらー\nカラオケで\n\n\n\nざこ寝",
-                 @"セミ。のー\n\n\n\n\n\n抜け殻",
-                 @"プール。ーで\n監視員に\n\n\n\n怒られる",
-                 @"好き。なー子と\n友達が\n\n\n\n付き合ってた",
-                 @"お。祭ーり\n\n\n\n\n騒ぎ",
-                 @"山ヵ\n\n\n\n\nガール",
-                 @"キゃャ。ンープで\n\n\n\n\n\nバーベキュー",
-                 @"セゅミ。の鳴き声ーで\n\n\n\n\n\n目を覚ます",
-                 @"昼ょ。間ーは\n\n\n\n図書館で\n\n勉強",
-                 @"縁っ。日ーで\n\n\n\n\n\nくじ引き",
-                 @"アッイス。食べーて\n\n\n\n\n\nお腹を壊す",
-                 @"開。発ーで\n\n\n\n\n\n一日が終わる",
+    textNames = [NSArray arrayWithObjects:@"気づいたら\nカラオケで\n\n\n\nざこ寝",
+                 @"セミの\n\n\n\n\n\n抜け殻",
+                 @"プールで\n監視員に\n\n\n\n怒られる",
+                 @"好きな子と\n友達が\n\n\n\n付き合ってた",
+                 @"お祭り\n\n\n\n\n騒ぎ",
+                 @"山\n\n\n\n\nガール",
+                 @"キャンプで\n\n\n\n\n\nバーベキュー",
+                 @"セミの鳴き声で\n\n\n\n\n\n目を覚ます",
+                 @"昼間は\n\n\n\n\n図書館で\n勉強",
+                 @"縁日で\n\n\n\n\n\nくじ引き",
+                 @"アイス食べて\n\n\n\n\n\nお腹を壊す",
+                 @"開発で\n\n\n\n\n\n一日が終わる",
                  nil];
     if(!currentSession){
         //一人でプレイ
