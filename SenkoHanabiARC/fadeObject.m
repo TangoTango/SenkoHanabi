@@ -47,7 +47,7 @@ static UIImageView *bokashiImage; // ぼかし画像のUIImageView
         // 幅が100pxになるようにサイズを調整
         img.frame = CGRectMake(220, 60, maxw, img.image.size.height*(maxw/img.image.size.width));
     }else{
-        img.frame = CGRectMake(220, 60, img.image.size.width*(maxw/img.image.size.height), maxh);
+        img.frame = CGRectMake(220, 60, img.image.size.width*(maxh/img.image.size.height), maxh);
     }
     
     // アニメーションパターンは乱数により決定
