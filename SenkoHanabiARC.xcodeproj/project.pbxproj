@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		0408659917E1AD51001C34FA /* fade2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0408659817E1AD51001C34FA /* fade2.png */; };
+		0408659E17E1BB56001C34FA /* fade7.png in Resources */ = {isa = PBXBuildFile; fileRef = 0408659D17E1BB56001C34FA /* fade7.png */; };
+		040865A017E1BC0B001C34FA /* fade8.png in Resources */ = {isa = PBXBuildFile; fileRef = 0408659F17E1BC0B001C34FA /* fade8.png */; };
+		040865A217E1BCDE001C34FA /* fade9.png in Resources */ = {isa = PBXBuildFile; fileRef = 040865A117E1BCDE001C34FA /* fade9.png */; };
+		040865A417E1BDED001C34FA /* fade10.png in Resources */ = {isa = PBXBuildFile; fileRef = 040865A317E1BDED001C34FA /* fade10.png */; };
 		043DFFB317DD6C64009449CC /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 043DFFB217DD6C64009449CC /* AVFoundation.framework */; };
 		043DFFB717DDDCEC009449CC /* spark.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 043DFFB617DDDCEC009449CC /* spark.mp3 */; };
 		043E214317DD532A00AB279F /* fadeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 043E214217DD532A00AB279F /* fadeView.m */; };
@@ -128,6 +132,10 @@
 
 /* Begin PBXFileReference section */
 		0408659817E1AD51001C34FA /* fade2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fade2.png; sourceTree = "<group>"; };
+		0408659D17E1BB56001C34FA /* fade7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fade7.png; sourceTree = "<group>"; };
+		0408659F17E1BC0B001C34FA /* fade8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fade8.png; sourceTree = "<group>"; };
+		040865A117E1BCDE001C34FA /* fade9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fade9.png; sourceTree = "<group>"; };
+		040865A317E1BDED001C34FA /* fade10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fade10.png; sourceTree = "<group>"; };
 		043DFFB217DD6C64009449CC /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		043DFFB617DDDCEC009449CC /* spark.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = spark.mp3; sourceTree = "<group>"; };
 		043E214117DD532A00AB279F /* fadeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fadeView.h; sourceTree = "<group>"; };
@@ -569,6 +577,10 @@
 				0DD5B26317DACBCB0018E636 /* senkohanabi3.png */,
 				0DD5B25F17DAA6380018E636 /* senkohanabi2.png */,
 				0D31F66017D97914005EBF21 /* hinotama.png */,
+				0408659D17E1BB56001C34FA /* fade7.png */,
+				0408659F17E1BC0B001C34FA /* fade8.png */,
+				040865A117E1BCDE001C34FA /* fade9.png */,
+				040865A317E1BDED001C34FA /* fade10.png */,
 				0D31F66417D97914005EBF21 /* hibana2.png */,
 				0D31F66317D97914005EBF21 /* hibana3.png */,
 				0D31F66217D97914005EBF21 /* hibana4.png */,
@@ -713,6 +725,10 @@
 				04A8EF7917E1A827008677AE /* fade5.png in Resources */,
 				04A8EF7B17E1A8BC008677AE /* fade2.jpg in Resources */,
 				0408659917E1AD51001C34FA /* fade2.png in Resources */,
+				0408659E17E1BB56001C34FA /* fade7.png in Resources */,
+				040865A017E1BC0B001C34FA /* fade8.png in Resources */,
+				040865A217E1BCDE001C34FA /* fade9.png in Resources */,
+				040865A417E1BDED001C34FA /* fade10.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
