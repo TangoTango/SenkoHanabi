@@ -29,6 +29,7 @@ fadeView *add;//画像追加結果
 fadeView *yakedo;//火傷しちゃう警告
 fadeView *friendWait;//友達待ち
 fadeView *katori;//蚊取り線香
+fadeView *waitText;//画像受信待ち
 UIImageView *senkoImage; // 線香花火の画像
 UIImageView *hinotamaImage;//火の玉の画像
 CALayer* hinotamaBlackLayer; // 消えた火の玉の画像のレイヤ
@@ -468,10 +469,13 @@ int sceneNumber;
                     [friendWait hide];
                 }
                 //画像共有中
-                
                 if(katori){
                     if(sharedFlg != 1){
+                        addimageButton.alpha = 1.0f;
+                        nextButton.alpha = 1.0f;
+                        connectButton.alpha = 1.0f;
                         [katori hide];
+                        [waitText hide];
                     }
                 }
                 
@@ -791,7 +795,7 @@ int sceneNumber;
 - (void)connectButtonTapped:(UIButton *)button{
     // 写真共有の説明文をアラートで表示
     UIAlertView *alert =
-    [[UIAlertView alloc] initWithTitle:@"写真を共有" message:@"Bluetooth通信を行い、\n近くにいる友だちと\n写真を交換します。" delegate:self cancelButtonTitle:@"キャンセル" otherButtonTitles:@"OK", nil];
+    [[UIAlertView alloc] initWithTitle:@"写真を共有" message:@"Bluetooth通信を行い、\n近くにいる友達と\n写真を交換します。" delegate:self cancelButtonTitle:@"キャンセル" otherButtonTitles:@"OK", nil];
     [alert show];
     
     
@@ -815,10 +819,19 @@ int sceneNumber;
     [self setAssets:^{
         sharedFlg = 1;
         if(!katori){
-            katori = [[fadeView alloc] initWithImageName:@"katori.png" frame:CGRectMake(100, 50, 120, 120) upAlpha:0.1f downAlpha:0.0f topAlpha:1.0f superview:selfview];
+            katori = [[fadeView alloc] initWithImageName:@"katori.png" frame:CGRectMake(120, 190, 80, 80) upAlpha:0.1f downAlpha:0.0f topAlpha:1.0f superview:selfview];
         }else{
             [katori show];
         }
+        if(!waitText){
+            waitText = [[fadeView alloc] initWithLableText:@"友達の画像を\n受信しています。" point:CGPointMake(160,10) fontsize:23 upAlpha:0.1f downAlpha:0.0f topAlpha:1.0f superview:selfview];
+            [waitText show];
+        }else{
+            [waitText show];
+        }
+        addimageButton.alpha = 0.0f;
+        nextButton.alpha = 0.0f;
+        connectButton.alpha = 0.0f;
         
         // 接続中のすべてのピアにデータを送信
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
