@@ -94,6 +94,7 @@
 		0D80556017E066EC0080AEE0 /* katori.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D80555F17E066EC0080AEE0 /* katori.png */; };
 		0D80557217E15E570080AEE0 /* AoyagiKouzanTOTF.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0D80557117E15E570080AEE0 /* AoyagiKouzanTOTF.otf */; };
 		0D80557417E165A50080AEE0 /* bo2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D80557317E165A50080AEE0 /* bo2.png */; };
+		0D80557D17E1BD3E0080AEE0 /* againWithFriends.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0D80557C17E1BD3E0080AEE0 /* againWithFriends.gif */; };
 		0DAD6FC017DDFAB900E52067 /* bo.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DAD6FBE17DDFAB900E52067 /* bo.png */; };
 		0DAD6FC117DDFAB900E52067 /* maru.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DAD6FBF17DDFAB900E52067 /* maru.png */; };
 		0DAD6FC417DEA86700E52067 /* CustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DAD6FC317DEA86700E52067 /* CustomButton.m */; };
@@ -262,6 +263,7 @@
 		0D80555F17E066EC0080AEE0 /* katori.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = katori.png; sourceTree = "<group>"; };
 		0D80557117E15E570080AEE0 /* AoyagiKouzanTOTF.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AoyagiKouzanTOTF.otf; sourceTree = "<group>"; };
 		0D80557317E165A50080AEE0 /* bo2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bo2.png; sourceTree = "<group>"; };
+		0D80557C17E1BD3E0080AEE0 /* againWithFriends.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = againWithFriends.gif; sourceTree = "<group>"; };
 		0DAD6FBE17DDFAB900E52067 /* bo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bo.png; sourceTree = "<group>"; };
 		0DAD6FBF17DDFAB900E52067 /* maru.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = maru.png; sourceTree = "<group>"; };
 		0DAD6FC217DEA86700E52067 /* CustomButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomButton.h; sourceTree = "<group>"; };
@@ -548,6 +550,7 @@
 		0D31F63E17D8CC58005EBF21 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				0D80557C17E1BD3E0080AEE0 /* againWithFriends.gif */,
 				04A8EF7217E1A62C008677AE /* fade4.png */,
 				04A8EF6D17E1A547008677AE /* fade3.png */,
 				04A8EF7817E1A827008677AE /* fade5.png */,
@@ -713,6 +716,7 @@
 				04A8EF7917E1A827008677AE /* fade5.png in Resources */,
 				04A8EF7B17E1A8BC008677AE /* fade2.jpg in Resources */,
 				0408659917E1AD51001C34FA /* fade2.png in Resources */,
+				0D80557D17E1BD3E0080AEE0 /* againWithFriends.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

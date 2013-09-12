@@ -488,6 +488,14 @@ int sceneNumber;
                     [self.view addSubview:nextButton];
                 }else{
                     [nextButton setHidden:NO];
+                    
+                    if(!currentSession){
+                        [nextButton setBackgroundImage:
+                         [UIImage imageNamed:@"again2.gif"] forState:UIControlStateNormal];
+                    }else{
+                        [nextButton setBackgroundImage:
+                         [UIImage imageNamed:@"againWithFriends.gif"] forState:UIControlStateNormal];
+                    }
                 }
                 // 「画像を追加」ボタン
                 if(!addimageButton){
