@@ -51,7 +51,7 @@ static UIImageView *bokashiImage;
     uilabels = [NSMutableArray array];
     alphaFlags = [NSMutableArray array];
     x = 30, y = 50, w = 270, h = 100;
-    int fontsize = 30;
+    int fontsize = 35;
     int ix = 0;
     int iy = 0;
     for(int i = 0; i < str.length; i++){
@@ -60,15 +60,16 @@ static UIImageView *bokashiImage;
             iy = 0;
             ix++;
         }else if([c rangeOfString:@"ー"].location != NSNotFound){
-            UIImageView *img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bo.png"]];
-            img.frame = CGRectMake(w - fontsize * (1+ix), y + fontsize * iy ,fontsize,fontsize);
+            UIImageView *img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bo2.png"]];
+            //img.backgroundColor = [UIColor blueColor];
+            img.frame = CGRectMake(w - fontsize * (1+ix), y + fontsize * iy + 4 ,fontsize,fontsize);
             img.alpha = 0.0f;
             
             [view addSubview:img];
             [uilabels addObject:img];
             [alphaFlags addObject:[NSNumber numberWithInt:0]];
             iy++;
-        }else if([c rangeOfString:@"。"].location != NSNotFound){
+        }else if(/*[c rangeOfString:@"。"].location != NSNotFound*/0){
             UIImageView *img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"maru.png"]];
             img.frame = CGRectMake(w - fontsize * (1+ix), y + fontsize * iy ,fontsize,fontsize);
             img.alpha = 0.0f;
@@ -79,12 +80,24 @@ static UIImageView *bokashiImage;
             iy++;
         }else{
             UILabel* l = [[UILabel alloc] initWithFrame:CGRectMake(w - fontsize * (1+ix), y + fontsize * iy ,fontsize,fontsize*1.5f)];
-            l.font = [UIFont fontWithName:@"Hiragino Mincho ProN" size:fontsize];
+            l.font = [UIFont fontWithName:@"AoyagiKouzanFontTOTF" size:fontsize];
             
             if( [self isInt:c] ){
                 int number = [c intValue];
                 NSString *numberStr = @[ @"〇", @"一", @"二", @"三", @"四", @"五", @"六", @"七", @"八", @"九"][number];
                 l.text = numberStr;
+            }else if( [c rangeOfString:@"。"].location != NSNotFound){
+                CGRect move = l.frame;
+                move.origin.x += 20;
+                move.origin.y -= 23;
+                l.frame = move;
+                l.text = c;
+            }else if( [self isSmallChar:c]){
+                CGRect move = l.frame;
+                move.origin.x += 6;
+                move.origin.y -= 15;
+                l.frame = move;
+                l.text = c;
             }else{
                 l.text = c;
             }
@@ -254,5 +267,12 @@ static UIImageView *bokashiImage;
     
     [aScanner scanInt:NULL];
     return [aScanner isAtEnd];
+}
+-(BOOL)isSmallChar:(NSString *)c{
+    NSString *texts = @"ぁぃぅぇぉゃゅょっゎッャュョヵ";
+    if( [texts rangeOfString:c].location != NSNotFound){
+        return 1;
+    }
+    return 0;
 }
 @end

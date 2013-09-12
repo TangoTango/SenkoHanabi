@@ -158,6 +158,7 @@ int sceneNumber;
             sceneNumber = 3;
             break;
         case 3://「線香花火」隠蔽アニメ、線香花火設定、「遊び方」設定
+            //全体の最初
             if(isTapped){
                 title.alphaFlag = -1;//タッチしたら消えるように
             }
@@ -200,6 +201,9 @@ int sceneNumber;
                 }else{
                     [how reInit];
                 }
+                
+                //オブジェクトシーンの順番初期化
+                [self fadeSelectUpdate];
                 
                 sceneNumber = 4;
             }
@@ -575,7 +579,7 @@ int sceneNumber;
                 }else{
                     winner = 0;
                 }
-                [self fadeSelectUpdate];
+                //[self fadeSelectUpdate];
                 if(friendWait){
                     [friendWait hide];
                 }
@@ -622,30 +626,32 @@ int sceneNumber;
 
 //imageNames, textNames, assets, friendImagesを設定する
 -(void)selectFadeObjectWithCompleteFunc:(void (^)())func{
-    textNames = [NSArray arrayWithObjects:@"気づいたら\nカラオケで\n\n\n\nざこ寝",
-                 @"セミの\n\n\n\n\n\n抜け殻",
-                 @"プールで\n監視員に\n\n\n\n怒られる",
-                 @"好きな子と\n友達が\n\n\n\n付き合ってた",
-                 @"お祭り\n\n\n\n\n騒ぎ",
-                 @"山\n\n\n\n\nガール",
-                 @"キャンプで\n\n\n\n\n\nバーベキュー",
-                 @"セミの鳴き声で\n\n\n\n\n\n目を覚ます",
-                 @"昼間は\n\n\n\n図書館で\n\n勉強",
-                 @"縁日で\n\n\n\n\n\nくじ引き",
-                 @"アイス食べて\n\n\n\n\n\nお腹を壊す",
-                 @"開発で\n\n\n\n\n\n一日が終わる",
+    textNames = [NSArray arrayWithObjects:@"気づい。たらー\nカラオケで\n\n\n\nざこ寝",
+                 @"セミ。のー\n\n\n\n\n\n抜け殻",
+                 @"プール。ーで\n監視員に\n\n\n\n怒られる",
+                 @"好き。なー子と\n友達が\n\n\n\n付き合ってた",
+                 @"お。祭ーり\n\n\n\n\n騒ぎ",
+                 @"山ヵ\n\n\n\n\nガール",
+                 @"キゃャ。ンープで\n\n\n\n\n\nバーベキュー",
+                 @"セゅミ。の鳴き声ーで\n\n\n\n\n\n目を覚ます",
+                 @"昼ょ。間ーは\n\n\n\n図書館で\n\n勉強",
+                 @"縁っ。日ーで\n\n\n\n\n\nくじ引き",
+                 @"アッイス。食べーて\n\n\n\n\n\nお腹を壊す",
+                 @"開。発ーで\n\n\n\n\n\n一日が終わる",
                  nil];
     if(!currentSession){
         //一人でプレイ
         imageNames = [NSArray arrayWithObjects:@"fade1.png",@"fade2.png", nil];
         friendImages = [NSArray array];
+        //id selfo = self;
         [self setAssets:^{
+            //[selfo fadeSelectUpdate];
             func();
         }];
     }else{
         //二人でプレイ
         imageNames = [NSArray array];
-        [self fadeSelectUpdate];
+        //[self fadeSelectUpdate];
         //friendImagesとassetsは通信で受取済
         func();
     }
@@ -659,7 +665,7 @@ int sceneNumber;
     initAssetsCount = 0;
     if( !assetsURL || [assetsURL count] == 0 ){
         assetsURL = [NSMutableDictionary dictionary];
-        [self fadeSelectUpdate];
+        //[self fadeSelectUpdate];
         func();
         return;
     }
@@ -684,7 +690,7 @@ int sceneNumber;
                                NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
                                [ud setObject:assetsURL forKey:@"assetsURL"];
                                [ud synchronize];
-                               [self fadeSelectUpdate];
+                               //[self fadeSelectUpdate];
                                func();
                            }
                        }
@@ -695,7 +701,7 @@ int sceneNumber;
                               NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
                               [ud setObject:assetsURL forKey:@"assetsURL"];
                               [ud synchronize];
-                              [self fadeSelectUpdate];
+                              //[self fadeSelectUpdate];
                               func();
                           }
                       }];

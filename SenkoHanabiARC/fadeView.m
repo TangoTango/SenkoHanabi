@@ -63,11 +63,11 @@
             iy = 0;
             ix++;
         }else if([c rangeOfString:@"ー"].location != NSNotFound){
-            UIImageView *img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bo.png"]];
+            UIImageView *img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bo2.png"]];
             img.frame = CGRectMake(p.x + fontsize * (line-1-ix), p.y + fontsize * iy, fontSize, fontSize);
             [obj addSubview:img];
             iy++;
-        }else if([c rangeOfString:@"。"].location != NSNotFound){
+        }else if(/*[c rangeOfString:@"。"].location != NSNotFound*/0){
             UIImageView *img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"maru.png"]];
             img.frame = CGRectMake(p.x + fontsize * (line-1-ix), p.y + fontsize * iy, fontSize, fontSize);
             [obj addSubview:img];
@@ -75,13 +75,25 @@
         }else{
             UILabel* l = [[UILabel alloc] initWithFrame:CGRectMake(p.x + fontsize * (line-1-ix), p.y + fontsize * iy ,
                                                                    fontsize,boxsize)];
-            l.font = [UIFont fontWithName:@"Hiragino Mincho ProN" size:fontsize];
-            
+            l.font = [UIFont fontWithName:@"AoyagiKouzanFontTOTF" size:fontsize+5];
             l.backgroundColor = [UIColor clearColor];
+            
             if( [self isInt:c] ){
                 int number = [c intValue];
                 NSString *numberStr = @[ @"〇", @"一", @"二", @"三", @"四", @"五", @"六", @"七", @"八", @"九"][number];
                 l.text = numberStr;
+            }else if( [c rangeOfString:@"。"].location != NSNotFound){
+                CGRect move = l.frame;
+                move.origin.x += fontsize*(23.0/40.0);
+                move.origin.y -= fontsize*(28.0/40.0);
+                l.frame = move;
+                l.text = c;
+            }else if( [self isSmallChar:c]){
+                CGRect move = l.frame;
+                move.origin.x += 6;
+                move.origin.y -= 15;
+                l.frame = move;
+                l.text = c;
             }else{
                 l.text = c;
             }
@@ -162,6 +174,13 @@
     
     [aScanner scanInt:NULL];
     return [aScanner isAtEnd];
+}
+-(BOOL)isSmallChar:(NSString *)c{
+    NSString *texts = @"ぁぃぅぇぉゃゅょっゎッャュョヵ";
+    if( [texts rangeOfString:c].location != NSNotFound){
+        return 1;
+    }
+    return 0;
 }
 
 @end
