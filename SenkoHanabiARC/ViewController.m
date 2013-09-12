@@ -160,7 +160,8 @@ int sceneNumber;
         case 3://「線香花火」隠蔽アニメ、線香花火設定、「遊び方」設定
             //全体の最初
             if(isTapped){
-                title.alphaFlag = -1;//タッチしたら消えるように
+                [title hide];//タッチしたら消えるように
+                title.alphaFlag = -1;
             }
             if([title Do]){//タイトルアニメーション　アニメーションが終了すれば1が返ってくる
                 // 線香花火の画像
