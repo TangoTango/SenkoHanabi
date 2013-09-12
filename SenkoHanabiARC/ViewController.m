@@ -219,7 +219,7 @@ int sceneNumber;
                     hinotamaImage.alpha = 1.0f;
                     [how hide];
                     if( !yakedo ){
-                        yakedo = [[fadeView alloc] initWithLableText:@"火傷しちゃうぅ！" point:CGPointMake(270,30) fontsize:50 upAlpha:0.03f downAlpha:0.03f topAlpha:1.0f superview:self.view];
+                        yakedo = [[fadeView alloc] initWithLableText:@"火傷します！" point:CGPointMake(270,30) fontsize:50 upAlpha:0.03f downAlpha:0.03f topAlpha:1.0f superview:self.view];
                         yakedo.alphaFlag = 2;
                         [yakedo reverse];
                     }else{
@@ -712,7 +712,7 @@ int sceneNumber;
 
 -(void)fadeSelectUpdate{
     fadeselect = 0;
-    if(!random90s){
+    if( !currentSession ){
         fadeSelects = [self randomList:[imageNames count] + [textNames count] + [assets count] + [friendImages count]];
     }else{
         int t = [imageNames count] + [textNames count] + [assets count] + [friendImages count];

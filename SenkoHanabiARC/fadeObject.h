@@ -13,6 +13,7 @@
     int isImage; // オブジェクトが画像であるかどうか
     NSMutableArray* uilabels;
     NSMutableArray* alphaFlags;
+    int alphaFlag;
     float x, y, w, h; // 画像の位置と幅，高さ
     float maxw, maxh; // 画像の幅，高さの最大値
     int deleteFlg; // 画像が消えているかどうか
