@@ -51,7 +51,7 @@ static UIImageView *bokashiImage; // ぼかし画像のUIImageView
     }
     
     // アニメーションパターンは乱数により決定
-    animationPattern = arc4random() % 4;
+    animationPattern = arc4random() % 5;
     CGRect temp = img.frame;
     
     // アニメーションパターンによる初期位置の設定
@@ -79,6 +79,14 @@ static UIImageView *bokashiImage; // ぼかし画像のUIImageView
         case 3:
             temp.origin.x = 100;
             temp.origin.y = 140;
+            temp.size.width = temp.size.width * (2.0/3);
+            temp.size.height = temp.size.height * (2.0/3);
+            img.frame = temp;
+            break;
+            
+        case 4:
+            temp.origin.x = 160;
+            temp.origin.y = 100;
             temp.size.width = temp.size.width * (2.0/3);
             temp.size.height = temp.size.height * (2.0/3);
             img.frame = temp;
@@ -258,7 +266,7 @@ int count = 0;
             [bokashiImage.superview bringSubviewToFront:bokashiImage];*/
             
         }
-        // アニメーションパターン3つ目、4つ目
+        // アニメーションパターン3つ目、4つ目、5つ目
         else {
             NSLog(@"animationPattern: %d", animationPattern);
             CGRect f = img.frame;

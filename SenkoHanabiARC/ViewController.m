@@ -656,7 +656,7 @@ int sceneNumber;
                  nil];
     if(!currentSession){
         //一人でプレイ
-        imageNames = [NSArray arrayWithObjects:@"fade1.png", @"fade2.png", @"fade3.png", @"fade4.png", @"fade5.png", @"fade6.png", nil];
+        imageNames = [NSArray arrayWithObjects:@"fade1.png", @"fade2.png", @"fade3.png", @"fade4.png", @"fade5.png", @"fade6.png", @"fade7.png", @"fade8.png", @"fade9.png", @"fade10.png", nil];
         friendImages = [NSArray array];
         //id selfo = self;
         [self setAssets:^{
