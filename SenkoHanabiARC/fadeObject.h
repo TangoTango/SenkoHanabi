@@ -9,12 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @interface fadeObject : NSObject {
-    id object;
-    int isImage;
+    id object; // 画像のオブジェクト
+    int isImage; // オブジェクトが画像であるかどうか
     NSMutableArray* uilabels;
     NSMutableArray* alphaFlags;
-    float x, y, w, h;
-    float maxw, maxh;
+    float x, y, w, h; // 画像の位置と幅，高さ
+    float maxw, maxh; // 画像の幅，高さの最大値
     int deleteFlg;
 }
 @property int deleteFlg;

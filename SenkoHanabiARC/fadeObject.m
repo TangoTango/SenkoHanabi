@@ -9,20 +9,28 @@
 #import "fadeObject.h"
 #import <QuartzCore/QuartzCore.h>
 
-static UIImageView *bokashiImage;
+static UIImageView *bokashiImage; // ぼかし画像のUIImageView
 
 @implementation fadeObject:NSObject
 @synthesize deleteFlg;
 
+// 画像の初期化
 -(id)initWithImage:(UIImageView*)img view:(UIView*)view{
+    
+    self = [super init];
+    
+    // ぼかし画像の表示
     if( !bokashiImage ){
         bokashiImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"gradation2.png"]];
         bokashiImage.alpha = 1.0f;
         [view addSubview:bokashiImage];
+        
+        // ぼかし画像は最前面におく
         [view bringSubviewToFront:bokashiImage];
     }else{
         bokashiImage.alpha = 1.0f;
     }
+    
     object = img;
     isImage = 1;
     img.alpha = 0.0f;
@@ -30,12 +38,16 @@ static UIImageView *bokashiImage;
     
     maxw = 100;
     maxh = 100;
+    
+    // 画像が横長であれば
     if(img.image.size.height < img.image.size.width){
+        // 幅が100pxになるように縦横比を調整
         img.frame = CGRectMake(320-100, 60, maxw, img.image.size.height*(maxw/img.image.size.width));
     }else{
         img.frame = CGRectMake(320-100, 60, img.image.size.width*(maxw/img.image.size.height), maxh);
     }
     
+    // メンバ変数に位置とサイズを代入
     CGRect f = img.frame;
     x = f.origin.x;
     y = f.origin.y;
@@ -43,17 +55,23 @@ static UIImageView *bokashiImage;
     h = f.size.height;
     
     [view addSubview:img];
+    
     return self;
 }
 
+// 文字の初期化
 -(id)initWithString:(NSString*)str view:(UIView*)view{
+    
+    self = [super init];
     
     uilabels = [NSMutableArray array];
     alphaFlags = [NSMutableArray array];
     x = 30, y = 50, w = 270, h = 100;
+    
     int fontsize = 30;
     int ix = 0;
     int iy = 0;
+    
     for(int i = 0; i < str.length; i++){
         NSString* c = [str substringWithRange:NSMakeRange(i, 1)];
         if([c rangeOfString:@"\n"].location != NSNotFound){
@@ -140,7 +158,9 @@ static UIImageView *bokashiImage;
     return self;
 }
 
+// 画像
 -(void)Do{
+    // 画像である場合
     if(isImage){
         UIImageView *img = object;
         CGRect f = img.frame;
