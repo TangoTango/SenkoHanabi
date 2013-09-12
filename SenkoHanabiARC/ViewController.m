@@ -150,7 +150,7 @@ int sceneNumber;
     switch (sceneNumber) {
         case 1://「線香花火」設定
             if(!title){
-                title = [[fadeView alloc] initWithLableText:@"おもひではなび" point:CGPointMake(155,60) fontsize:50 upAlpha:0.02f downAlpha:0.02f topAlpha:2.0f superview:self.view];
+                title = [[fadeView alloc] initWithLableText:@"おもひではなび" point:CGPointMake(155,50) fontsize:50 upAlpha:0.02f downAlpha:0.02f topAlpha:2.0f superview:self.view];
             }else{
                 [title reInit];
             }
@@ -791,7 +791,7 @@ int sceneNumber;
 - (void)connectButtonTapped:(UIButton *)button{
     // 写真共有の説明文をアラートで表示
     UIAlertView *alert =
-    [[UIAlertView alloc] initWithTitle:@"写真を共有" message:@"Bluetooth通信を行い、\n近くにいる友だちと\n写真を交換します。" delegate:self cancelButtonTitle:@"キャンセル" otherButtonTitles:@"OK", nil];
+    [[UIAlertView alloc] initWithTitle:@"写真を共有" message:@"Bluetooth通信を行い、\n近くにいる友だちと\nアプリに追加した\n写真を交換します。" delegate:self cancelButtonTitle:@"キャンセル" otherButtonTitles:@"OK", nil];
     [alert show];
     
     
