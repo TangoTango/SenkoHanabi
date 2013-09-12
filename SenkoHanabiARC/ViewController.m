@@ -904,6 +904,18 @@ int sceneNumber;
         case GKPeerStateDisconnected:
             NSLog(@"disconnected");
             currentSession = nil;
+            if([katori isDisp]){//蚊取り線香出してる最中に切断された場合
+                [katori hide];
+                [waitText hide];
+                addimageButton.alpha = 1.0f;
+                nextButton.alpha = 1.0f;
+                connectButton.alpha = 1.0f;
+                [addimageButton setEnabled:YES];
+                [nextButton setEnabled:YES];
+                [connectButton setEnabled:YES];
+            }
+            
+            
             break;
         default:
             break;

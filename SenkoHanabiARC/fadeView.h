@@ -24,6 +24,7 @@
 -(void)reInit;
 -(int)Do;
 -(void)rotationDo;
+-(BOOL)isDisp;
 -(void)show;
 -(void)hide;
 -(void)changeTextWithString:(NSString *)newText;

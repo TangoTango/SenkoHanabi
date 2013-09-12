@@ -133,6 +133,12 @@
     obj.alpha = 0.0f;
     alphaFlag = 1;
 }
+-(BOOL)isDisp{
+    if(0 < obj.alpha){
+        return 1;
+    }
+    return 0;
+}
 -(void)show{
     obj.alpha = 1.0f;
 }
