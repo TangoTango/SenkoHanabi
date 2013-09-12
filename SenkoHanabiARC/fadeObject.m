@@ -37,9 +37,10 @@ static UIImageView *bokashiImage; // ぼかし画像のUIImageView
     // 画像は初期状態では見えない
     img.alpha = 0.0f;
     deleteFlg = 0;
+    alphaFlag = 1;
     
-    maxw = 100;
-    maxh = 100;
+    maxw = 150;
+    maxh = 150;
     
     // 画像が横長であれば
     if(img.image.size.height < img.image.size.width){
@@ -50,26 +51,36 @@ static UIImageView *bokashiImage; // ぼかし画像のUIImageView
     }
     
     // アニメーションパターンは乱数により決定
-    animationPattern = arc4random() % 3;
-    
+    animationPattern = arc4random() % 4;
+    animationPattern = 1;//テスト！！！
     CGRect temp = img.frame;
     
     // アニメーションパターンによる初期位置の設定
     switch (animationPattern) {
             
         case 0:
+            /*
             temp.origin.x = 220;
             temp.origin.y = 60;
+            img.frame = temp;
+             break;*/
+            temp.origin.x = 35;
+            temp.origin.y = 70;
             img.frame = temp;
             break;
             
         case 1:
+            temp.origin.x = 135;
+            temp.origin.y = 70;
+            img.frame = temp;
+            break;
+        case 2:
             temp.origin.x = 50;
             temp.origin.y = 60;
             img.frame = temp;
             break;
             
-        case 2:
+        case 3:
             temp.origin.x = 100;
             temp.origin.y = 140;
             img.frame = temp;
@@ -164,6 +175,7 @@ static UIImageView *bokashiImage; // ぼかし画像のUIImageView
 }
 
 // 画像
+int count = 0;
 -(void)Do{
     // 画像である場合
     if(isImage){
@@ -172,9 +184,46 @@ static UIImageView *bokashiImage; // ぼかし画像のUIImageView
         
         //NSLog(@"animationPattern: %d", animationPattern);
         
-        // アニメーションパターン1つ目
-        if (animationPattern == 0) {
-            NSLog(@"animationPattern: %d", animationPattern);            
+        // アニメーションパターン1、2つ目
+        if (animationPattern == 0 || animationPattern == 1) {
+            CGPoint p = img.center;
+            float dMAX = 100;//移動量
+            float coma = 116;//コマ数
+            count++;
+            if(animationPattern == 0){
+                p.x += dMAX / coma;
+            }else{
+                p.x -= dMAX / coma;
+            }
+            CGRect f = img.frame;
+            if( alphaFlag == 1 ){
+                img.alpha += (2 / coma);
+                f.size.width += (float)w * (2 / coma);
+                f.size.height += (float)h * (2 / coma);
+                if( 1.0f <= img.alpha ){
+                    alphaFlag = -1;
+                }
+            }else{
+                img.alpha -= (2 / coma);
+                f.size.width -= w * (2 / coma);
+                f.size.height -= h * (2 / coma);
+                // 画像が透明になったら
+                if(img.alpha < 0) {
+                    // 画像を取り除き，ぼかし画像も透明にする
+                    [img removeFromSuperview];
+                    bokashiImage.alpha = 0.0f;
+                    deleteFlg = 1;
+                    
+                }
+            }
+            img.frame = f;
+            img.center = p;
+            // ぼかし画像は常に画像と同じ位置で，かつ最前面
+            bokashiImage.frame = img.frame;
+            [bokashiImage.superview bringSubviewToFront:bokashiImage];
+            
+            
+            /*NSLog(@"animationPattern: %d", animationPattern);
             CGRect f = img.frame;
             
             // 画像の中心が画面全体の中央から右側にあるとき
@@ -209,10 +258,10 @@ static UIImageView *bokashiImage; // ぼかし画像のUIImageView
             
             // ぼかし画像は常に画像と同じ位置で，かつ最前面
             bokashiImage.frame = img.frame;
-            [bokashiImage.superview bringSubviewToFront:bokashiImage];
+            [bokashiImage.superview bringSubviewToFront:bokashiImage];*/
             
         }
-        // アニメーションパターン2つ目
+        // アニメーションパターン3つ目、4つ目
         else {
             NSLog(@"animationPattern: %d", animationPattern);
             CGRect f = img.frame;
@@ -278,7 +327,7 @@ static UIImageView *bokashiImage; // ぼかし画像のUIImageView
             }
         }else{
             l = uilabels[plusi];
-            if(0.3 < l.alpha && plusi + 1 < [uilabels count]){
+            if(0.5 < l.alpha && plusi + 1 < [uilabels count]){
                 alphaFlags[plusi + 1] = [NSNumber numberWithInt:1];
             }
         }
@@ -288,7 +337,7 @@ static UIImageView *bokashiImage; // ぼかし画像のUIImageView
         for(int i = 0; i < [uilabels count]; i++){
             //透明度が1.5以上なら＋から−へ
             l = uilabels[i];
-            if(1.5 < l.alpha){
+            if(2.0 < l.alpha){
                 alphaFlags[i] = [NSNumber numberWithInt:-1];
             }
             
