@@ -801,6 +801,7 @@ int sceneNumber;
     currentSession = session;
     session.delegate = self;
     [session setDataReceiveHandler:self withContext:nil];
+    endNumber = 2;
     
     UIView *selfview = self.view;
     //id randomCall = self;
@@ -862,7 +863,6 @@ int sceneNumber;
                 [friendImages addObject:reverse[[NSString stringWithFormat:@"%d",i]] ];
             }
         }
-        endNumber = 2;
         sharedFlg = 2;
     }else if(reverse[@"gyanken"]){
         enemyRandom90s = reverse[@"random90s"];
@@ -1113,6 +1113,9 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
                 }else{
                     [addBar reInit];
                 }
+                [nextButton setEnabled:NO];
+                [addimageButton setEnabled:NO];
+                [connectButton setEnabled:NO];
                 
                 sceneNumber = 12;
                 addAssetsCount = 0;
