@@ -33,6 +33,8 @@ static UIImageView *bokashiImage; // ぼかし画像のUIImageView
     
     object = img;
     isImage = 1;
+    
+    // 画像は初期状態では見えない
     img.alpha = 0.0f;
     deleteFlg = 0;
     
@@ -41,11 +43,41 @@ static UIImageView *bokashiImage; // ぼかし画像のUIImageView
     
     // 画像が横長であれば
     if(img.image.size.height < img.image.size.width){
-        // 幅が100pxになるように縦横比を調整
-        img.frame = CGRectMake(320-100, 60, maxw, img.image.size.height*(maxw/img.image.size.width));
+        // 幅が100pxになるようにサイズを調整
+        img.frame = CGRectMake(220, 60, maxw, img.image.size.height*(maxw/img.image.size.width));
     }else{
-        img.frame = CGRectMake(320-100, 60, img.image.size.width*(maxw/img.image.size.height), maxh);
+        img.frame = CGRectMake(220, 60, img.image.size.width*(maxw/img.image.size.height), maxh);
     }
+    
+    // アニメーションパターンは乱数により決定
+    animationPattern = arc4random() % 3;
+    
+    CGRect temp = img.frame;
+    
+    // アニメーションパターンによる初期位置の設定
+    switch (animationPattern) {
+            
+        case 0:
+            temp.origin.x = 220;
+            temp.origin.y = 60;
+            img.frame = temp;
+            break;
+            
+        case 1:
+            temp.origin.x = 50;
+            temp.origin.y = 60;
+            img.frame = temp;
+            break;
+            
+        case 2:
+            temp.origin.x = 100;
+            temp.origin.y = 140;
+            img.frame = temp;
+            break;
+            
+    }
+    
+    NSLog(@"img.frame: %@", img);
     
     // メンバ変数に位置とサイズを代入
     CGRect f = img.frame;
@@ -116,45 +148,6 @@ static UIImageView *bokashiImage; // ぼかし画像のUIImageView
         }
     }
     
-    
-    
-    /*x = 30, y = 30, w = 120, h = 300;
-    int fontsize = 30;
-    int ix = 0;
-    int iy = 0;
-    isImage = 0;
-    deleteFlg = 0;
-    uilabels = [NSMutableArray array];
-    alphaFlags = [NSMutableArray array];
-    for(int i = 0; i < str.length; i++){
-        NSString* c = [str substringWithRange:NSMakeRange(i, 1)];
-        if([c rangeOfString:@"\n"].location != NSNotFound){
-            iy = 0;
-            ix++;
-        }else{
-            UILabel* l = [[UILabel alloc] initWithFrame:CGRectMake(w - fontsize * (1+ix), y + fontsize * iy ,320,100)];
-            l.font = [UIFont fontWithName:@"Hiragino Mincho ProN" size:fontsize];
-            l.textAlignment = NSTextAlignmentCenter;
-            l.text = c;
-            l.backgroundColor = [UIColor clearColor];
-            l.textColor = [UIColor whiteColor];
-            l.alpha = 0.0f;
-            if([c rangeOfString:@"ー"].location != NSNotFound){
-                //[l setText:@"|"];
-                //CGRect move = l.frame;
-                //move.size.width = move.size.width * 0.7;
-                //move.size.height = move.size.height * 0.7;
-                //l.frame = move;
-                //l.transform = CGAffineTransformMakeRotation(M_PI_2+M_PI);
-            }
-            
-            [view addSubview:l];
-            [uilabels addObject:l];
-            [alphaFlags addObject:[NSNumber numberWithInt:0]];
-            iy++;
-        }
-    }*/
-    
     return self;
 }
 
@@ -162,25 +155,101 @@ static UIImageView *bokashiImage; // ぼかし画像のUIImageView
 -(void)Do{
     // 画像である場合
     if(isImage){
-        UIImageView *img = object;
-        CGRect f = img.frame;
-        if( img.superview.frame.size.width/2 < f.origin.x + f.size.width/2 ){
-            img.alpha += 0.02f;
-            img.frame = CGRectMake(f.origin.x - 1.5f - w * 0.01f, f.origin.y - h * 0.01f,
-                                   f.size.width + w * 0.02f, f.size.height + h * 0.02f);
-        }else{
-            img.alpha -= 0.02f;
-            img.frame = CGRectMake(f.origin.x - 1.5f + w * 0.01f, f.origin.y + h * 0.01f,
-                                   f.size.width - w * 0.02f, f.size.height - h * 0.02f);
-            if(img.alpha < 0){
-                [img removeFromSuperview];
-                bokashiImage.alpha = 0.0f;
-                deleteFlg = 1;
+        
+        UIImageView *img = object; // 画像のオブジェクト
+        
+        //NSLog(@"animationPattern: %d", animationPattern);
+        
+        // アニメーションパターン1つ目
+        if (animationPattern == 0) {
+            NSLog(@"animationPattern: %d", animationPattern);            
+            CGRect f = img.frame;
+            
+            // 画像の中心が画面全体の中央から右側にあるとき
+            if( img.superview.frame.size.width/2 < f.origin.x + f.size.width/2 ){
+                
+                // 画像を鮮明にする
+                img.alpha += 0.02f;
+                
+                // 画像を左に動かしながら大きくする
+                img.frame = CGRectMake(f.origin.x - 1.5f - w * 0.01f, f.origin.y - h * 0.01f,
+                                       f.size.width + w * 0.02f, f.size.height + h * 0.02f);
             }
+            // 画像の中心が画面全体の中央から左側にあるとき
+            else {
+                // 画像を透明にする
+                img.alpha -= 0.02f;
+                
+                // 画像を右に動かしながら小さくする
+                img.frame = CGRectMake(f.origin.x - 1.5f + w * 0.01f, f.origin.y + h * 0.01f,
+                                       f.size.width - w * 0.02f, f.size.height - h * 0.02f);
+                
+                // 画像が透明になったら
+                if(img.alpha < 0) {
+                    
+                    // 画像を取り除き，ぼかし画像も透明にする
+                    [img removeFromSuperview];
+                    bokashiImage.alpha = 0.0f;
+                    deleteFlg = 1;
+                    
+                }
+            }
+            
+            // ぼかし画像は常に画像と同じ位置で，かつ最前面
+            bokashiImage.frame = img.frame;
+            [bokashiImage.superview bringSubviewToFront:bokashiImage];
+            
+        }
+        // アニメーションパターン2つ目
+        else {
+            NSLog(@"animationPattern: %d", animationPattern);
+            CGRect f = img.frame;
+            
+            // 幅か高さが初期値の2.0倍になるまでは
+            if (f.size.width <= 2.0 * w || f.size.height <= 2.0 * h) {
+                
+                // 画像を鮮明にする
+                img.alpha += 0.02f;
+                
+                // 画像の中央位置を保ちながら幅，高さを増やす
+                CGPoint center = img.center; // 画像の中央位置
+                f.size.width += w * 0.015f;
+                f.size.height += h * 0.015f;
+                img.frame = f;
+                img.center  = center;
+                
+            }
+            // その後は
+            else {
+                
+                // 画像を透明にする
+                img.alpha -= 0.02f;
+                bokashiImage.alpha -= 0.01f;
+                
+                // 画像の中央位置を保ちながら幅，高さを少しだけ増やす
+                CGPoint center = img.center;
+                f.size.width += w * 0.008f;
+                f.size.height += h * 0.008f;
+                img.frame = f;
+                img.center  = center;
+                
+                // 画像が透明になったら
+                if (img.alpha < 0.0f) {
+                    
+                    // 画像を取り除き，ぼかし画像も透明にする
+                    [img removeFromSuperview];
+                    bokashiImage.alpha = 0.0f;
+                    deleteFlg = 1;
+                }
+                
+            }
+            
+            // ぼかし画像は常に画像と同じ位置で，かつ最前面
+            bokashiImage.frame = img.frame;
+            [bokashiImage.superview bringSubviewToFront:bokashiImage];
+            
         }
         
-        bokashiImage.frame = img.frame;
-        [bokashiImage.superview bringSubviewToFront:bokashiImage];
     }else{
         //＋していく先頭の文字の透明度が0.5以上なら次の文字も＋していく。
         int plusi = -1;

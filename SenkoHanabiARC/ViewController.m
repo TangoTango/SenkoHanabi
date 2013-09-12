@@ -129,6 +129,7 @@ int sceneNumber;
                                         repeats:YES];
     }];
 }
+
 -(void)loop{
     if(manager){
         [manager startAccelerometerUpdates];
@@ -297,7 +298,9 @@ int sceneNumber;
             }
             //フェードオブジェクト追加
             if(!showFadeObject){
+                
                 int i = [fadeSelects[fadeselect] intValue];
+
                 if( i < [imageNames count]){
                     int t = i;
                     //画像の追加

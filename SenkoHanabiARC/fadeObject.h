@@ -9,13 +9,14 @@
 #import <UIKit/UIKit.h>
 
 @interface fadeObject : NSObject {
-    id object; // 画像のオブジェクト
+    id object; // アニメーションの対象となるオブジェクト
     int isImage; // オブジェクトが画像であるかどうか
     NSMutableArray* uilabels;
     NSMutableArray* alphaFlags;
     float x, y, w, h; // 画像の位置と幅，高さ
     float maxw, maxh; // 画像の幅，高さの最大値
-    int deleteFlg;
+    int deleteFlg; // 画像が消えているかどうか
+    int animationPattern; // アニメーションのパターンを表す変数
 }
 @property int deleteFlg;
 -(id)initWithImage:(UIImageView*)img view:(UIView*)view;
