@@ -15,7 +15,6 @@
 #import "fire.h"
 #import "fireFlower.h"
 #import "fadeView.h"
-#import "Bgm.h"
 #import "CustomButton.h"
 #import "MyProgressBar.h"
 
@@ -130,6 +129,7 @@ int sceneNumber;
                                         repeats:YES];
     }];
 }
+
 -(void)loop{
     if(manager){
         [manager startAccelerometerUpdates];
@@ -302,7 +302,9 @@ int sceneNumber;
             }
             //フェードオブジェクト追加
             if(!showFadeObject){
+                
                 int i = [fadeSelects[fadeselect] intValue];
+
                 if( i < [imageNames count]){
                     int t = i;
                     //画像の追加
@@ -770,7 +772,7 @@ int sceneNumber;
 // 「写真を追加」ボタンをタップした時
 - (void)addimageButtonTapped:(UIButton *)button{
     // 写真追加の説明文をアラートで表示
-    UIAlertView *alert = 
+    UIAlertView *alert =
     [[UIAlertView alloc] initWithTitle:@"写真を追加" message:@"カメラロールから\n写真をアプリに取り込み、\nスライドショー表示します。" delegate:self cancelButtonTitle:@"キャンセル" otherButtonTitles:@"OK", nil];
     [alert show];
 }
@@ -1188,7 +1190,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
                 [nextButton setEnabled:NO];
                 [addimageButton setEnabled:NO];
                 [connectButton setEnabled:NO];
-
+                
                 // ピアピッカーを作成
                 GKPeerPickerController* picker = [[GKPeerPickerController alloc] init];
                 picker.delegate = self;
@@ -1199,7 +1201,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
         }
         
     }
-         
-         }
-         
-         @end
+    
+}
+
+@end
