@@ -121,7 +121,7 @@
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SenkoHanabiARC/ViewController.m"
@@ -312,6 +312,19 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "49"
          endingLineNumber = "49"
+         landmarkName = "-initWithImage:view:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "SenkoHanabiARC/fadeObject.m"
+         timestampString = "400665864.979484"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "55"
+         endingLineNumber = "55"
          landmarkName = "-initWithImage:view:"
          landmarkType = "5">
       </FileBreakpoint>

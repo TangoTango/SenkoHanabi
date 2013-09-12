@@ -151,7 +151,7 @@ int sceneNumber;
     switch (sceneNumber) {
         case 1://「線香花火」設定
             if(!title){
-                title = [[fadeView alloc] initWithLableText:@"おもひではなび" point:CGPointMake(155,60) fontsize:50 upAlpha:0.02f downAlpha:0.02f topAlpha:2.0f superview:self.view];
+                title = [[fadeView alloc] initWithLableText:@"おもひではなび" point:CGPointMake(155,50) fontsize:50 upAlpha:0.02f downAlpha:0.02f topAlpha:2.0f superview:self.view];
             }else{
                 [title reInit];
             }
