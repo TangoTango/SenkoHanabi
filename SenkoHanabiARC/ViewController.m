@@ -687,7 +687,7 @@ int sceneNumber;
                                [assetsURL removeObjectForKey:URLstr];
                                initAssetsCount--;
                            }
-                           if(initAssetsCount == min){
+                           if(initAssetsCount == min || i == min-1){
                                //消えてる写真がある場合もあるので、assetsURLは保存し直す
                                NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
                                [ud setObject:assetsURL forKey:@"assetsURL"];

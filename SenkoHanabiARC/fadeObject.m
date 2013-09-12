@@ -52,18 +52,12 @@ static UIImageView *bokashiImage; // ぼかし画像のUIImageView
     
     // アニメーションパターンは乱数により決定
     animationPattern = arc4random() % 4;
-    animationPattern = 1;//テスト！！！
     CGRect temp = img.frame;
     
     // アニメーションパターンによる初期位置の設定
     switch (animationPattern) {
             
         case 0:
-            /*
-            temp.origin.x = 220;
-            temp.origin.y = 60;
-            img.frame = temp;
-             break;*/
             temp.origin.x = 35;
             temp.origin.y = 70;
             img.frame = temp;
@@ -77,12 +71,16 @@ static UIImageView *bokashiImage; // ぼかし画像のUIImageView
         case 2:
             temp.origin.x = 50;
             temp.origin.y = 60;
+            temp.size.width = temp.size.width * (2.0/3);
+            temp.size.height = temp.size.height * (2.0/3);
             img.frame = temp;
             break;
             
         case 3:
             temp.origin.x = 100;
             temp.origin.y = 140;
+            temp.size.width = temp.size.width * (2.0/3);
+            temp.size.height = temp.size.height * (2.0/3);
             img.frame = temp;
             break;
             
@@ -188,8 +186,7 @@ int count = 0;
         if (animationPattern == 0 || animationPattern == 1) {
             CGPoint p = img.center;
             float dMAX = 100;//移動量
-            float coma = 116;//コマ数
-            count++;
+            float coma = 135;//コマ数
             if(animationPattern == 0){
                 p.x += dMAX / coma;
             }else{
@@ -266,6 +263,7 @@ int count = 0;
             NSLog(@"animationPattern: %d", animationPattern);
             CGRect f = img.frame;
             
+            count++;
             // 幅か高さが初期値の2.0倍になるまでは
             if (f.size.width <= 2.0 * w || f.size.height <= 2.0 * h) {
                 
