@@ -64,7 +64,6 @@
 		04A8EF7317E1A62C008677AE /* fade4.png in Resources */ = {isa = PBXBuildFile; fileRef = 04A8EF7217E1A62C008677AE /* fade4.png */; };
 		04A8EF7717E1A806008677AE /* fade6.png in Resources */ = {isa = PBXBuildFile; fileRef = 04A8EF7617E1A806008677AE /* fade6.png */; };
 		04A8EF7917E1A827008677AE /* fade5.png in Resources */ = {isa = PBXBuildFile; fileRef = 04A8EF7817E1A827008677AE /* fade5.png */; };
-		04A8EF7B17E1A8BC008677AE /* fade2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 04A8EF7A17E1A8BC008677AE /* fade2.jpg */; };
 		0D31F61917D8B5C8005EBF21 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D31F61817D8B5C8005EBF21 /* UIKit.framework */; };
 		0D31F61B17D8B5C8005EBF21 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D31F61A17D8B5C8005EBF21 /* Foundation.framework */; };
 		0D31F61D17D8B5C8005EBF21 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D31F61C17D8B5C8005EBF21 /* CoreGraphics.framework */; };
@@ -90,6 +89,7 @@
 		0D31F66717D97914005EBF21 /* hibana4.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D31F66217D97914005EBF21 /* hibana4.png */; };
 		0D31F66817D97914005EBF21 /* hibana3.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D31F66317D97914005EBF21 /* hibana3.png */; };
 		0D31F66917D97914005EBF21 /* hibana2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D31F66417D97914005EBF21 /* hibana2.png */; };
+		0D38CDB5180B1681001A7F85 /* icon-120.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D38CDB4180B1681001A7F85 /* icon-120.png */; };
 		0D46BECE17DFF98B0031CB69 /* hinotama_black2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D46BECD17DFF98B0031CB69 /* hinotama_black2.png */; };
 		0D46BED417E03BD90031CB69 /* MyProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D46BED317E03BD90031CB69 /* MyProgressBar.m */; };
 		0D46BED817E03D6F0031CB69 /* progress3.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D46BED517E03D6F0031CB69 /* progress3.png */; };
@@ -229,7 +229,6 @@
 		04A8EF7217E1A62C008677AE /* fade4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fade4.png; sourceTree = "<group>"; };
 		04A8EF7617E1A806008677AE /* fade6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fade6.png; sourceTree = "<group>"; };
 		04A8EF7817E1A827008677AE /* fade5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fade5.png; sourceTree = "<group>"; };
-		04A8EF7A17E1A8BC008677AE /* fade2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fade2.jpg; sourceTree = "<group>"; };
 		0D31F61517D8B5C8005EBF21 /* SenkoHanabiARC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SenkoHanabiARC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D31F61817D8B5C8005EBF21 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0D31F61A17D8B5C8005EBF21 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -262,6 +261,7 @@
 		0D31F66217D97914005EBF21 /* hibana4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hibana4.png; sourceTree = "<group>"; };
 		0D31F66317D97914005EBF21 /* hibana3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hibana3.png; sourceTree = "<group>"; };
 		0D31F66417D97914005EBF21 /* hibana2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hibana2.png; sourceTree = "<group>"; };
+		0D38CDB4180B1681001A7F85 /* icon-120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-120.png"; sourceTree = "<group>"; };
 		0D46BECD17DFF98B0031CB69 /* hinotama_black2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hinotama_black2.png; sourceTree = "<group>"; };
 		0D46BED217E03BD90031CB69 /* MyProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyProgressBar.h; sourceTree = "<group>"; };
 		0D46BED317E03BD90031CB69 /* MyProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyProgressBar.m; sourceTree = "<group>"; };
@@ -477,6 +477,7 @@
 		0D31F60C17D8B5C8005EBF21 = {
 			isa = PBXGroup;
 			children = (
+				0D38CDB4180B1681001A7F85 /* icon-120.png */,
 				04A3D61F17E04434009E2AE7 /* icon@2x.png */,
 				0D80557117E15E570080AEE0 /* AoyagiKouzanTOTF.otf */,
 				04A3D61A17E043A8009E2AE7 /* icon.png */,
@@ -567,7 +568,6 @@
 				0408659817E1AD51001C34FA /* fade2.png */,
 				04A8EF7617E1A806008677AE /* fade6.png */,
 				0D46BED617E03D6F0031CB69 /* progress1.png */,
-				04A8EF7A17E1A8BC008677AE /* fade2.jpg */,
 				0D46BED717E03D6F0031CB69 /* progress2.png */,
 				0D46BED517E03D6F0031CB69 /* progress3.png */,
 				04A3D61017DFFAE1009E2AE7 /* sharePicture.gif */,
@@ -726,13 +726,13 @@
 				04A8EF7317E1A62C008677AE /* fade4.png in Resources */,
 				04A8EF7717E1A806008677AE /* fade6.png in Resources */,
 				04A8EF7917E1A827008677AE /* fade5.png in Resources */,
-				04A8EF7B17E1A8BC008677AE /* fade2.jpg in Resources */,
 				0408659917E1AD51001C34FA /* fade2.png in Resources */,
 				0D80557D17E1BD3E0080AEE0 /* againWithFriends.gif in Resources */,
 				0408659E17E1BB56001C34FA /* fade7.png in Resources */,
 				040865A017E1BC0B001C34FA /* fade8.png in Resources */,
 				040865A217E1BCDE001C34FA /* fade9.png in Resources */,
 				040865A417E1BDED001C34FA /* fade10.png in Resources */,
+				0D38CDB5180B1681001A7F85 /* icon-120.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -824,8 +824,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Ippei Otsuka (JZW5DJYPD8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: TAKEYA TANGO";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: TAKEYA TANGO";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -840,7 +840,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "E8CCBB2A-18E4-4933-9581-590BC89EEE54";
+				PROVISIONING_PROFILE = "F9F1877F-6B74-4373-8AB1-C747AC0BE857";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F9F1877F-6B74-4373-8AB1-C747AC0BE857";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -857,8 +858,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Ippei Otsuka (JZW5DJYPD8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: TAKEYA TANGO";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: TAKEYA TANGO";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -866,7 +867,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "E8CCBB2A-18E4-4933-9581-590BC89EEE54";
+				PROVISIONING_PROFILE = "F9F1877F-6B74-4373-8AB1-C747AC0BE857";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F9F1877F-6B74-4373-8AB1-C747AC0BE857";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

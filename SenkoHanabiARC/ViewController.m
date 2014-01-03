@@ -284,7 +284,7 @@ int sceneNumber;
             int rate = [@[ @50, @30, @10, @1, @10, @50, @9999][fireScene-1] intValue];
             int r = (arc4random() % rate);
             if( r == 0 ){
-                fireFlower* ff = [[fireFlower alloc] initWithPoint:hidanePoint view:self.view scene:fireScene];
+                fireFlower* ff = [[fireFlower alloc] initWithPoint:hinotamaImage.center view:self.view scene:fireScene];
                 [fireFlowers addObject:ff];
             }
             
